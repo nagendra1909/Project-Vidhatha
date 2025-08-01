@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout";
 import { useState } from "react";
 
 // Icon components
@@ -686,29 +687,30 @@ const Footer = () => {
 const DonateNow = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      
-      <main className="pt-20">
-        <HeroSection />
-        
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Main Form */}
-              <div className="lg:col-span-2">
-                <DonationForm />
-              </div>
-              
-              {/* Sidebar */}
-              <div className="lg:col-span-1">
-                <ImpactSidebar />
+      {/* <Header /> */}
+      <Layout>
+        <main className="pt-2">
+          <HeroSection />
+
+          <section className="py-16">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Main Form */}
+                <div className="lg:col-span-2">
+                  <DonationForm />
+                </div>
+
+                {/* Sidebar */}
+                <div className="lg:col-span-1">
+                  <ImpactSidebar />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </main>
-      
-      <Footer />
+          </section>
+        </main>
+      </Layout>
+
+      {/* <Footer /> */}
     </div>
   );
 };

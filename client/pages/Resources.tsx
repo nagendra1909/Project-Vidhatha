@@ -1,5 +1,5 @@
+import Layout from "@/components/Layout";
 import { useState } from "react";
-
 // Icon components
 const SearchIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -809,16 +809,17 @@ const Footer = () => {
 export default function Resources() {
   return (
     <div className="min-h-screen">
-      <Header />
-      <HeroSection />
-      <SearchFilters />
-      <StatsSection />
-      <PhotoGallery />
-      <SuccessStoriesSection />
-      <ReportsSection />
-      <AwarenessMaterials />
-      <Newsletter />
-      <Footer />
+
+      <Layout>
+        <HeroSection />
+        <SearchFilters />
+        <StatsSection />
+        <PhotoGallery />
+        <SuccessStoriesSection />
+        <ReportsSection />
+        <AwarenessMaterials />
+        <Newsletter />
+      </Layout>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import Layout from '@/components/Layout';
 import React, { useState } from 'react';
 
 // Location Icon Component
@@ -49,58 +50,7 @@ const UserIcon = () => (
 );
 
 // Header Component
-const Header = () => {
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 py-5">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/92332e7f2ac6463bb386ac57dc63f0b1cdde3eb0?width=176" 
-              alt="NGO Logo" 
-              className="w-[88px] h-[88px]"
-            />
-          </div>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-[#343333] font-Niramit text-base font-normal hover:text-[#EB414B] transition-colors">
-              Home
-            </a>
-            <a href="/programs" className="text-[#343333] font-Niramit text-base font-normal hover:text-[#EB414B] transition-colors">
-              Programs
-            </a>
-            <a href="/resources" className="text-[#343333] font-Niramit text-base font-normal hover:text-[#EB414B] transition-colors">
-              Resources
-            </a>
-            <a href="/get-involved" className="text-[#343333] font-Niramit text-base font-normal hover:text-[#EB414B] transition-colors">
-              Get Involved
-            </a>
-            <a href="/about" className="text-[#343333] font-Niramit text-base font-normal hover:text-[#EB414B] transition-colors">
-              About
-            </a>
-            <a href="/contact" className="text-[#EB414B] font-Niramit text-base font-medium">
-              Contact
-            </a>
-          </nav>
-
-          {/* Donate Button */}
-          <a href="/donate" className="flex items-center justify-center w-[161px] h-[48px] bg-white border border-gray-200 rounded-[50px] shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-2">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 9.13738C2 14.0004 6.02 16.5914 8.962 18.9114C10 19.7294 11 20.5004 12 20.5004C13 20.5004 14 19.7304 15.038 18.9104C17.981 16.5924 22 14.0004 22 9.13838C22 4.27638 16.5 0.825382 12 5.50138C7.5 0.825382 2 4.27438 2 9.13738Z" fill="#E61C1F"/>
-              </svg>
-              <span className="text-[#343333] font-Merriweather text-base font-bold">
-                Donate now
-              </span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </header>
-  );
-};
 
 // Hero Section Component
 const HeroSection = () => {
@@ -624,116 +574,19 @@ const FAQSection = () => {
 };
 
 // Footer Component
-const Footer = () => {
-  return (
-    <footer className="bg-[#1F2937] text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo and Description */}
-          <div className="space-y-4">
-            <div className="h-8"></div>
-            <p className="text-base font-Niramit text-[#D1D5DB] leading-relaxed">
-              Transforming lives through comprehensive healthcare, education, and community support services since 2010.
-            </p>
-            <div className="flex space-x-4">
-              <svg className="w-6 h-6 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
-              </svg>
-              <svg className="w-6 h-6 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
-              </svg>
-              <svg className="w-6 h-6 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-              </svg>
-              <svg className="w-6 h-6 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
-                <circle cx="4" cy="4" r="2" />
-              </svg>
-            </div>
-          </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold font-Niramit text-white">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="/about" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">About Us</a></li>
-              <li><a href="/programs" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Our Programs</a></li>
-              <li><a href="/volunteer" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Volunteer</a></li>
-              <li><a href="#" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Donate</a></li>
-              <li><a href="/" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Home</a></li>
-              <li><a href="/contact" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Contact</a></li>
-            </ul>
-          </div>
-
-          {/* Our Programs */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold font-Niramit text-white">Our Programs</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Healthcare Services</a></li>
-              <li><a href="#" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Education & Skills</a></li>
-              <li><a href="#" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Community Support</a></li>
-              <li><a href="#" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Arts & Culture</a></li>
-              <li><a href="#" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Environmental Protection</a></li>
-              <li><a href="#" className="text-[#D1D5DB] font-Niramit hover:text-white transition-colors">Specialized Care</a></li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold font-Niramit text-white">Contact Info</h3>
-            <div className="space-y-3">
-              <div className="flex items-start">
-                <LocationIcon />
-                <div className="ml-3">
-                  <p className="text-[#D1D5DB] font-Niramit">123 Community Street</p>
-                  <p className="text-[#D1D5DB] font-Niramit">Hope City, HC 12345</p>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <PhoneIcon />
-                <p className="text-[#D1D5DB] font-Niramit ml-3">+1 (555) 123-4567</p>
-              </div>
-              <div className="flex items-center">
-                <EmailIcon />
-                <p className="text-[#D1D5DB] font-Niramit ml-3">info@ngocare.org</p>
-              </div>
-            </div>
-            <div className="pt-2">
-              <h4 className="text-base font-bold font-Niramit text-white mb-2">Emergency Hotline</h4>
-              <p className="text-lg font-bold font-Niramit text-[#F87171]">+1 (555) 911-HELP</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="border-t border-[#374151] mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm font-Niramit text-[#9CA3AF]">
-            © 2024 NGO Care. All rights reserved. | Tax ID: 12-3456789
-          </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-sm font-Niramit text-[#9CA3AF] hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="text-sm font-Niramit text-[#9CA3AF] hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="text-sm font-Niramit text-[#9CA3AF] hover:text-white transition-colors">Financial Transparency</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
 
 // Main Contact Component
 const Contact = () => {
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <Layout >
       <HeroSection />
       <LocationsSection />
       <FormsSection />
       <EmergencySection />
       <FAQSection />
-      <Footer />
+      </Layout>
     </div>
   );
 };

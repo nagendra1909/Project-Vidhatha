@@ -1,70 +1,33 @@
 import React, { useState } from "react";
+import Layout from "../components/Layout";
 
 const GetInvolved = () => {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <Header />
-      
-      {/* Hero Section */}
-      <HeroSection />
-      
-      {/* Ways to Make a Difference */}
-      <WaysToMakeDifferenceSection />
-      
-      {/* Volunteer Opportunities */}
-      <VolunteerOpportunitiesSection />
-      
-      {/* Volunteer Impact */}
-      <VolunteerImpactSection />
-      
-      {/* Volunteer Stories */}
-      <VolunteerStoriesSection />
-      
-      {/* Call to Action */}
-      <CallToActionSection />
-      
-      {/* Footer */}
-      <Footer />
+      <Layout>
+        {/* Hero Section */}
+        <HeroSection />
+
+        {/* Ways to Make a Difference */}
+        <WaysToMakeDifferenceSection />
+
+        {/* Volunteer Opportunities */}
+        <VolunteerOpportunitiesSection />
+
+        {/* Volunteer Impact */}
+        <VolunteerImpactSection />
+
+        {/* Volunteer Stories */}
+        <VolunteerStoriesSection />
+
+        {/* Call to Action */}
+        <CallToActionSection />
+      </Layout>
     </div>
   );
 };
 
-const Header = () => {
-  return (
-    <div className="relative w-full h-[88px] bg-white shadow-[0_1px_75px_rgba(0,0,0,0.25)]">
-      <div className="absolute left-[86px] top-0 w-[88px] h-[88px]">
-        <img 
-          src="https://api.builder.io/api/v1/image/assets/TEMP/92332e7f2ac6463bb386ac57dc63f0b1cdde3eb0?width=176" 
-          alt="NGO Logo" 
-          className="w-full h-full object-cover"
-        />
-      </div>
-      
-      {/* Navigation */}
-      <nav className="absolute left-[546px] top-[33px] flex items-center gap-8">
-        <a href="/" className="text-[#343333] font-niramit text-base font-medium">Home</a>
-        <a href="/resources" className="text-[#343333] font-niramit text-base font-medium">Resources</a>
-        <a href="/programs" className="text-[#343333] font-niramit text-base font-medium">Programs</a>
-        <a href="/about" className="text-[#343333] font-niramit text-base font-medium">About</a>
-        <a href="/get-involved" className="text-[#343333] font-niramit text-base font-medium">Get Involved</a>
-        <a href="/contact" className="text-[#343333] font-niramit text-base font-medium">Contact</a>
-      </nav>
-      
-      {/* Donate Button */}
-      <a href="/donate" className="absolute right-[40px] top-[20px] w-[161px] h-[48px] bg-white rounded-[50px] flex items-center justify-center hover:shadow-md transition-shadow">
-        <div className="flex items-center gap-[10px]">
-          <div className="w-6 h-6">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 9.13738C2 14.0004 6.02 16.5914 8.962 18.9114C10 19.7294 11 20.5004 12 20.5004C13 20.5004 14 19.7304 15.038 18.9104C17.981 16.5924 22 14.0004 22 9.13838C22 4.27638 16.5 0.825382 12 5.50138C7.5 0.825382 2 4.27438 2 9.13738Z" fill="#E61C1F"/>
-            </svg>
-          </div>
-          <span className="text-[#343333] font-merriweather text-base font-bold">Donate now</span>
-        </div>
-      </a>
-    </div>
-  );
-};
+
 
 const HeroSection = () => {
   return (
@@ -518,108 +481,6 @@ const CallToActionSection = () => {
   );
 };
 
-const Footer = () => {
-  return (
-    <footer className="w-full bg-[#1F2937] py-16">
-      <div className="w-full max-w-[1400px] mx-auto px-4 flex flex-col gap-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="flex flex-col gap-6">
-            <div className="h-8"></div>
-            <p className="text-[#D1D5DB] font-niramit text-base font-normal leading-[26px]">
-              Transforming lives through comprehensive healthcare, education, and community support services since 2010.
-            </p>
-            <div className="flex gap-4">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 4.00002C22 4.00002 21.3 6.10002 20 7.40002C21.6 17.4 10.6 24.7 2 19C4.2 19.1 6.4 18.4 8 17C3 15.5 0.5 9.60002 3 5.00002C5.2 7.60002 8.6 9.10002 12 9.00002C11.1 4.80002 16 2.40002 19 5.20002C20.1 5.20002 22 4.00002 22 4.00002Z" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M15.9997 11.3703C16.1231 12.2025 15.981 13.0525 15.5935 13.7993C15.206 14.5461 14.5929 15.1517 13.8413 15.53C13.0898 15.9082 12.2382 16.0399 11.4075 15.9062C10.5768 15.7726 9.80947 15.3804 9.21455 14.7855C8.61962 14.1905 8.22744 13.4232 8.09377 12.5925C7.96011 11.7619 8.09177 10.9102 8.47003 10.1587C8.84829 9.40716 9.45389 8.79404 10.2007 8.40654C10.9475 8.01904 11.7975 7.87689 12.6297 8.0003C13.4786 8.12619 14.2646 8.52176 14.8714 9.12861C15.4782 9.73545 15.8738 10.5214 15.9997 11.3703Z" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M17.5 6.5H17.51" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M6 9H2V21H6V9Z" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6Z" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-          </div>
-          
-          <div className="flex flex-col gap-6">
-            <h3 className="text-white font-niramit text-lg font-bold leading-7">Quick Links</h3>
-            <div className="flex flex-col gap-2">
-              {['About Us', 'Our Programs', 'Volunteer', 'Donate', 'Home', 'Contact'].map((link, index) => (
-                <a key={index} href="#" className="text-[#D1D5DB] font-geist text-base font-normal leading-6">
-                  {link}
-                </a>
-              ))}
-            </div>
-          </div>
-          
-          <div className="flex flex-col gap-6">
-            <h3 className="text-white font-geist text-lg font-bold leading-7">Our Programs</h3>
-            <div className="flex flex-col gap-2">
-              {['Healthcare Services', 'Education & Skills', 'Community Support', 'Arts & Culture', 'Environmental Protection', 'Specialized Care'].map((program, index) => (
-                <a key={index} href="#" className="text-[#D1D5DB] font-niramit text-base font-normal leading-6">
-                  {program}
-                </a>
-              ))}
-            </div>
-          </div>
-          
-          <div className="flex flex-col gap-6">
-            <h3 className="text-white font-niramit text-lg font-bold leading-7">Contact Info</h3>
-            <div className="flex flex-col gap-3">
-              <div className="flex items-start gap-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.6654 8.33366C16.6654 13.3337 9.9987 18.3337 9.9987 18.3337C9.9987 18.3337 3.33203 13.3337 3.33203 8.33366C3.33203 6.56555 4.03441 4.86986 5.28465 3.61961C6.5349 2.36937 8.23059 1.66699 9.9987 1.66699C11.7668 1.66699 13.4625 2.36937 14.7127 3.61961C15.963 4.86986 16.6654 6.56555 16.6654 8.33366Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M10 10.833C11.3807 10.833 12.5 9.71372 12.5 8.33301C12.5 6.9523 11.3807 5.83301 10 5.83301C8.61929 5.83301 7.5 6.9523 7.5 8.33301C7.5 9.71372 8.61929 10.833 10 10.833Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <div>
-                  <p className="text-[#D1D5DB] font-geist text-base font-normal leading-6">123 Community Street</p>
-                  <p className="text-[#D1D5DB] font-geist text-base font-normal leading-6">Hope City, HC 12345</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18.3351 14.1004V16.6004C18.3361 16.8325 18.2886 17.0622 18.1956 17.2749C18.1026 17.4875 17.9662 17.6784 17.7952 17.8353C17.6242 17.9922 17.4223 18.1116 17.2024 18.186C16.9826 18.2603 16.7496 18.288 16.5185 18.2671C13.9542 17.9884 11.491 17.1122 9.32682 15.7087C7.31334 14.4293 5.60626 12.7222 4.32682 10.7087C2.91846 8.53474 2.04202 6.05957 1.76848 3.48374C1.74766 3.2533 1.77505 3.02104 1.8489 2.80176C1.92275 2.58248 2.04146 2.38098 2.19745 2.21009C2.35345 2.0392 2.54332 1.90266 2.75498 1.80917C2.96663 1.71569 3.19543 1.66729 3.42682 1.66707H5.92682C6.33124 1.66309 6.72331 1.80631 7.02995 2.07002C7.33659 2.33373 7.53688 2.69995 7.59348 3.10041C7.699 3.90046 7.89469 4.68601 8.17682 5.44207C8.28894 5.74034 8.3132 6.0645 8.24674 6.37614C8.18028 6.68778 8.02587 6.97383 7.80182 7.20041L6.74348 8.25874C7.92978 10.345 9.65719 12.0724 11.7435 13.2587L12.8018 12.2004C13.0284 11.9764 13.3144 11.8219 13.6261 11.7555C13.9377 11.689 14.2619 11.7133 14.5601 11.8254C15.3162 12.1075 16.1018 12.3032 16.9018 12.4087C17.3066 12.4658 17.6763 12.6697 17.9406 12.9817C18.2049 13.2936 18.3453 13.6917 18.3351 14.1004Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <p className="text-[#D1D5DB] font-niramit text-base font-normal leading-6">+1 (555) 123-4567</p>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.668 3.33301H3.33464C2.41416 3.33301 1.66797 4.0792 1.66797 4.99967V14.9997C1.66797 15.9201 2.41416 16.6663 3.33464 16.6663H16.668C17.5884 16.6663 18.3346 15.9201 18.3346 14.9997V4.99967C18.3346 4.0792 17.5884 3.33301 16.668 3.33301Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M18.3346 5.83301L10.8596 10.583C10.6024 10.7442 10.3049 10.8297 10.0013 10.8297C9.6977 10.8297 9.40024 10.7442 9.14297 10.583L1.66797 5.83301" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <p className="text-[#D1D5DB] font-niramit text-base font-normal leading-6">info@ngocare.org</p>
-              </div>
-            </div>
-            
-            <div className="flex flex-col gap-2 pt-2">
-              <h4 className="text-white font-niramit text-base font-bold leading-6">Emergency Hotline</h4>
-              <p className="text-[#F87171] font-niramit text-lg font-bold leading-7">+1 (555) 911-HELP</p>
-            </div>
-          </div>
-        </div>
-        
-        <div className="border-t border-[#374151] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[#9CA3AF] font-niramit text-sm font-normal leading-5">
-            © 2024 NGO Care. All rights reserved. | Tax ID: 12-3456789
-          </p>
-          <div className="flex gap-6">
-            <a href="#" className="text-[#9CA3AF] font-niramit text-sm font-normal leading-5">Privacy Policy</a>
-            <a href="#" className="text-[#9CA3AF] font-niramit text-sm font-normal leading-5">Terms of Service</a>
-            <a href="#" className="text-[#9CA3AF] font-niramit text-sm font-normal leading-5">Financial Transparency</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
+
 
 export default GetInvolved;

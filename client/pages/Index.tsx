@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Layout from "../components/Layout";
 
 // Icon components
 const HeartIcon = () => (
@@ -40,46 +41,10 @@ const QuoteIcon = () => (
   </svg>
 );
 
-const Header = () => {
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 py-5">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/92332e7f2ac6463bb386ac57dc63f0b1cdde3eb0?width=176" 
-              alt="NGO Logo" 
-              className="h-22 w-22"
-            />
-          </div>
-
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-ngo-primary font-niramit text-base font-medium">Home</a>
-            <a href="/programs" className="text-ngo-secondary font-niramit text-base font-medium hover:text-ngo-primary transition-colors">Programs</a>
-            <a href="/resources" className="text-ngo-secondary font-niramit text-base font-medium hover:text-ngo-primary transition-colors">Resources</a>
-            <a href="/get-involved" className="text-ngo-secondary font-niramit text-base font-medium hover:text-ngo-primary transition-colors">Get Involved</a>
-            <a href="/about" className="text-ngo-secondary font-niramit text-base font-medium hover:text-ngo-primary transition-colors">About</a>
-            <a href="/contact" className="text-ngo-secondary font-niramit text-base font-medium hover:text-ngo-primary transition-colors">Contact</a>
-          </nav>
-
-          {/* Donate Button */}
-          <a href="/donate" className="flex items-center gap-3 bg-white rounded-full px-3 py-3 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-2">
-              <HeartIcon />
-              <span className="text-ngo-secondary font-merriweather text-base font-bold">Donate now</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </header>
-  );
-};
 
 const Hero = () => {
   return (
-    <section className="relative h-screen flex items-center justify-center">
+    <section className="relative h-screen flex items-center justify-between">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -93,8 +58,8 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black/60" />
       
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 flex items-center justify-between h-full">
-        <div className="flex-1 max-w-2xl">
+      <div className="relative z-10 max-w-9xl mx-auto px-2 flex items-center justify-between h-full">
+        <div className="flex-1 max-w-4xl">
           <h1 className="text-white font-niramit text-5xl font-bold leading-tight mb-6">
             Transforming Lives,<br />Building Hope
           </h1>
@@ -377,6 +342,61 @@ const FeaturedPrograms = () => {
 };
 
 const SuccessStories = () => {
+  const [currentStory, setCurrentStory] = useState(0);
+  
+  const stories = [
+    {
+      name: "James Thompson",
+      age: 28,
+      program: "Education & Skills",
+      quote:
+        "The vocational training program changed my life completely. I learned carpentry skills and now run my own small business. I can provide for my family and even employ two other people from my community.",
+      impact: "Started successful carpentry business",
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+    },
+    {
+      name: "Maria Santos",
+      age: 34,
+      program: "Healthcare Services",
+      quote:
+        "Thanks to the free medical consultations, I was able to get treatment for my diabetes. The health awareness programs taught me how to manage my condition and live a healthier life.",
+      impact: "Successfully managing diabetes with proper care",
+      image:
+        "https://images.unsplash.com/photo-1534339480783-6816b68be29c?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      name: "Rajesh Kumar",
+      age: 42,
+      program: "Community Support",
+      quote:
+        "When my family faced financial crisis, the emergency relief program helped us get back on our feet. Now I volunteer to help other families in similar situations.",
+      impact: "Recovered from financial crisis, now helps others",
+      image:
+        "https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?q=80&w=1206&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      name: "Priya Sharma",
+      age: 25,
+      program: "Environmental Protection",
+      quote:
+        "Participating in the tree plantation drive opened my eyes to environmental issues. I now lead a local green initiative in my neighborhood and we've planted over 500 trees.",
+      impact: "Leading environmental initiatives in community",
+      image:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
+    },
+  ];
+
+  const nextStory = () => {
+    setCurrentStory((prev) => (prev + 1) % stories.length);
+  };
+
+  const prevStory = () => {
+    setCurrentStory((prev) => (prev - 1 + stories.length) % stories.length);
+  };
+
+  const currentStoryData = stories[currentStory];
+
   return (
     <section className="py-20 bg-ngo-gray-50">
       <div className="max-w-7xl mx-auto px-4">
@@ -391,7 +411,11 @@ const SuccessStories = () => {
           <div className="flex items-center gap-8">
             <div className="flex-shrink-0">
               <div className="w-64 h-64 rounded-full overflow-hidden bg-gray-200">
-                <img src="/placeholder.svg" alt="James Thompson" className="w-full h-full object-cover" />
+                <img 
+                  src={currentStoryData.image} 
+                  alt={currentStoryData.name} 
+                  className="w-full h-full object-cover" 
+                />
               </div>
             </div>
             
@@ -401,15 +425,19 @@ const SuccessStories = () => {
               </div>
               
               <blockquote className="text-ngo-gray-700 font-niramit text-lg leading-relaxed mb-6">
-                "The vocational training program changed my life completely. I learned carpentry skills and now run my own small business. I can provide for my family and even employ two other people from my community."
+                "{currentStoryData.quote}"
               </blockquote>
               
               <div>
-                <div className="text-ngo-gray-800 font-niramit text-xl font-bold">James Thompson, 28</div>
-                <div className="text-ngo-primary font-niramit text-base mb-4">Education & Skills</div>
+                <div className="text-ngo-gray-800 font-niramit text-xl font-bold">
+                  {currentStoryData.name}, {currentStoryData.age}
+                </div>
+                <div className="text-ngo-primary font-niramit text-base mb-4">
+                  {currentStoryData.program}
+                </div>
                 <div className="bg-ngo-gray-100 p-3 rounded">
                   <div className="text-ngo-gray-600 font-niramit text-sm">
-                    Impact: Started successful carpentry business
+                    Impact: {currentStoryData.impact}
                   </div>
                 </div>
               </div>
@@ -417,20 +445,31 @@ const SuccessStories = () => {
           </div>
           
           <div className="flex justify-center items-center mt-8 gap-4">
-            <button className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-50">
+            <button 
+              onClick={prevStory}
+              className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-50 transition-colors"
+            >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 12L6 8L10 4" stroke="black" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
             
             <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-              <div className="w-3 h-3 rounded-full bg-ngo-primary"></div>
-              <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-              <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+              {stories.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentStory(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentStory ? 'bg-ngo-primary' : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                />
+              ))}
             </div>
             
-            <button className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-50">
+            <button 
+              onClick={nextStory}
+              className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-50 transition-colors"
+            >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 12L10 8L6 4" stroke="black" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -561,132 +600,9 @@ const Newsletter = () => {
   );
 };
 
-const Footer = () => {
-  return (
-    <footer className="bg-ngo-gray-800 text-white py-16">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          {/* Company Info */}
-          <div>
-            <div className="mb-6">
-              {/* Logo placeholder */}
-              <div className="h-8 w-32 bg-gray-600 rounded"></div>
-            </div>
-            <p className="text-ngo-gray-300 font-niramit text-base leading-relaxed mb-6">
-              Transforming lives through comprehensive healthcare, education, and community support services since 2010.
-            </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-ngo-gray-400 hover:text-white transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-              <a href="#" className="text-ngo-gray-400 hover:text-white transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22 4.00002C22 4.00002 21.3 6.10002 20 7.40002C21.6 17.4 10.6 24.7 2 19C4.2 19.1 6.4 18.4 8 17C3 15.5 0.5 9.60002 3 5.00002C5.2 7.60002 8.6 9.10002 12 9.00002C11.1 4.80002 16 2.40002 19 5.20002C20.1 5.20002 22 4.00002 22 4.00002Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-              <a href="#" className="text-ngo-gray-400 hover:text-white transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M15.9997 11.3703C16.1231 12.2025 15.981 13.0525 15.5935 13.7993C15.206 14.5461 14.5929 15.1517 13.8413 15.53C13.0898 15.9082 12.2382 16.0399 11.4075 15.9062C10.5768 15.7726 9.80947 15.3804 9.21455 14.7855C8.61962 14.1905 8.22744 13.4232 8.09377 12.5925C7.96011 11.7619 8.09177 10.9102 8.47003 10.1587C8.84829 9.40716 9.45389 8.79404 10.2007 8.40654C10.9475 8.01904 11.7975 7.87689 12.6297 8.0003C13.4786 8.12619 14.2646 8.52176 14.8714 9.12861C15.4782 9.73545 15.8738 10.5214 15.9997 11.3703Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M17.5 6.5H17.51" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-              <a href="#" className="text-ngo-gray-400 hover:text-white transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M6 9H2V21H6V9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M4 6C5.10457 6 6 5.10457 6 4C6 2.89543 5.10457 2 4 2C2.89543 2 2 2.89543 2 4C2 5.10457 2.89543 6 4 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-          
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-white font-niramit text-lg font-bold mb-6">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Our Programs</a></li>
-              <li><a href="/volunteer" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Volunteer</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Donate</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Home</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Contact</a></li>
-            </ul>
-          </div>
-          
-          {/* Our Programs */}
-          <div>
-            <h3 className="text-white font-niramit text-lg font-bold mb-6">Our Programs</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Healthcare Services</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Education & Skills</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Community Support</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Arts & Culture</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Environmental Protection</a></li>
-              <li><a href="#" className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors">Specialized Care</a></li>
-            </ul>
-          </div>
-          
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-white font-niramit text-lg font-bold mb-6">Contact Info</h3>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="mt-1 flex-shrink-0">
-                  <path d="M16.6673 8.33366C16.6673 13.3337 10.0007 18.3337 10.0007 18.3337C10.0007 18.3337 3.33398 13.3337 3.33398 8.33366C3.33398 6.56555 4.03636 4.86986 5.28661 3.61961C6.53685 2.36937 8.23254 1.66699 10.0007 1.66699C11.7688 1.66699 13.4645 2.36937 14.7147 3.61961C15.9649 4.86986 16.6673 6.56555 16.6673 8.33366Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M10 10.833C11.3807 10.833 12.5 9.71372 12.5 8.33301C12.5 6.9523 11.3807 5.83301 10 5.83301C8.61929 5.83301 7.5 6.9523 7.5 8.33301C7.5 9.71372 8.61929 10.833 10 10.833Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <div>
-                  <div className="text-ngo-gray-300 font-niramit text-base">123 Community Street</div>
-                  <div className="text-ngo-gray-300 font-niramit text-base">Hope City, HC 12345</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-                  <path d="M18.3332 14.1004V16.6004C18.3341 16.8325 18.2866 17.0622 18.1936 17.2749C18.1006 17.4875 17.9643 17.6784 17.7933 17.8353C17.6222 17.9922 17.4203 18.1116 17.2005 18.186C16.9806 18.2603 16.7477 18.288 16.5165 18.2671C13.9522 17.9884 11.489 17.1122 9.32486 15.7087C7.31139 14.4293 5.60431 12.7222 4.32486 10.7087C2.91651 8.53474 2.04007 6.05957 1.76653 3.48374C1.7457 3.2533 1.77309 3.02104 1.84695 2.80176C1.9208 2.58248 2.03951 2.38098 2.1955 2.21009C2.3515 2.0392 2.54137 1.90266 2.75302 1.80917C2.96468 1.71569 3.19348 1.66729 3.42486 1.66707H5.92486C6.32928 1.66309 6.72136 1.80631 7.028 2.07002C7.33464 2.33373 7.53493 2.69995 7.59153 3.10041C7.69705 3.90046 7.89274 4.68601 8.17486 5.44207C8.28698 5.74034 8.31125 6.0645 8.24478 6.37614C8.17832 6.68778 8.02392 6.97383 7.79986 7.20041L6.74153 8.25874C7.92783 10.345 9.65524 12.0724 11.7415 13.2587L12.7999 12.2004C13.0264 11.9764 13.3125 11.8219 13.6241 11.7555C13.9358 11.689 14.2599 11.7133 14.5582 11.8254C15.3143 12.1075 16.0998 12.3032 16.8999 12.4087C17.3047 12.4658 17.6744 12.6697 17.9386 12.9817C18.2029 13.2936 18.3433 13.6917 18.3332 14.1004Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <div className="text-ngo-gray-300 font-niramit text-base">+1 (555) 123-4567</div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-                  <path d="M16.666 3.33301H3.33268C2.41221 3.33301 1.66602 4.0792 1.66602 4.99967V14.9997C1.66602 15.9201 2.41221 16.6663 3.33268 16.6663H16.666C17.5865 16.6663 18.3327 15.9201 18.3327 14.9997V4.99967C18.3327 4.0792 17.5865 3.33301 16.666 3.33301Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M18.3327 5.83301L10.8577 10.583C10.6004 10.7442 10.3029 10.8297 9.99935 10.8297C9.69575 10.8297 9.39829 10.7442 9.14102 10.583L1.66602 5.83301" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <div className="text-ngo-gray-300 font-niramit text-base">info@ngocare.org</div>
-              </div>
-            </div>
-            
-            <div className="mt-6">
-              <h4 className="text-white font-niramit text-base font-bold mb-2">Emergency Hotline</h4>
-              <div className="text-red-400 font-niramit text-lg font-bold">+1 (555) 911-HELP</div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Bottom Bar */}
-        <div className="border-t border-ngo-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-ngo-gray-400 font-niramit text-sm">
-            © 2024 NGO Care. All rights reserved. | Tax ID: 12-3456789
-          </div>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors">Financial Transparency</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
 export default function Index() {
   return (
-    <div className="min-h-screen">
-      <Header />
+    <Layout>
       <Hero />
       <ContentSections />
       <MissionValues />
@@ -694,7 +610,7 @@ export default function Index() {
       <SuccessStories />
       <ImpactNumbers />
       <Newsletter />
-      <Footer />
-    </div>
+    </Layout>
   );
 }
+

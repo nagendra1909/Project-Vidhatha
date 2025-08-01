@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout";
 import { useState } from "react";
 
 // Icon components
@@ -550,7 +551,8 @@ const VolunteerForm = () => {
   if (currentStep === 4) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        {/* <Header /> */}
+        {/* <Layout> */}
         <main className="pt-24">
           <div className="bg-[#EB414B] py-16">
             <div className="max-w-4xl mx-auto px-6 text-center">
@@ -568,193 +570,112 @@ const VolunteerForm = () => {
             <SuccessStep />
           </div>
         </main>
+      {/* </Layout> */}
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="pt-24">
-        {/* Hero Section */}
-        <div className="bg-[#EB414B] py-16">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h1 className="text-white font-geist text-4xl font-bold mb-4">
-              Volunteer Application
-            </h1>
-            <p className="text-blue-100 font-geist text-xl">
-              Join our community of dedicated volunteers and make a lasting impact
-            </p>
-          </div>
-        </div>
-
-        {/* Progress Indicator */}
-        <ProgressIndicator currentStep={currentStep} />
-
-        {/* Form Content */}
-        <div className="py-12">
-          <div className="max-w-4xl mx-auto px-6">
-            <div className="space-y-8">
-              {renderCurrentStep()}
-
-              {/* Navigation Buttons */}
-              {currentStep < 4 && (
-                <div className="flex justify-between">
-                  <button
-                    onClick={prevStep}
-                    disabled={currentStep === 1}
-                    className={`px-6 py-3 rounded-md border transition-colors ${
-                      currentStep === 1
-                        ? 'border-gray-200 text-gray-400 cursor-not-allowed opacity-50'
-                        : 'border-gray-200 text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    Previous
-                  </button>
-                  <button
-                    onClick={nextStep}
-                    className="px-6 py-3 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors"
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* What to Expect Section */}
-        <div className="bg-gray-50 py-16">
-          <div className="max-w-4xl mx-auto px-6">
-            <h2 className="text-center font-geist text-3xl font-bold text-gray-900 mb-12">
-              What to Expect
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 text-center">
-                <div className="flex justify-center mb-6">
-                  <ClockIcon />
-                </div>
-                <h3 className="font-geist text-lg font-bold text-gray-900 mb-4">Application Review</h3>
-                <p className="text-gray-600 text-sm">
-                  We'll review your application within 3-5 business days and match you with suitable opportunities.
-                </p>
-              </div>
-              <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 text-center">
-                <div className="flex justify-center mb-6">
-                  <GroupIcon />
-                </div>
-                <h3 className="font-geist text-lg font-bold text-gray-900 mb-4">Orientation</h3>
-                <p className="text-gray-600 text-sm">
-                  Attend a brief orientation session to learn about our organization and volunteer guidelines.
-                </p>
-              </div>
-              <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 text-center">
-                <div className="flex justify-center mb-6">
-                  <HeartRedIcon />
-                </div>
-                <h3 className="font-geist text-lg font-bold text-gray-900 mb-4">Start Volunteering</h3>
-                <p className="text-gray-600 text-sm">
-                  Begin your volunteer journey and start making a positive impact in your community.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <p className="font-niramit text-base leading-relaxed mb-6">
-                Transforming lives through comprehensive healthcare, education, and community support services since 2010.
+      {/* <Header /> */}
+      <Layout>
+        <main className="pt-2">
+          {/* Hero Section */}
+          <div className="bg-[#EB414B] py-16">
+            <div className="max-w-4xl mx-auto px-6 text-center">
+              <h1 className="text-white font-geist text-4xl font-bold mb-4">
+                Volunteer Application
+              </h1>
+              <p className="text-blue-100 font-geist text-xl">
+                Join our community of dedicated volunteers and make a lasting
+                impact
               </p>
-              <div className="flex space-x-4">
-                <div className="w-6 h-6 bg-gray-600 rounded"></div>
-                <div className="w-6 h-6 bg-gray-600 rounded"></div>
-                <div className="w-6 h-6 bg-gray-600 rounded"></div>
-                <div className="w-6 h-6 bg-gray-600 rounded"></div>
-              </div>
             </div>
-            
-            <div>
-              <h3 className="font-niramit text-lg font-bold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li><a href="/about" className="text-gray-300 hover:text-white">About Us</a></li>
-                <li><a href="/programs" className="text-gray-300 hover:text-white">Our Programs</a></li>
-                <li><a href="/volunteer" className="text-gray-300 hover:text-white">Volunteer</a></li>
-                <li><a href="/donate" className="text-gray-300 hover:text-white">Donate</a></li>
-                <li><a href="/" className="text-gray-300 hover:text-white">Home</a></li>
-                <li><a href="/contact" className="text-gray-300 hover:text-white">Contact</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-geist text-lg font-bold mb-4">Our Programs</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-300 hover:text-white">Healthcare Services</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Education & Skills</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Community Support</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Arts & Culture</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Environmental Protection</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Specialized Care</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-niramit text-lg font-bold mb-4">Contact Info</h3>
-              <div className="space-y-3">
-                <div className="flex items-start">
-                  <div className="mt-1 mr-3">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16.6654 8.33268C16.6654 13.3327 9.9987 18.3327 9.9987 18.3327C9.9987 18.3327 3.33203 13.3327 3.33203 8.33268C3.33203 6.56457 4.03441 4.86888 5.28465 3.61864C6.5349 2.36839 8.23059 1.66602 9.9987 1.66602C11.7668 1.66602 13.4625 2.36839 14.7127 3.61864C15.963 4.86888 16.6654 6.56457 16.6654 8.33268Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M10 10.834C11.3807 10.834 12.5 9.7147 12.5 8.33398C12.5 6.95327 11.3807 5.83398 10 5.83398C8.61929 5.83398 7.5 6.95327 7.5 8.33398C7.5 9.7147 8.61929 10.834 10 10.834Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+          </div>
+
+          {/* Progress Indicator */}
+          <ProgressIndicator currentStep={currentStep} />
+
+          {/* Form Content */}
+          <div className="py-12">
+            <div className="max-w-4xl mx-auto px-6">
+              <div className="space-y-8">
+                {renderCurrentStep()}
+
+                {/* Navigation Buttons */}
+                {currentStep < 4 && (
+                  <div className="flex justify-between">
+                    <button
+                      onClick={prevStep}
+                      disabled={currentStep === 1}
+                      className={`px-6 py-3 rounded-md border transition-colors ${
+                        currentStep === 1
+                          ? "border-gray-200 text-gray-400 cursor-not-allowed opacity-50"
+                          : "border-gray-200 text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      Previous
+                    </button>
+                    <button
+                      onClick={nextStep}
+                      className="px-6 py-3 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors"
+                    >
+                      Next
+                    </button>
                   </div>
-                  <div>
-                    <div className="text-gray-300">123 Community Street</div>
-                    <div className="text-gray-300">Hope City, HC 12345</div>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="mr-3">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18.3351 14.0994V16.5994C18.3361 16.8315 18.2886 17.0612 18.1956 17.2739C18.1026 17.4865 17.9662 17.6774 17.7952 17.8343C17.6242 17.9912 17.4223 18.1107 17.2024 18.185C16.9826 18.2594 16.7496 18.287 16.5185 18.2661C13.9542 17.9875 11.491 17.1112 9.32682 15.7078C7.31334 14.4283 5.60626 12.7212 4.32682 10.7078C2.91846 8.53377 2.04202 6.05859 1.76848 3.48276C1.74766 3.25232 1.77505 3.02006 1.8489 2.80078C1.92275 2.5815 2.04146 2.38 2.19745 2.20911C2.35345 2.03822 2.54332 1.90169 2.75498 1.8082C2.96663 1.71471 3.19543 1.66631 3.42682 1.6661H5.92682C6.33124 1.66212 6.72331 1.80533 7.02995 2.06904C7.33659 2.33275 7.53688 2.69897 7.59348 3.09943C7.699 3.89949 7.89469 4.68504 8.17682 5.4411C8.28894 5.73937 8.3132 6.06353 8.24674 6.37516C8.18028 6.6868 8.02587 6.97286 7.80182 7.19943L6.74348 8.25776C7.92978 10.3441 9.65719 12.0715 11.7435 13.2578L12.8018 12.1994C13.0284 11.9754 13.3144 11.821 13.6261 11.7545C13.9377 11.688 14.2619 11.7123 14.5601 11.8244C15.3162 12.1066 16.1018 12.3022 16.9018 12.4078C17.3066 12.4649 17.6763 12.6688 17.9406 12.9807C18.2049 13.2926 18.3453 13.6907 18.3351 14.0994Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <span className="text-gray-300">+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center">
-                  <div className="mr-3">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16.668 3.33398H3.33464C2.41416 3.33398 1.66797 4.08018 1.66797 5.00065V15.0007C1.66797 15.9211 2.41416 16.6673 3.33464 16.6673H16.668C17.5884 16.6673 18.3346 15.9211 18.3346 15.0007V5.00065C18.3346 4.08018 17.5884 3.33398 16.668 3.33398Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M18.3346 5.83398L10.8596 10.584C10.6024 10.7452 10.3049 10.8307 10.0013 10.8307C9.6977 10.8307 9.40024 10.7452 9.14297 10.584L1.66797 5.83398" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <span className="text-gray-300">info@ngocare.org</span>
-                </div>
-              </div>
-              
-              <div className="mt-6">
-                <h4 className="font-niramit text-base font-bold mb-2">Emergency Hotline</h4>
-                <div className="text-red-400 font-niramit text-lg font-bold">+1 (555) 911-HELP</div>
+                )}
               </div>
             </div>
           </div>
-          
-          <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm">
-              © 2024 NGO Care. All rights reserved. | Tax ID: 12-3456789
-            </div>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 text-sm hover:text-white">Privacy Policy</a>
-              <a href="#" className="text-gray-400 text-sm hover:text-white">Terms of Service</a>
-              <a href="#" className="text-gray-400 text-sm hover:text-white">Financial Transparency</a>
+
+          {/* What to Expect Section */}
+          <div className="bg-gray-50 py-16">
+            <div className="max-w-4xl mx-auto px-6">
+              <h2 className="text-center font-geist text-3xl font-bold text-gray-900 mb-12">
+                What to Expect
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 text-center">
+                  <div className="flex justify-center mb-6">
+                    <ClockIcon />
+                  </div>
+                  <h3 className="font-geist text-lg font-bold text-gray-900 mb-4">
+                    Application Review
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    We'll review your application within 3-5 business days and
+                    match you with suitable opportunities.
+                  </p>
+                </div>
+                <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 text-center">
+                  <div className="flex justify-center mb-6">
+                    <GroupIcon />
+                  </div>
+                  <h3 className="font-geist text-lg font-bold text-gray-900 mb-4">
+                    Orientation
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    Attend a brief orientation session to learn about our
+                    organization and volunteer guidelines.
+                  </p>
+                </div>
+                <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 text-center">
+                  <div className="flex justify-center mb-6">
+                    <HeartRedIcon />
+                  </div>
+                  <h3 className="font-geist text-lg font-bold text-gray-900 mb-4">
+                    Start Volunteering
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    Begin your volunteer journey and start making a positive
+                    impact in your community.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </main>
+      </Layout>
     </div>
   );
 };
