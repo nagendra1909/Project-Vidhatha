@@ -1,5 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
+
+// Animation styles
+const fadeInUp = {
+  opacity: 0,
+  transform: 'translateY(30px)',
+  transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+};
+
+const fadeInLeft = {
+  opacity: 0,
+  transform: 'translateX(-30px)',
+  transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+};
+
+const fadeInRight = {
+  opacity: 0,
+  transform: 'translateX(30px)',
+  transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+};
+
+const visible = {
+  opacity: 1,
+  transform: 'translateY(0) translateX(0)'
+};
+
+// Intersection Observer Hook
+const useIntersectionObserver = (options = {}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [element, setElement] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!element) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.unobserve(element);
+      }
+    }, {
+      threshold: 0.1,
+      rootMargin: '50px',
+      ...options
+    });
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [element, options]);
+
+  return [setElement, isVisible] as const;
+};
+
+
 
 // Icon components
 const HeartIcon = () => (
@@ -43,85 +96,121 @@ const QuoteIcon = () => (
 
 
 const Hero = () => {
+  const [heroRef, heroVisible] = useIntersectionObserver();
+  const [statsRef, statsVisible] = useIntersectionObserver();
+
   return (
-    <section className="relative h-screen flex items-center justify-between">
+    <section className="relative min-h-screen flex items-center justify-center">
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('https://api.builder.io/api/v1/image/assets/TEMP/5140f3a836186c0897d4412d1dedd5fd4f28a4de?width=2880')`,
           filter: 'drop-shadow(0 8px 10px rgba(0, 0, 0, 0.7))',
         }}
       />
-      
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60" />
-      
+
       {/* Content */}
-      <div className="relative z-10 max-w-9xl mx-auto px-2 flex items-center justify-between h-full">
-        <div className="flex-1 max-w-4xl">
-          <h1 className="text-white font-niramit text-5xl font-bold leading-tight mb-6">
-            Transforming Lives,<br />Building Hope
-          </h1>
-          
-          <p className="text-blue-200 font-niramit text-xl leading-relaxed mb-8 max-w-xl">
-            Join us in creating lasting change through healthcare, education, and community support. Together, we can make a difference in the lives of those who need it most.
-          </p>
-          
-          <div className="flex items-center gap-6">
-            <a href="/volunteer" className="bg-white text-ngo-primary px-8 py-3 rounded-md font-geist text-lg font-medium flex items-center gap-2 hover:bg-gray-50 transition-colors">
-              Volunteer
-              <ArrowRightIcon />
-            </a>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="flex flex-col lg:flex-row items-center justify-between min-h-screen py-20 lg:py-0">
+          <div
+            ref={heroRef}
+            className="flex-1 max-w-4xl text-center lg:text-left"
+            style={{
+              ...fadeInLeft,
+              ...(heroVisible ? visible : {})
+            }}
+          >
+            <h1 className="text-white font-niramit text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6">
+              Transforming Lives,<br />Building Hope
+            </h1>
+
+            <p className="text-blue-200 font-niramit text-base sm:text-lg md:text-xl leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
+              Join us in creating lasting change through healthcare, education, and community support. Together, we can make a difference in the lives of those who need it most.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-8 sm:mb-12">
+              <a
+                href="/volunteer"
+                className="w-full sm:w-auto bg-white text-ngo-primary px-6 sm:px-8 py-3 sm:py-4 rounded-md font-geist text-base sm:text-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-50 hover:scale-105 transition-all duration-300 min-h-[44px]"
+              >
+                Volunteer
+                <ArrowRightIcon />
+              </a>
+              <a
+                href="/donate"
+                className="w-full sm:w-auto border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-md font-geist text-base sm:text-lg font-medium hover:bg-white hover:text-ngo-primary hover:scale-105 transition-all duration-300 min-h-[44px] text-center"
+              >
+                Donate Now
+              </a>
+            </div>
+
+            {/* Stats */}
+            <div
+              ref={statsRef}
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8 sm:gap-12 lg:gap-16"
+              style={{
+                ...fadeInUp,
+                ...(statsVisible ? visible : {}),
+                transitionDelay: '0.3s'
+              }}
+            >
+              <div className="text-center">
+                <div className="w-8 h-8 mx-auto mb-3 text-yellow-300">
+                  <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21.6628 28V25.3333C21.6628 23.9188 21.1009 22.5623 20.1007 21.5621C19.1005 20.5619 17.7439 20 16.3294 20H8.32943C6.91494 20 5.55839 20.5619 4.55819 21.5621C3.558 22.5623 2.99609 23.9188 2.99609 25.3333V28" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12.3294 14.6667C15.2749 14.6667 17.6628 12.2789 17.6628 9.33333C17.6628 6.38781 15.2749 4 12.3294 4C9.38391 4 6.99609 6.38781 6.99609 9.33333C6.99609 12.2789 9.38391 14.6667 12.3294 14.6667Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="text-white font-geist text-xl sm:text-2xl font-bold">50,000+</div>
+                <div className="text-blue-200 font-geist text-sm sm:text-base">Lives Impacted</div>
+              </div>
+
+              <div className="text-center">
+                <div className="w-8 h-8 mx-auto mb-3 text-ngo-primary">
+                  <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25.653 18.6667C27.6397 16.72 29.653 14.3867 29.653 11.3333C29.653 9.38841 28.8804 7.52315 27.5051 6.14788C26.1298 4.77262 24.2646 4 22.3197 4C19.973 4 18.3197 4.66667 16.3197 6.66667C14.3197 4.66667 12.6663 4 10.3197 4C8.37474 4 6.50948 4.77262 5.13421 6.14788C3.75895 7.52315 2.98633 9.38841 2.98633 11.3333C2.98633 14.4 4.98633 16.7333 6.98633 18.6667L16.3197 28L25.653 18.6667Z" stroke="#EB414B" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="text-white font-geist text-xl sm:text-2xl font-bold">15+</div>
+                <div className="text-blue-200 font-geist text-sm sm:text-base">Programs</div>
+              </div>
+
+              <div className="text-center">
+                <div className="w-8 h-8 mx-auto mb-3 text-yellow-300">
+                  <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.3294 29.3333C23.6932 29.3333 29.6628 23.3638 29.6628 16C29.6628 8.63616 23.6932 2.66663 16.3294 2.66663C8.96563 2.66663 2.99609 8.63616 2.99609 16C2.99609 23.3638 8.96563 29.3333 16.3294 29.3333Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16.3294 2.66663C12.9057 6.2615 10.9961 11.0356 10.9961 16C10.9961 20.9643 12.9057 25.7384 16.3294 29.3333C19.7531 25.7384 21.6628 20.9643 21.6628 16C21.6628 11.0356 19.7531 6.2615 16.3294 2.66663Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="text-white font-geist text-xl sm:text-2xl font-bold">25+</div>
+                <div className="text-blue-200 font-geist text-sm sm:text-base">Communities</div>
+              </div>
+            </div>
           </div>
-          
-          {/* Stats */}
-          <div className="flex items-center gap-16 mt-16">
-            <div className="text-center">
-              <div className="w-8 h-8 mx-auto mb-3 text-yellow-300">
-                <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21.6628 28V25.3333C21.6628 23.9188 21.1009 22.5623 20.1007 21.5621C19.1005 20.5619 17.7439 20 16.3294 20H8.32943C6.91494 20 5.55839 20.5619 4.55819 21.5621C3.558 22.5623 2.99609 23.9188 2.99609 25.3333V28" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12.3294 14.6667C15.2749 14.6667 17.6628 12.2789 17.6628 9.33333C17.6628 6.38781 15.2749 4 12.3294 4C9.38391 4 6.99609 6.38781 6.99609 9.33333C6.99609 12.2789 9.38391 14.6667 12.3294 14.6667Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+
+          {/* Hero Image */}
+          <div
+            className="hidden lg:block flex-1 max-w-lg mt-8 lg:mt-0"
+            style={{
+              ...fadeInRight,
+              ...(heroVisible ? visible : {}),
+              transitionDelay: '0.6s'
+            }}
+          >
+            <div className="relative">
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/9df290f6a88aaee6370fa211720a0d55628fbadf?width=1000"
+                alt="Community"
+                className="w-full h-auto rounded-xl hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute -bottom-4 sm:-bottom-8 -left-4 sm:-left-8 bg-ngo-primary text-white p-3 sm:p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="text-lg sm:text-2xl font-bold">14 Years</div>
+                <div className="text-xs sm:text-sm">of Service</div>
               </div>
-              <div className="text-white font-geist text-2xl font-bold">50,000+</div>
-              <div className="text-blue-200 font-geist text-base">Lives Impacted</div>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-8 h-8 mx-auto mb-3 text-ngo-primary">
-                <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M25.653 18.6667C27.6397 16.72 29.653 14.3867 29.653 11.3333C29.653 9.38841 28.8804 7.52315 27.5051 6.14788C26.1298 4.77262 24.2646 4 22.3197 4C19.973 4 18.3197 4.66667 16.3197 6.66667C14.3197 4.66667 12.6663 4 10.3197 4C8.37474 4 6.50948 4.77262 5.13421 6.14788C3.75895 7.52315 2.98633 9.38841 2.98633 11.3333C2.98633 14.4 4.98633 16.7333 6.98633 18.6667L16.3197 28L25.653 18.6667Z" stroke="#EB414B" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className="text-white font-geist text-2xl font-bold">15+</div>
-              <div className="text-blue-200 font-geist text-base">Programs</div>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-8 h-8 mx-auto mb-3 text-yellow-300">
-                <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.3294 29.3333C23.6932 29.3333 29.6628 23.3638 29.6628 16C29.6628 8.63616 23.6932 2.66663 16.3294 2.66663C8.96563 2.66663 2.99609 8.63616 2.99609 16C2.99609 23.3638 8.96563 29.3333 16.3294 29.3333Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M16.3294 2.66663C12.9057 6.2615 10.9961 11.0356 10.9961 16C10.9961 20.9643 12.9057 25.7384 16.3294 29.3333C19.7531 25.7384 21.6628 20.9643 21.6628 16C21.6628 11.0356 19.7531 6.2615 16.3294 2.66663Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className="text-white font-geist text-2xl font-bold">25+</div>
-              <div className="text-blue-200 font-geist text-base">Communities</div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Hero Image */}
-        <div className="hidden lg:block flex-1 max-w-lg">
-          <div className="relative">
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/9df290f6a88aaee6370fa211720a0d55628fbadf?width=1000" 
-              alt="Community" 
-              className="w-full h-auto rounded-xl"
-            />
-            <div className="absolute -bottom-8 -left-8 bg-ngo-primary text-white p-4 rounded-lg shadow-lg">
-              <div className="text-2xl font-bold">14 Years</div>
-              <div className="text-sm">of Service</div>
             </div>
           </div>
         </div>
@@ -131,70 +220,113 @@ const Hero = () => {
 };
 
 const ContentSections = () => {
+  const [womenChildRef, womenChildVisible] = useIntersectionObserver();
+  const [oldAgeRef, oldAgeVisible] = useIntersectionObserver();
+
   return (
     <>
       {/* Women & Child Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 flex items-center gap-16">
-          <div className="flex-1 grid grid-cols-2 gap-8">
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/8f72c9802b018dd43ec81595d3f4e94527a0d63c?width=1004" 
-              alt="Women and Children" 
-              className="w-full h-96 object-cover rounded-[50px]"
-            />
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/d2009583a5a8fb83858a033322a7897dc296916a?width=1004" 
-              alt="Community Support" 
-              className="w-full h-96 object-cover rounded-[50px]"
-            />
-          </div>
-          
-          <div className="flex-1 text-center">
-            <h2 className="text-black font-niramit text-6xl font-bold mb-8">WOMEN & CHILD</h2>
-            <p className="text-ngo-gray-600 font-niramit text-2xl leading-relaxed mb-12 max-w-lg mx-auto">
-              Vidhatha Society is a non-profit organization dedicated to transforming the lives of orphans and vulnerable children in India, particularly in Telugu-speaking regions of Andhra Pradesh and Telangana.
-            </p>
-            <div className="flex justify-center gap-4">
-              <button className="bg-ngo-primary text-white px-8 py-3 rounded font-niramit text-xl hover:bg-red-600 transition-colors">
-                Donate
-              </button>
-              <a href="/volunteer" className="border border-ngo-secondary text-ngo-secondary px-8 py-3 rounded font-niramit text-xl hover:bg-ngo-secondary hover:text-white transition-colors inline-block">
-                Volunteer
-              </a>
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+            <div
+              ref={womenChildRef}
+              className="flex-1 w-full"
+              style={{
+                ...fadeInLeft,
+                ...(womenChildVisible ? visible : {})
+              }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+                <img
+                  src="https://api.builder.io/api/v1/image/assets/TEMP/8f72c9802b018dd43ec81595d3f4e94527a0d63c?width=1004"
+                  alt="Women and Children"
+                  className="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-[25px] sm:rounded-[35px] lg:rounded-[50px] hover:scale-105 transition-transform duration-500"
+                />
+                <img
+                  src="https://api.builder.io/api/v1/image/assets/TEMP/d2009583a5a8fb83858a033322a7897dc296916a?width=1004"
+                  alt="Community Support"
+                  className="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-[25px] sm:rounded-[35px] lg:rounded-[50px] hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
+
+            <div
+              className="flex-1 text-center lg:text-left"
+              style={{
+                ...fadeInRight,
+                ...(womenChildVisible ? visible : {}),
+                transitionDelay: '0.3s'
+              }}
+            >
+              <h2 className="text-black font-niramit text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 lg:mb-8">
+                WOMEN & CHILD
+              </h2>
+              <p className="text-ngo-gray-600 font-niramit text-base sm:text-lg lg:text-xl xl:text-2xl leading-relaxed mb-8 sm:mb-10 lg:mb-12 max-w-lg mx-auto lg:mx-0">
+                Vidhatha Society is a non-profit organization dedicated to transforming the lives of orphans and vulnerable children in India, particularly in Telugu-speaking regions of Andhra Pradesh and Telangana.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
+                <button className="w-full sm:w-auto bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px]">
+                  Donate
+                </button>
+                <a href="/volunteer" className="w-full sm:w-auto border border-ngo-secondary text-ngo-secondary px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-ngo-secondary hover:text-white hover:scale-105 transition-all duration-300 inline-block text-center min-h-[44px]">
+                  Volunteer
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Old Age Home Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 flex items-center gap-16">
-          <div className="flex-1 text-center">
-            <h2 className="text-black font-niramit text-6xl font-bold mb-8">OLDAGE HOME</h2>
-            <p className="text-ngo-gray-600 font-niramit text-2xl leading-relaxed mb-12 max-w-lg mx-auto">
-              Vidhatha Society is a non-profit organization dedicated to transforming the lives of orphans and vulnerable children in India, particularly in Telugu-speaking regions of Andhra Pradesh and Telangana.
-            </p>
-            <div className="flex justify-center gap-4">
-              <button className="bg-ngo-primary text-white px-8 py-3 rounded font-niramit text-xl hover:bg-red-600 transition-colors">
-                Donate
-              </button>
-              <a href="/volunteer" className="border border-ngo-secondary text-ngo-secondary px-8 py-3 rounded font-niramit text-xl hover:bg-ngo-secondary hover:text-white transition-colors inline-block">
-                Volunteer
-              </a>
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+            <div
+              className="flex-1 text-center lg:text-left order-2 lg:order-1"
+              style={{
+                ...fadeInLeft,
+                ...(oldAgeVisible ? visible : {})
+              }}
+            >
+              <h2 className="text-black font-niramit text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 lg:mb-8">
+                OLDAGE HOME
+              </h2>
+              <p className="text-ngo-gray-600 font-niramit text-base sm:text-lg lg:text-xl xl:text-2xl leading-relaxed mb-8 sm:mb-10 lg:mb-12 max-w-lg mx-auto lg:mx-0">
+                Providing compassionate care and dignity to our elderly community members. Our old age home offers a safe, comfortable environment where seniors can live with respect and receive the care they deserve.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
+                <button className="w-full sm:w-auto bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px]">
+                  Donate
+                </button>
+                <a href="/volunteer" className="w-full sm:w-auto border border-ngo-secondary text-ngo-secondary px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-ngo-secondary hover:text-white hover:scale-105 transition-all duration-300 inline-block text-center min-h-[44px]">
+                  Volunteer
+                </a>
+              </div>
             </div>
-          </div>
-          
-          <div className="flex-1 grid grid-cols-2 gap-8">
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/bf73a5db1c602a2e3b8225dc6e36b841d4d47de1?width=1004" 
-              alt="Old Age Care" 
-              className="w-full h-96 object-cover rounded-[50px]"
-            />
-            <img 
-              src="https://api.builder.io/api/v1/image/assets/TEMP/d04b54492381426b995dd53eea8a740031b226a0?width=1004" 
-              alt="Elder Support" 
-              className="w-full h-96 object-cover rounded-[50px]"
-            />
+
+            <div
+              ref={oldAgeRef}
+              className="flex-1 w-full order-1 lg:order-2"
+              style={{
+                ...fadeInRight,
+                ...(oldAgeVisible ? visible : {}),
+                transitionDelay: '0.3s'
+              }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+                <img
+                  src="https://api.builder.io/api/v1/image/assets/TEMP/bf73a5db1c602a2e3b8225dc6e36b841d4d47de1?width=1004"
+                  alt="Old Age Care"
+                  className="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-[25px] sm:rounded-[35px] lg:rounded-[50px] hover:scale-105 transition-transform duration-500"
+                />
+                <img
+                  src="https://api.builder.io/api/v1/image/assets/TEMP/d04b54492381426b995dd53eea8a740031b226a0?width=1004"
+                  alt="Elder Support"
+                  className="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-[25px] sm:rounded-[35px] lg:rounded-[50px] hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -203,69 +335,92 @@ const ContentSections = () => {
 };
 
 const MissionValues = () => {
+  const [missionRef, missionVisible] = useIntersectionObserver();
+  const [valuesRef, valuesVisible] = useIntersectionObserver();
+  const [visionRef, visionVisible] = useIntersectionObserver();
+
   return (
-    <section className="py-20 bg-ngo-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-black font-niramit text-4xl font-bold mb-4">Our Mission & Values</h2>
-          <p className="text-ngo-secondary font-niramit text-xl max-w-3xl mx-auto">
+    <section className="py-12 sm:py-16 lg:py-20 bg-ngo-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          ref={missionRef}
+          className="text-center mb-12 sm:mb-16"
+          style={{
+            ...fadeInUp,
+            ...(missionVisible ? visible : {})
+          }}
+        >
+          <h2 className="text-black font-niramit text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Our Mission & Values</h2>
+          <p className="text-ngo-secondary font-niramit text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
             To empower communities through comprehensive healthcare, education, and social support services, creating sustainable positive change and fostering hope for a better tomorrow.
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-            <div className="flex justify-center mb-6">
-              <HeartIcon />
+
+        <div
+          ref={valuesRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 sm:mb-16"
+        >
+          {[
+            {
+              icon: <HeartIcon />,
+              title: "Compassion",
+              description: "We approach every individual with empathy, understanding, and genuine care for their wellbeing."
+            },
+            {
+              icon: <GroupIcon />,
+              title: "Community",
+              description: "We believe in the power of collective action and building strong, supportive communities."
+            },
+            {
+              icon: <FocusIcon />,
+              title: "Impact",
+              description: "We focus on creating measurable, sustainable change that transforms lives for the better."
+            },
+            {
+              icon: <EarthIcon />,
+              title: "Inclusivity",
+              description: "We serve all members of our community regardless of background, beliefs, or circumstances."
+            }
+          ].map((value, index) => (
+            <div
+              key={value.title}
+              className="bg-white p-6 sm:p-8 rounded-lg shadow-sm text-center hover:shadow-lg hover:scale-105 transition-all duration-300"
+              style={{
+                ...fadeInUp,
+                ...(valuesVisible ? visible : {}),
+                transitionDelay: `${index * 0.1}s`
+              }}
+            >
+              <div className="flex justify-center mb-4 sm:mb-6">
+                {value.icon}
+              </div>
+              <h3 className="text-ngo-secondary font-niramit text-xl sm:text-2xl font-bold mb-3 sm:mb-4">{value.title}</h3>
+              <p className="text-ngo-secondary font-niramit text-base sm:text-lg leading-relaxed">
+                {value.description}
+              </p>
             </div>
-            <h3 className="text-ngo-secondary font-niramit text-2xl font-bold mb-4">Compassion</h3>
-            <p className="text-ngo-secondary font-niramit text-lg leading-relaxed">
-              We approach every individual with empathy, understanding, and genuine care for their wellbeing.
-            </p>
-          </div>
-          
-          <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-            <div className="flex justify-center mb-6">
-              <GroupIcon />
-            </div>
-            <h3 className="text-ngo-secondary font-niramit text-2xl font-bold mb-4">Community</h3>
-            <p className="text-ngo-secondary font-niramit text-lg leading-relaxed">
-              We believe in the power of collective action and building strong, supportive communities.
-            </p>
-          </div>
-          
-          <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-            <div className="flex justify-center mb-6">
-              <FocusIcon />
-            </div>
-            <h3 className="text-ngo-secondary font-niramit text-2xl font-bold mb-4">Impact</h3>
-            <p className="text-ngo-secondary font-niramit text-lg leading-relaxed">
-              We focus on creating measurable, sustainable change that transforms lives for the better.
-            </p>
-          </div>
-          
-          <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-            <div className="flex justify-center mb-6">
-              <EarthIcon />
-            </div>
-            <h3 className="text-ngo-secondary font-niramit text-2xl font-bold mb-4">Inclusivity</h3>
-            <p className="text-ngo-secondary font-niramit text-lg leading-relaxed">
-              We serve all members of our community regardless of background, beliefs, or circumstances.
-            </p>
-          </div>
+          ))}
         </div>
-        
+
         {/* Vision Banner */}
-        <div className="hero-gradient rounded-xl p-12 flex items-center justify-between">
-          <div className="flex-1">
-            <h3 className="text-white font-niramit text-2xl font-bold mb-4">Our Vision</h3>
-            <p className="text-white font-niramit text-xl leading-relaxed max-w-3xl">
+        <div
+          ref={visionRef}
+          className="hero-gradient rounded-xl p-6 sm:p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-6 lg:gap-0 lg:justify-between"
+          style={{
+            ...fadeInUp,
+            ...(visionVisible ? visible : {}),
+            transitionDelay: '0.4s'
+          }}
+        >
+          <div className="flex-1 text-center lg:text-left">
+            <h3 className="text-white font-niramit text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Our Vision</h3>
+            <p className="text-white font-niramit text-base sm:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto lg:mx-0">
               A world where every individual has access to quality healthcare, education, and opportunities to thrive, regardless of their socioeconomic background. We envision communities that are self-sufficient, resilient, and united in their commitment to mutual support and growth.
             </p>
           </div>
-          <div className="text-right">
-            <div className="text-ngo-primary font-niramit text-4xl font-bold">2030</div>
-            <div className="text-white font-niramit text-xl">Our goal to reach 100,000 lives</div>
+          <div className="text-center lg:text-right">
+            <div className="text-white font-niramit text-3xl sm:text-4xl font-bold">2030</div>
+            <div className="text-white font-niramit text-base sm:text-lg lg:text-xl">Our goal to reach 100,000 lives</div>
           </div>
         </div>
       </div>
@@ -274,6 +429,9 @@ const MissionValues = () => {
 };
 
 const FeaturedPrograms = () => {
+  const [programsRef, programsVisible] = useIntersectionObserver();
+  const [headerRef, headerVisible] = useIntersectionObserver();
+
   const programs = [
     {
       title: "Healthcare Services",
@@ -302,37 +460,55 @@ const FeaturedPrograms = () => {
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-black font-niramit text-4xl font-bold mb-4">Our Featured Programs</h2>
-          <p className="text-ngo-secondary font-niramit text-xl max-w-3xl mx-auto">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          ref={headerRef}
+          className="text-center mb-12 sm:mb-16"
+          style={{
+            ...fadeInUp,
+            ...(headerVisible ? visible : {})
+          }}
+        >
+          <h2 className="text-black font-niramit text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Our Featured Programs</h2>
+          <p className="text-ngo-secondary font-niramit text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
             Discover how we're making a difference through our comprehensive range of community-focused programs
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+
+        <div
+          ref={programsRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12"
+        >
           {programs.map((program, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <img 
-                src={program.image} 
+            <div
+              key={index}
+              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300"
+              style={{
+                ...fadeInUp,
+                ...(programsVisible ? visible : {}),
+                transitionDelay: `${index * 0.1}s`
+              }}
+            >
+              <img
+                src={program.image}
                 alt={program.title}
-                className="w-full h-48 object-cover"
+                className="w-full h-40 sm:h-48 object-cover"
               />
-              <div className="p-6">
-                <h3 className="text-ngo-secondary font-niramit text-xl font-bold mb-2">{program.title}</h3>
-                <p className="text-ngo-primary font-niramit text-sm font-bold mb-4">{program.impact}</p>
-                <p className="text-gray-600 font-niramit text-base leading-relaxed mb-6">{program.description}</p>
-                <button className="w-full border border-gray-300 text-ngo-secondary py-2 rounded font-niramit text-base hover:bg-gray-50 transition-colors">
+              <div className="p-4 sm:p-6">
+                <h3 className="text-ngo-secondary font-niramit text-lg sm:text-xl font-bold mb-2">{program.title}</h3>
+                <p className="text-ngo-primary font-niramit text-xs sm:text-sm font-bold mb-3 sm:mb-4">{program.impact}</p>
+                <p className="text-gray-600 font-niramit text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">{program.description}</p>
+                <button className="w-full border border-gray-300 text-ngo-secondary py-2 sm:py-3 rounded font-niramit text-sm sm:text-base hover:bg-gray-50 hover:scale-105 transition-all duration-300 min-h-[44px]">
                   Learn More
                 </button>
               </div>
             </div>
           ))}
         </div>
-        
+
         <div className="text-center">
-          <button className="bg-ngo-primary text-white px-8 py-3 rounded font-niramit text-base font-bold hover:bg-red-600 transition-colors">
+          <button className="bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-base font-bold hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px]">
             View All Programs
           </button>
         </div>
@@ -343,7 +519,10 @@ const FeaturedPrograms = () => {
 
 const SuccessStories = () => {
   const [currentStory, setCurrentStory] = useState(0);
-  
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [storiesRef, storiesVisible] = useIntersectionObserver();
+
   const stories = [
     {
       name: "James Thompson",
@@ -395,85 +574,212 @@ const SuccessStories = () => {
     setCurrentStory((prev) => (prev - 1 + stories.length) % stories.length);
   };
 
+  // Touch handlers for swipe functionality
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0); // Reset touchEnd
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      nextStory();
+    } else if (isRightSwipe) {
+      prevStory();
+    }
+  };
+
+  // Auto-advance carousel (optional) - pause on hover/focus
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextStory();
+    }, 8000); // Change story every 8 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        prevStory();
+      } else if (e.key === 'ArrowRight') {
+        nextStory();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const currentStoryData = stories[currentStory];
 
   return (
-    <section className="py-20 bg-ngo-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-ngo-gray-800 font-niramit text-4xl font-bold mb-4">Success Stories</h2>
-          <p className="text-ngo-gray-600 font-niramit text-xl max-w-3xl mx-auto">
+    <section className="py-12 sm:py-16 lg:py-20 bg-ngo-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
+          style={{
+            ...fadeInUp,
+            ...(storiesVisible ? visible : {})
+          }}
+        >
+          <h2 className="text-ngo-gray-800 font-niramit text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">Success Stories</h2>
+          <p className="text-ngo-gray-600 font-niramit text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
             Real stories from real people whose lives have been transformed through our programs
           </p>
         </div>
-        
-        <div className="bg-white rounded-lg shadow-xl p-8 max-w-4xl mx-auto">
-          <div className="flex items-center gap-8">
-            <div className="flex-shrink-0">
-              <div className="w-64 h-64 rounded-full overflow-hidden bg-gray-200">
-                <img 
-                  src={currentStoryData.image} 
-                  alt={currentStoryData.name} 
-                  className="w-full h-full object-cover" 
+
+        <div
+          ref={storiesRef}
+          className="bg-white rounded-lg shadow-xl p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto no-select carousel-container"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          style={{
+            ...fadeInUp,
+            ...(storiesVisible ? visible : {}),
+            transitionDelay: '0.3s'
+          }}
+        >
+          {/* Mobile Layout */}
+          <div className="block lg:hidden">
+            <div className="text-center mb-6">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-gray-200 mx-auto mb-4">
+                <img
+                  src={currentStoryData.image}
+                  alt={currentStoryData.name}
+                  className="w-full h-full object-cover"
                 />
               </div>
-            </div>
-            
-            <div className="flex-1">
-              <div className="mb-6">
+              <div className="mb-4">
                 <QuoteIcon />
               </div>
-              
-              <blockquote className="text-ngo-gray-700 font-niramit text-lg leading-relaxed mb-6">
+            </div>
+
+            <div className="text-center">
+              <blockquote className="text-ngo-gray-700 font-niramit text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
                 "{currentStoryData.quote}"
               </blockquote>
-              
-              <div>
-                <div className="text-ngo-gray-800 font-niramit text-xl font-bold">
+
+              <div className="mb-4">
+                <div className="text-ngo-gray-800 font-niramit text-lg sm:text-xl font-bold">
                   {currentStoryData.name}, {currentStoryData.age}
                 </div>
-                <div className="text-ngo-primary font-niramit text-base mb-4">
+                <div className="text-ngo-primary font-niramit text-sm sm:text-base mb-3">
                   {currentStoryData.program}
                 </div>
                 <div className="bg-ngo-gray-100 p-3 rounded">
-                  <div className="text-ngo-gray-600 font-niramit text-sm">
+                  <div className="text-ngo-gray-600 font-niramit text-xs sm:text-sm">
                     Impact: {currentStoryData.impact}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
-          <div className="flex justify-center items-center mt-8 gap-4">
-            <button 
+
+          {/* Desktop Layout */}
+          <div className="hidden lg:flex items-center gap-8">
+            <div className="flex-shrink-0">
+              <div className="w-48 h-48 xl:w-64 xl:h-64 rounded-full overflow-hidden bg-gray-200">
+                <img
+                  src={currentStoryData.image}
+                  alt={currentStoryData.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            <div className="flex-1">
+              <div className="mb-6">
+                <QuoteIcon />
+              </div>
+
+              <blockquote className="text-ngo-gray-700 font-niramit text-lg xl:text-xl leading-relaxed mb-6">
+                "{currentStoryData.quote}"
+              </blockquote>
+
+              <div>
+                <div className="text-ngo-gray-800 font-niramit text-xl xl:text-2xl font-bold">
+                  {currentStoryData.name}, {currentStoryData.age}
+                </div>
+                <div className="text-ngo-primary font-niramit text-base xl:text-lg mb-4">
+                  {currentStoryData.program}
+                </div>
+                <div className="bg-ngo-gray-100 p-3 xl:p-4 rounded">
+                  <div className="text-ngo-gray-600 font-niramit text-sm xl:text-base">
+                    Impact: {currentStoryData.impact}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation Controls */}
+          <div className="flex justify-center items-center mt-6 sm:mt-8 gap-3 sm:gap-4">
+            <button
               onClick={prevStory}
-              className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-50 transition-colors"
+              className="w-12 h-12 sm:w-14 sm:h-14 border-2 border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-50 hover:border-ngo-primary hover:scale-110 transition-all duration-300 touch-manipulation"
+              aria-label="Previous story"
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 12L6 8L10 4" stroke="black" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
-            
-            <div className="flex gap-2">
+
+            <div className="flex gap-2 sm:gap-3 px-4">
               {stories.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentStory(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    index === currentStory ? 'bg-ngo-primary' : 'bg-gray-300 hover:bg-gray-400'
+                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 touch-manipulation ${
+                    index === currentStory
+                      ? 'bg-ngo-primary scale-125'
+                      : 'bg-gray-300 hover:bg-gray-400 hover:scale-110'
                   }`}
+                  aria-label={`Go to story ${index + 1}`}
                 />
               ))}
             </div>
-            
-            <button 
+
+            <button
               onClick={nextStory}
-              className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-50 transition-colors"
+              className="w-12 h-12 sm:w-14 sm:h-14 border-2 border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-50 hover:border-ngo-primary hover:scale-110 transition-all duration-300 touch-manipulation"
+              aria-label="Next story"
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 12L10 8L6 4" stroke="black" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
+          </div>
+
+          {/* Progress Indicator */}
+          <div className="mt-4 sm:mt-6">
+            <div className="flex justify-center text-xs sm:text-sm text-gray-500 mb-2">
+              {currentStory + 1} of {stories.length}
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-1">
+              <div
+                className="bg-ngo-primary h-1 rounded-full transition-all duration-500"
+                style={{ width: `${((currentStory + 1) / stories.length) * 100}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Swipe Hint for Mobile */}
+          <div className="block sm:hidden text-center mt-4">
+            <p className="text-xs text-gray-400">
+              Swipe left or right to navigate stories
+            </p>
           </div>
         </div>
       </div>
@@ -601,6 +907,68 @@ const Newsletter = () => {
 };
 
 export default function Index() {
+  // Add CSS styles to head
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      .hero-gradient {
+        background: linear-gradient(135deg, #EB414B 0%, #81272C 100%);
+      }
+
+      /* Touch-friendly carousel */
+      .touch-manipulation {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Smooth carousel transitions */
+      .carousel-container {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+      }
+
+      /* Prevent text selection during swipe */
+      .no-select {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      /* Ensure proper touch targets */
+      button, a, [role="button"] {
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      /* Smooth transitions for interactive elements */
+      .transition-smooth {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   return (
     <Layout>
       <Hero />
