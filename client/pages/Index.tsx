@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 // Animation styles
@@ -133,19 +134,19 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-8 sm:mb-12">
-              <a
-                href="/volunteer"
+              <Link
+                to="/volunteer"
                 className="w-full sm:w-auto bg-white text-ngo-primary px-6 sm:px-8 py-3 sm:py-4 rounded-md font-geist text-base sm:text-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-50 hover:scale-105 transition-all duration-300 min-h-[44px]"
               >
                 Volunteer
                 <ArrowRightIcon />
-              </a>
-              <a
-                href="/donate"
+              </Link>
+              <Link
+                to="/donate"
                 className="w-full sm:w-auto border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-md font-geist text-base sm:text-lg font-medium hover:bg-white hover:text-ngo-primary hover:scale-105 transition-all duration-300 min-h-[44px] text-center"
               >
                 Donate Now
-              </a>
+              </Link>
             </div>
 
             {/* Stats */}
@@ -266,12 +267,12 @@ const ContentSections = () => {
                 Vidhatha Society is a non-profit organization dedicated to transforming the lives of orphans and vulnerable children in India, particularly in Telugu-speaking regions of Andhra Pradesh and Telangana.
               </p>
               <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
-                <button className="w-full sm:w-auto bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px]">
+                <Link to="/donate" className="w-full sm:w-auto bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px] text-center">
                   Donate
-                </button>
-                <a href="/volunteer" className="w-full sm:w-auto border border-ngo-secondary text-ngo-secondary px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-ngo-secondary hover:text-white hover:scale-105 transition-all duration-300 inline-block text-center min-h-[44px]">
+                </Link>
+                <Link to="/volunteer" className="w-full sm:w-auto border border-ngo-secondary text-ngo-secondary px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-ngo-secondary hover:text-white hover:scale-105 transition-all duration-300 inline-block text-center min-h-[44px]">
                   Volunteer
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -296,12 +297,12 @@ const ContentSections = () => {
                 Providing compassionate care and dignity to our elderly community members. Our old age home offers a safe, comfortable environment where seniors can live with respect and receive the care they deserve.
               </p>
               <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4">
-                <button className="w-full sm:w-auto bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px]">
+                <Link to="/donate" className="w-full sm:w-auto bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px] text-center">
                   Donate
-                </button>
-                <a href="/volunteer" className="w-full sm:w-auto border border-ngo-secondary text-ngo-secondary px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-ngo-secondary hover:text-white hover:scale-105 transition-all duration-300 inline-block text-center min-h-[44px]">
+                </Link>
+                <Link to="/volunteer" className="w-full sm:w-auto border border-ngo-secondary text-ngo-secondary px-6 sm:px-8 py-3 rounded font-niramit text-lg sm:text-xl hover:bg-ngo-secondary hover:text-white hover:scale-105 transition-all duration-300 inline-block text-center min-h-[44px]">
                   Volunteer
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -826,9 +827,9 @@ const ImpactNumbers = () => {
             <button className="bg-ngo-primary text-white px-6 py-3 rounded font-niramit text-base font-bold hover:bg-red-600 transition-colors">
               Donate Today
             </button>
-            <a href="/volunteer" className="border border-white text-white px-6 py-3 rounded font-niramit text-base font-bold hover:bg-white hover:text-black transition-colors inline-block">
+            <Link to="/volunteer" className="border border-white text-white px-6 py-3 rounded font-niramit text-base font-bold hover:bg-white hover:text-black transition-colors inline-block">
               Volunteer Now
-            </a>
+            </Link>
           </div>
         </div>
       </div>

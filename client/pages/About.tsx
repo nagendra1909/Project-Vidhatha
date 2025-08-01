@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 // Icon components
@@ -337,18 +338,18 @@ const JoinMissionSection = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <a
-            href="/volunteer"
+          <Link
+            to="/volunteer"
             className="bg-ngo-primary text-white px-8 py-3 rounded-md text-base font-medium font-niramit hover:bg-red-600 transition-all duration-300 hover:scale-105 inline-block"
           >
             Volunteer With Us
-          </a>
-          <a
-            href="/donate"
+          </Link>
+          <Link
+            to="/donate"
             className="bg-white text-ngo-secondary border border-white px-8 py-3 rounded-md text-base font-medium font-niramit hover:bg-gray-50 transition-all duration-300 hover:scale-105 inline-block"
           >
             Make a Donation
-          </a>
+          </Link>
         </div>
       </div>
     </section>
