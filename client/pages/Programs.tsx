@@ -59,7 +59,7 @@ const SpecializedIcon = () => (
 
 const HeroSection = () => {
   return (
-    <section className="pt-24 bg-gradient-to-r from-[#EB414B] to-[#81272C] text-white">
+    <section className="pt-2 bg-gradient-to-r from-[#EB414B] to-[#81272C] text-white">
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
         <h1 className="text-5xl font-bold font-Niramit mb-6">Our Programs</h1>
         <p className="text-xl font-Niramit text-[#DBEAFE] leading-relaxed max-w-3xl mx-auto">
@@ -137,7 +137,7 @@ const ProgramsGrid = () => {
       description: "Comprehensive medical care including free consultations, medicine distribution, and health awareness campaigns across multiple specialties.",
       services: ["General Medicine", "Gynecology", "Pediatrics", "Orthopedics", "Ophthalmology"],
       icon: <HealthcareIcon />,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F9145fe0927f140c4b000cb71df6a31e0%2F858a0427e4e5423e9f4c08b37cfd165d?format=webp&width=400"
+      imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     },
     {
       title: "Education & Skills",
@@ -145,7 +145,7 @@ const ProgramsGrid = () => {
       description: "Empowering individuals through skill development, educational support, and literacy programs for all age groups.",
       services: ["Vocational Training", "Career Guidance", "Educational Support", "Literacy Programs"],
       icon: <EducationIcon />,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F9145fe0927f140c4b000cb71df6a31e0%2F858a0427e4e5423e9f4c08b37cfd165d?format=webp&width=400"
+      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     },
     {
       title: "Community Support",
@@ -153,7 +153,7 @@ const ProgramsGrid = () => {
       description: "Essential support services including food security, emergency relief, and funeral services for families in need.",
       services: ["Food Distribution", "Emergency Relief", "Funeral Services", "Family Counseling"],
       icon: <CommunityIcon />,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F9145fe0927f140c4b000cb71df6a31e0%2F858a0427e4e5423e9f4c08b37cfd165d?format=webp&width=400"
+      imageUrl: "https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     },
     {
       title: "Arts & Culture",
@@ -161,7 +161,7 @@ const ProgramsGrid = () => {
       description: "Preserving and promoting cultural heritage through classes, events, and community festivals.",
       services: ["Dance & Music", "Traditional Arts", "Cultural Events", "Competitions"],
       icon: <ArtsIcon />,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F9145fe0927f140c4b000cb71df6a31e0%2F858a0427e4e5423e9f4c08b37cfd165d?format=webp&width=400"
+      imageUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     },
     {
       title: "Environmental Protection",
@@ -169,7 +169,7 @@ const ProgramsGrid = () => {
       description: "Creating a sustainable future through green initiatives, tree plantation, and environmental education.",
       services: ["Tree Plantation", "Community Cleanups", "Environmental Education", "Green Initiatives"],
       icon: <EnvironmentIcon />,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F9145fe0927f140c4b000cb71df6a31e0%2F858a0427e4e5423e9f4c08b37cfd165d?format=webp&width=400"
+      imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     },
     {
       title: "Specialized Care",
@@ -177,7 +177,7 @@ const ProgramsGrid = () => {
       description: "Targeted support for vulnerable populations including seniors, differently-abled individuals, and women & children.",
       services: ["Disability Support", "Senior Care", "Women & Children Programs", "Counseling Services"],
       icon: <SpecializedIcon />,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets%2F9145fe0927f140c4b000cb71df6a31e0%2F858a0427e4e5423e9f4c08b37cfd165d?format=webp&width=400"
+      imageUrl: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     }
   ];
 

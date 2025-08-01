@@ -222,42 +222,42 @@ const PhotoGallery = () => {
       description: "Providing essential healthcare services to underserved communities",
       date: "March 15, 2024",
       category: "Healthcare",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     },
     {
-      title: "Free Medical Camp - Rural Area",
-      description: "Providing essential healthcare services to underserved communities",
-      date: "March 15, 2024",
-      category: "Healthcare",
-      image: "/placeholder.svg"
+      title: "Education Workshop - Community Center",
+      description: "Skill development and literacy programs for all age groups",
+      date: "March 12, 2024",
+      category: "Education",
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     },
     {
-      title: "Free Medical Camp - Rural Area",
-      description: "Providing essential healthcare services to underserved communities",
-      date: "March 15, 2024",
-      category: "Healthcare",
-      image: "/placeholder.svg"
+      title: "Community Food Distribution",
+      description: "Emergency relief and food security support for families in need",
+      date: "March 10, 2024",
+      category: "Community",
+      image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     },
     {
-      title: "Free Medical Camp - Rural Area",
-      description: "Providing essential healthcare services to underserved communities",
-      date: "March 15, 2024",
-      category: "Healthcare",
-      image: "/placeholder.svg"
+      title: "Tree Plantation Drive",
+      description: "Environmental protection and green initiatives for sustainable future",
+      date: "March 8, 2024",
+      category: "Environment",
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     },
     {
-      title: "Free Medical Camp - Rural Area",
-      description: "Providing essential healthcare services to underserved communities",
-      date: "March 15, 2024",
-      category: "Healthcare",
-      image: "/placeholder.svg"
+      title: "Cultural Dance Performance",
+      description: "Preserving and promoting traditional arts and cultural heritage",
+      date: "March 5, 2024",
+      category: "Culture",
+      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     },
     {
-      title: "Free Medical Camp - Rural Area",
-      description: "Providing essential healthcare services to underserved communities",
-      date: "March 15, 2024",
+      title: "Senior Care Program",
+      description: "Specialized care and support for elderly community members",
+      date: "March 3, 2024",
       category: "Healthcare",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
     }
   ];
 
@@ -335,28 +335,34 @@ const SuccessStoriesSection = () => {
   const stories = [
     {
       title: "From Illness to Health: Maria's Journey",
-      description: "How our free medical consultations helped Maria overcome her chronic condition and return to a healthy life.",
+      description:
+        "How our free medical consultations helped Maria overcome her chronic condition and return to a healthy life.",
       date: "March 10, 2024",
       readTime: "5 min read",
       category: "Healthcare",
-      image: "/placeholder.svg"
+      image:
+        "https://images.unsplash.com/photo-1584982751601-97dcc096659c?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       title: "Education Opens Doors: Raj's Success",
-      description: "A young student's transformation through our educational support program, leading to college admission.",
+      description:
+        "A young student's transformation through our educational support program, leading to college admission.",
       date: "February 28, 2024",
       readTime: "4 min read",
       category: "Education",
-      image: "/placeholder.svg"
+      image:
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
     },
     {
       title: "Community Garden: Growing Together",
-      description: "How our tree plantation drive transformed a barren area into a thriving community garden.",
+      description:
+        "How our tree plantation drive transformed a barren area into a thriving community garden.",
       date: "February 15, 2024",
       readTime: "6 min read",
       category: "Environment",
-      image: "/placeholder.svg"
-    }
+      image:
+        "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+    },
   ];
 
   return (
