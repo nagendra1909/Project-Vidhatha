@@ -1,5 +1,6 @@
 import Layout from '@/components/Layout';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // Location Icon Component
 const LocationIcon = () => (
@@ -354,7 +355,7 @@ const VolunteerForm = () => {
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
         <p className="text-sm text-blue-800 font-Niramit">
           <strong>Quick Interest Form:</strong> Fill out this form to express interest, or use our
-          <a href="/volunteer" className="underline hover:text-blue-900 ml-1">comprehensive volunteer application</a>
+          <Link to="/volunteer" className="underline hover:text-blue-900 ml-1">comprehensive volunteer application</Link>
           for immediate consideration.
         </p>
       </div>
@@ -470,12 +471,12 @@ const VolunteerForm = () => {
           />
         </div>
 
-        <a
-          href="/volunteer"
+        <Link
+          to="/volunteer"
           className="w-full h-10 bg-[#EB414B] text-white text-sm font-medium font-Niramit rounded-md hover:bg-red-600 transition-colors inline-flex items-center justify-center"
         >
           Complete Full Application
-        </a>
+        </Link>
       </form>
     </div>
   );

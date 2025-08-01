@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 const GetInvolved = () => {
@@ -119,9 +120,9 @@ const VolunteerCard = () => {
           </div>
         </div>
 
-        <a href="/volunteer" className="w-full py-2.5 px-4 bg-[#18181B] text-white text-center font-geist text-sm font-medium leading-5 rounded-md inline-block hover:bg-gray-800 transition-colors">
+        <Link to="/volunteer" className="w-full py-2.5 px-4 bg-[#18181B] text-white text-center font-geist text-sm font-medium leading-5 rounded-md inline-block hover:bg-gray-800 transition-colors">
           Apply Now
-        </a>
+        </Link>
       </div>
     </div>
   );

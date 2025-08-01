@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 // Icon components
@@ -254,9 +255,9 @@ const GetInvolved = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <a href="/volunteer" className="bg-[#EB414B] text-white px-8 py-3 rounded-md text-sm font-medium font-Niramit hover:bg-red-600 transition-colors inline-block">
+          <Link to="/volunteer" className="bg-[#EB414B] text-white px-8 py-3 rounded-md text-sm font-medium font-Niramit hover:bg-red-600 transition-colors inline-block">
             Volunteer Now
-          </a>
+          </Link>
           <button className="bg-white text-[#EB414B] border border-white px-8 py-3 rounded-md text-sm font-medium font-Niramit hover:bg-gray-50 transition-colors">
             Support Our Programs
           </button>
