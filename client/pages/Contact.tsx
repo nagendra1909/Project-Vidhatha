@@ -56,7 +56,7 @@ const UserIcon = () => (
 // Hero Section Component
 const HeroSection = () => {
   return (
-    <section className="pt-24 bg-gradient-to-r from-[#EB414B] to-[#81272C] text-white">
+    <section className="pt-10 bg-gradient-to-r from-[#EB414B] to-[#81272C] text-white">
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
         <h1 className="text-5xl font-bold font-Niramit mb-6">
           Contact Us
@@ -509,7 +509,7 @@ const EmergencySection = () => {
           contact our emergency hotline available 24/7.
         </p>
         
-        <div className="bg-[#DC2626] rounded-lg p-8 text-white">
+        <div className="bg-[#DC2626] rounded-lg py-2 text-white">
           <div className="text-center">
             <h3 className="text-4xl font-bold font-Niramit mb-2">
               +1 (555) 911-HELP

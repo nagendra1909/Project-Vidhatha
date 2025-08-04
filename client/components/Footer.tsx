@@ -119,12 +119,34 @@ const Footer = () => {
     { path: "/programs", label: "Specialized Care" },
   ];
 
-  const socialLinks = [
-    { icon: <FacebookIcon />, href: "#", label: "Facebook" },
-    { icon: <TwitterIcon />, href: "#", label: "Twitter" },
-    { icon: <InstagramIcon />, href: "#", label: "Instagram" },
-    { icon: <LinkedInIcon />, href: "#", label: "LinkedIn" },
-  ];
+ const socialLinks = [
+   {
+     icon: <FacebookIcon />,
+     href: "https://www.facebook.com/VidhathaSociety/",
+     label: "Facebook",
+   },
+   {
+     icon: <TwitterIcon />,
+     href: "https://x.com/VidhathaSociety",
+     label: "Twitter",
+   },
+   {
+     icon: <InstagramIcon />,
+     href: "https://www.instagram.com/vidhathasociety/",
+     label: "Instagram",
+   },
+   {
+     icon: <LinkedInIcon />,
+     href: "https://www.linkedin.com/in/vidhatha-society-ngo-aba53732b/",
+     label: "LinkedIn",
+   },
+   // You can add more if you have icons for these, e.g., for Blogger, Pinterest, Telegram, WhatsApp, and YouTube
+   // { icon: <BloggerIcon />, href: "https://www.blogger.com/blog/posts/6756384376880786319?pli=1", label: "Blog" },
+   // { icon: <PinterestIcon />, href: "https://in.pinterest.com/vidhathasociety/", label: "Pinterest" },
+   // { icon: <TelegramIcon />, href: "https://t.me/vidhathasocietytelegram", label: "Telegram" },
+   // { icon: <WhatsAppIcon />, href: "https://chat.whatsapp.com/J8iWUxXF8XqE9xLVh2IfRi?mode=r_t", label: "WhatsApp Community" },
+   // { icon: <YouTubeIcon />, href: "YOUR_YOUTUBE_CHANNEL_URL_HERE", label: "Youtube" }, // The provided YouTube link is not a valid channel URL
+ ];
 
   return (
     <footer className="bg-ngo-gray-800 text-white">
@@ -133,14 +155,15 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-6">
             <Link to="/" className="inline-block">
-              <img 
-                src="https://api.builder.io/api/v1/image/assets/TEMP/92332e7f2ac6463bb386ac57dc63f0b1cdde3eb0?width=176" 
-                alt="Vidhatha Society Logo" 
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/92332e7f2ac6463bb386ac57dc63f0b1cdde3eb0?width=176"
+                alt="Vidhatha Society Logo"
                 className="h-16 w-16 object-contain filter brightness-0 invert"
               />
             </Link>
             <p className="text-ngo-gray-300 font-niramit text-base leading-relaxed">
-              Transforming lives through comprehensive healthcare, education, and community support services since 2010.
+              Transforming lives through comprehensive healthcare, education,
+              and community support services since 2010.
             </p>
             <div className="flex gap-4">
               {socialLinks.map((social, index) => (
@@ -158,7 +181,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h3 className="text-white font-niramit text-lg font-bold">Quick Links</h3>
+            <h3 className="text-white font-niramit text-lg font-bold">
+              Quick Links
+            </h3>
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
                 <li key={index}>
@@ -175,7 +200,9 @@ const Footer = () => {
 
           {/* Our Programs */}
           <div className="space-y-6">
-            <h3 className="text-white font-niramit text-lg font-bold">Our Programs</h3>
+            <h3 className="text-white font-niramit text-lg font-bold">
+              Our Programs
+            </h3>
             <ul className="space-y-3">
               {programLinks.map((link, index) => (
                 <li key={index}>
@@ -192,30 +219,45 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="space-y-6">
-            <h3 className="text-white font-niramit text-lg font-bold">Contact Info</h3>
+            <h3 className="text-white font-niramit text-lg font-bold">
+              Contact Info
+            </h3>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <LocationIcon />
                 <div>
-                  <div className="text-ngo-gray-300 font-niramit text-base">123 Community Street</div>
-                  <div className="text-ngo-gray-300 font-niramit text-base">Hope City, HC 12345</div>
+                  {/* Use an <a> tag around the address text */}
+                  <a
+                    href="https://www.google.com/maps/place/Vidhatha+Society/@17.3270565,78.5631468,473m/data=!3m1!1e3!4m14!1m7!3m6!1s0x3bcba3daebe098f5:0xb614d1ae5750a117!2sVidhatha+Society!8m2!3d17.3270559!4d78.5643538!16s%2Fg%2F11lywv57dt!3m5!1s0x3bcba3daebe098f5:0xb614d1ae5750a117!8m2!3d17.3270559!4d78.5643538!16s%2Fg%2F11lywv57dt!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDczMC4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" // Opens in a new tab
+                    rel="noopener noreferrer" // Recommended for security when using target="_blank"
+                    className="text-ngo-gray-300 font-niramit text-base" // Apply original styling to the link
+                  >
+                    <div className="text-ngo-gray-300 font-niramit text-base">
+                      Address: 3-15-9k/401, Sahara states, Mansoorabad L B
+                      Nagar
+                    </div>
+                    <div className="text-ngo-gray-300 font-niramit text-base">
+                      Rangareddy, Telangana
+                    </div>
+                  </a>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <PhoneIcon />
-                <a 
+                <a
                   href="tel:+15551234567"
                   className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors duration-300"
                 >
-                  +1 (555) 123-4567
+                  +91 95423 66556
                 </a>
               </div>
 
               <div className="flex items-center gap-3">
                 <EmailIcon />
-                <a 
-                  href="mailto:info@vidhatha.org"
+                <a
+                  href="mailto:vidhathasociety@gmail.com"
                   className="text-ngo-gray-300 font-niramit text-base hover:text-white transition-colors duration-300"
                 >
                   info@vidhatha.org
@@ -224,8 +266,10 @@ const Footer = () => {
             </div>
 
             <div className="pt-2">
-              <h4 className="text-white font-niramit text-base font-bold mb-2">Emergency Hotline</h4>
-              <a 
+              <h4 className="text-white font-niramit text-base font-bold mb-2">
+                Emergency Hotline
+              </h4>
+              <a
                 href="tel:+15559114357"
                 className="text-red-400 font-niramit text-lg font-bold hover:text-red-300 transition-colors duration-300"
               >
@@ -238,16 +282,26 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-ngo-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-ngo-gray-400 font-niramit text-sm text-center md:text-left">
-            © {currentYear} Vidhatha Society. All rights reserved. | Tax ID: 12-3456789
+            © {currentYear} Vidhatha Society. All rights reserved. | Tax ID:
+            12-3456789
           </div>
           <div className="flex flex-wrap gap-6 justify-center md:justify-end">
-            <a href="#" className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors duration-300">
+            <a
+              href="#"
+              className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors duration-300"
+            >
               Privacy Policy
             </a>
-            <a href="#" className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors duration-300">
+            <a
+              href="#"
+              className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors duration-300"
+            >
               Terms of Service
             </a>
-            <a href="#" className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors duration-300">
+            <a
+              href="#"
+              className="text-ngo-gray-400 font-niramit text-sm hover:text-white transition-colors duration-300"
+            >
               Financial Transparency
             </a>
           </div>
