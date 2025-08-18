@@ -509,9 +509,12 @@ const FeaturedPrograms = () => {
         </div>
 
         <div className="text-center">
-          <button className="bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-base font-bold hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px]">
+          <Link
+            to="/programs"
+            className="inline-block bg-ngo-primary text-white px-6 sm:px-8 py-3 rounded font-niramit text-base font-bold hover:bg-red-600 hover:scale-105 transition-all duration-300 min-h-[44px]"
+          >
             View All Programs
-          </button>
+          </Link>
         </div>
       </div>
     </section>
