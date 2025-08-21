@@ -449,7 +449,7 @@ const FeaturedPrograms = () => {
     {
       title: "Community Support",
       impact: "15,000+ families assisted",
-      description: "Food security, emergency relief, and funeral services to support families in times of need.",
+      description: "Food security, emergency relief, and funeral services to support families in times of need for the people.",
       image: "https://api.builder.io/api/v1/image/assets/TEMP/e10513ca55d162a46bbf26759417ec65676f9282?width=636"
     },
     {
