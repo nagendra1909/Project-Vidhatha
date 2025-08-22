@@ -23,21 +23,35 @@ const HeroSection = () => {
           Make a Difference Today
         </h1>
         <p className="text-white font-niramit text-xl mb-8 max-w-2xl mx-auto">
-          Your donation helps us provide essential services to those who need it most. Every contribution counts toward building a better tomorrow.
+          Your donation helps us provide essential services to those who need it
+          most. Every contribution counts toward building a better tomorrow.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
           <div className="text-center">
-            <div className="text-white font-niramit text-3xl font-bold">₹250</div>
-            <div className="text-white font-niramit text-base">Provides meals for a family</div>
+            <div className="text-white font-niramit text-3xl font-bold">
+              50,000+
+            </div>
+            <div className="text-white font-niramit text-base">
+              Lives impacted
+            </div>
           </div>
           <div className="text-center">
-            <div className="text-white font-niramit text-3xl font-bold">₹1000</div>
-            <div className="text-white font-niramit text-base">Educational supplies for a child</div>
+            <div className="text-white font-niramit text-3xl font-bold">
+              ₹25
+            </div>
+            <div className="text-white font-niramit text-base">
+              Provides a meal
+            </div>
           </div>
+
           <div className="text-center">
-            <div className="text-white font-niramit text-3xl font-bold">₹500</div>
-            <div className="text-white font-niramit text-base">Medical consultation</div>
+            <div className="text-white font-niramit text-3xl font-bold">
+              ₹500
+            </div>
+            <div className="text-white font-niramit text-base">
+              Medical consultation
+            </div>
           </div>
         </div>
       </div>
@@ -116,7 +130,7 @@ const DonationDetailsStep = ({ formData, updateFormData, errors }: {
     </div>
 
     <div>
-      <h3 className="text-black font-niramit text-lg font-semibold mb-4">Support Area</h3>
+      <h3 className="text-black font-niramit text-lg font-semibold mb-4">Choose program to Support</h3>
       <select
         value={formData.program}
         onChange={(e) => updateFormData('program', e.target.value)}
