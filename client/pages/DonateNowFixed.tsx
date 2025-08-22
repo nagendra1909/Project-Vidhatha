@@ -388,7 +388,7 @@ const ReviewStep = ({ formData, updateFormData, errors }: {
           className={`w-5 h-5 mt-1 ${errors.terms ? 'border-red-500' : ''}`}
         />
         <p className="text-black font-niramit text-base">
-          I agree to confirm the payment and proceed
+          I agree to the <a href="#" className="text-red-600 underline">Terms & Conditions</a> and <a href="#" className="text-red-600 underline">Privacy Policy</a>
         </p>
       </label>
       {errors.terms && <p className="text-red-500 text-xs mt-1 ml-8">{errors.terms}</p>}
