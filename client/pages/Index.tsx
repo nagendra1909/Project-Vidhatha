@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Stethoscope, Heart, Users } from "lucide-react";
 import Layout from "../components/Layout";
 
 // Animation styles
@@ -55,18 +56,17 @@ const useIntersectionObserver = (options = {}) => {
 
 
 
-// Icon components
+// Icon components - All consistently sized at 48x48 for uniformity
 const HeartIcon = () => (
-  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M31.1673 3.66675C27.134 3.66675 23.834 5.86675 22.0006 9.16675C20.1673 5.86675 16.8673 3.66675 12.834 3.66675C6.96732 3.66675 1.83398 7.33341 1.83398 14.6667C1.83398 23.8334 22.0006 42.1667 22.0006 42.1667C22.0006 42.1667 42.1673 23.8334 42.1673 14.6667C42.1673 7.33341 37.034 3.66675 31.1673 3.66675Z" stroke="#EB414B" strokeWidth="4" strokeLinejoin="round"/>
-  </svg>
+  <div className="w-12 h-12 flex items-center justify-center">
+    <Heart size={48} color="#EF4444" fill="none" strokeWidth={2} />
+  </div>
 );
 
 const GroupIcon = () => (
-  <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3.83398 42.1667C3.83398 38.1001 5.44946 34.2 8.32501 31.3244C11.2006 28.4489 15.1007 26.8334 19.1673 26.8334C23.234 26.8334 27.1341 28.4489 30.0096 31.3244C32.8852 34.2 34.5007 38.1001 34.5007 42.1667H30.6673C30.6673 39.1168 29.4557 36.1917 27.299 34.035C25.1424 31.8783 22.2173 30.6667 19.1673 30.6667C16.1173 30.6667 13.1923 31.8783 11.0356 34.035C8.87892 36.1917 7.66732 39.1168 7.66732 42.1667H3.83398ZM19.1673 24.9167C12.8136 24.9167 7.66732 19.7705 7.66732 13.4167C7.66732 7.063 12.8136 1.91675 19.1673 1.91675C25.5211 1.91675 30.6673 7.063 30.6673 13.4167C30.6673 19.7705 25.5211 24.9167 19.1673 24.9167ZM19.1673 21.0834C23.4032 21.0834 26.834 17.6526 26.834 13.4167C26.834 9.18091 23.4032 5.75008 19.1673 5.75008C14.9315 5.75008 11.5007 9.18091 11.5007 13.4167C11.5007 17.6526 14.9315 21.0834 19.1673 21.0834Z" fill="#EB414B"/>
-    <path d="M35.045 28.1808C37.7388 29.3935 40.025 31.3586 41.6286 33.8398C43.2321 36.3209 44.0848 39.2125 44.084 42.1667H40.2506C40.2513 39.951 39.6119 37.7822 38.4092 35.9213C37.2065 34.0603 35.4919 32.5864 33.4714 31.6768L35.045 28.1808ZM33.7263 6.54166C35.6574 7.33765 37.3085 8.68936 38.4701 10.4253C39.6317 12.1612 40.2514 14.203 40.2506 16.2917C40.251 18.9219 39.2682 21.4572 37.495 23.3999C35.7219 25.3425 33.2866 26.5521 30.6673 26.7912V22.933C32.0875 22.7296 33.405 22.0763 34.4265 21.069C35.448 20.0616 36.1196 18.7534 36.3429 17.3362C36.5661 15.919 36.3291 14.4677 35.6667 13.1951C35.0043 11.9225 33.9514 10.8958 32.6626 10.2657L33.7263 6.54166Z" fill="#EB414B"/>
-  </svg>
+  <div className="w-12 h-12 flex items-center justify-center">
+    <Users size={48} color="#3B82F6" fill="none" strokeWidth={2} />
+  </div>
 );
 
 const EarthIcon = () => (
@@ -93,6 +93,41 @@ const QuoteIcon = () => (
     <path d="M6 42.0001C12 42.0001 20 40.0001 20 26.0001V10.0001C20 7.50007 18.488 5.96607 16 6.00007H8C5.5 6.00007 4 7.50007 4 9.94407V22.0001C4 24.5001 5.5 26.0001 8 26.0001C10 26.0001 10 26.0001 10 28.0001V30.0001C10 32.0001 8 34.0001 6 34.0001C4 34.0001 4 34.0161 4 36.0621V40.0001C4 42.0001 4 42.0001 6 42.0001Z" stroke="#EB414B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M30 42.0001C36 42.0001 44 40.0001 44 26.0001V10.0001C44 7.50007 42.486 5.96607 40 6.00007H32C29.5 6.00007 28 7.50007 28 9.94407V22.0001C28 24.5001 29.5 26.0001 32 26.0001H33.5C33.5 30.5001 34 34.0001 28 34.0001V40.0001C28 42.0001 28 42.0001 30 42.0001Z" stroke="#EB414B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
+);
+
+// Impact Numbers Icons - All consistently sized at 48x48 for uniformity
+const EducationIcon = () => (
+  <div className="w-12 h-12 flex items-center justify-center">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M44.16 21.84C44.4 21.72 44.62 21.55 44.79 21.34C44.96 21.13 45.07 20.88 45.11 20.62C45.15 20.36 45.12 20.1 45.02 19.86C44.92 19.62 44.76 19.41 44.54 19.25L26.88 10.37C26.4 10.13 25.86 10 25.32 10C24.78 10 24.24 10.13 23.76 10.37L6.1 19.25C5.88 19.41 5.72 19.62 5.62 19.86C5.52 20.1 5.49 20.36 5.53 20.62C5.57 20.88 5.68 21.13 5.85 21.34C6.02 21.55 6.24 21.72 6.46 21.84L23.76 30.84C24.24 31.08 24.78 31.21 25.32 31.21C25.86 31.21 26.4 31.08 26.88 30.84L44.16 21.84Z" stroke="#FDE047" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M45.31 19.99V31.99" stroke="#FDE047" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M13.32 25.01V31.99C13.32 33.43 14.59 34.73 16.51 35.64C18.43 36.55 21.49 37.2 24.79 37.2C28.09 37.2 31.15 36.55 33.07 35.64C34.99 34.73 36.26 33.43 36.26 31.99V25.01" stroke="#FDE047" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </div>
+);
+
+const HealthIcon = () => (
+  <div className="w-12 h-12 flex items-center justify-center">
+    <Stethoscope size={48} color="#8B5CF6" />
+  </div>
+);
+
+const HomeIcon = () => (
+  <div className="w-12 h-12 flex items-center justify-center">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 18L24 4.01L42 18V40.01C42 40.8 41.68 41.55 41.1 42.12C40.53 42.69 39.78 43.01 39 43.01H9C8.22 43.01 7.47 42.69 6.9 42.12C6.33 41.55 6.01 40.8 6.01 40.01L6 18Z" stroke="#FFA500" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M18 43.99V24H30V43.99" stroke="#FFA500" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </div>
+);
+
+const TreeIcon = () => (
+  <div className="w-12 h-12 flex items-center justify-center">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M23.16 40.01C19.73 40.01 16.44 38.3 14.23 35.4C12.05 32.5 11.16 28.7 11.74 25.03C12.31 21.36 14.35 18.14 17.4 16.15C20.45 14.16 24.22 13.58 27.72 14.59C33.62 10.01 36.41 8.95 39.96 4.01C41.57 8 43.18 12.36 43.18 20.01C43.18 31.01 33.78 40.01 23.16 40.01Z" stroke="#22C55E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M5.33 42C5.33 36 8.62 30.89 14.69 30C19.13 29.04 25.32 25.99 27.17 24" stroke="#22C55E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </div>
 );
 
 
@@ -793,12 +828,12 @@ const SuccessStories = () => {
 
 const ImpactNumbers = () => {
   const stats = [
-    { number: "50,000+", label: "Lives Impacted", icon: "heart" },
-    { number: "15,000+", label: "Families Supported", icon: "group" },
-    { number: "5,000+", label: "Students Educated", icon: "education" },
-    { number: "25,000+", label: "Patients Treated", icon: "health" },
-    { number: "2,500+", label: "Homes Built", icon: "home" },
-    { number: "50,000+", label: "Trees Planted", icon: "tree" }
+    { number: "50,000+", label: "Lives Impacted", icon: <HeartIcon /> },
+    { number: "15,000+", label: "Families Supported", icon: <GroupIcon /> },
+    { number: "5,000+", label: "Students Educated", icon: <EducationIcon /> },
+    { number: "25,000+", label: "Patients Treated", icon: <HealthIcon /> },
+    { number: "2,500+", label: "Homes Built", icon: <HomeIcon /> },
+    { number: "50,000+", label: "Trees Planted", icon: <TreeIcon /> }
   ];
 
   return (
@@ -811,11 +846,22 @@ const ImpactNumbers = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-16">
+        {/* Stats Grid with uniform tiles */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-16">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-white font-niramit text-4xl font-bold mb-2">{stat.number}</div>
-              <div className="text-white font-niramit text-xl">{stat.label}</div>
+            <div key={index} className="text-center p-6">
+              {/* Icon container with consistent sizing */}
+              <div className="flex justify-center items-center mb-6 h-16">
+                {stat.icon}
+              </div>
+              {/* Number with consistent styling */}
+              <div className="text-white font-niramit text-3xl lg:text-4xl font-bold mb-3 min-h-[3rem] flex items-center justify-center">
+                {stat.number}
+              </div>
+              {/* Label with consistent styling */}
+              <div className="text-white font-niramit text-lg lg:text-xl min-h-[2.5rem] flex items-center justify-center text-center leading-tight">
+                {stat.label}
+              </div>
             </div>
           ))}
         </div>
