@@ -1,6 +1,126 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
+
+// Modal component for detailed program information
+const ProgramModal = ({ 
+  program, 
+  isOpen, 
+  onClose 
+}: { 
+  program: any; 
+  isOpen: boolean; 
+  onClose: () => void; 
+}) => {
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !program) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={onClose}>
+      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto m-4" onClick={(e) => e.stopPropagation()}>
+        <div className="relative">
+          {/* Close button */}
+          <button 
+            onClick={onClose}
+            className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+            aria-label="Close modal"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+
+          {/* Header with image and icon */}
+          <div className="relative h-64 bg-gray-200">
+            <img
+              src={program.imageUrl}
+              alt={program.title}
+              className="w-full h-full object-cover rounded-t-lg"
+            />
+            <div className="absolute top-4 left-4 w-16 h-16 bg-[#EB414B] rounded-lg flex items-center justify-center">
+              {program.icon}
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+              <h2 className="text-3xl font-bold font-Niramit text-white mb-2">{program.title}</h2>
+              <p className="text-lg font-medium font-Niramit text-[#DBEAFE]">{program.statistic}</p>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="p-6">
+            <div className="mb-8">
+              <h3 className="text-xl font-bold font-Niramit text-[#1F2937] mb-4">About This Program</h3>
+              <p className="text-base font-Niramit text-[#4B5563] leading-relaxed">
+                {program.description}
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-bold font-Niramit text-[#1F2937] mb-4">Key Services</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {program.services.map((service: string, index: number) => (
+                  <div key={index} className="flex items-center p-3 bg-[#F9FAFB] rounded-lg">
+                    <div className="w-3 h-3 bg-[#EB414B] rounded-full mr-3"></div>
+                    <span className="text-base font-Niramit text-[#4B5563]">{service}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-xl font-bold font-Niramit text-[#1F2937] mb-4">How We Help</h3>
+              <div className="bg-[#FFE9EA] p-6 rounded-lg">
+                <p className="text-base font-Niramit text-[#4B5563] leading-relaxed">
+                  Our {program.title.toLowerCase()} program operates through a comprehensive approach that combines 
+                  direct service delivery with community engagement. We work closely with local partners and 
+                  volunteers to ensure that our services reach those who need them most, creating sustainable 
+                  impact in the communities we serve.
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-xl font-bold font-Niramit text-[#1F2937] mb-4">Get Involved</h3>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link 
+                  to="/volunteer" 
+                  className="bg-[#EB414B] text-white px-6 py-3 rounded-md text-sm font-medium font-Niramit hover:bg-red-600 transition-colors text-center"
+                >
+                  Volunteer for This Program
+                </Link>
+                <Link 
+                  to="/donate" 
+                  className="bg-white text-[#EB414B] border border-[#EB414B] px-6 py-3 rounded-md text-sm font-medium font-Niramit hover:bg-red-50 transition-colors text-center"
+                >
+                  Support This Program
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Icon components
 const HeartIcon = () => (
@@ -78,7 +198,8 @@ const ProgramCard = ({
   description, 
   services, 
   icon, 
-  imageUrl 
+  imageUrl,
+  onLearnMore
 }: { 
   title: string;
   statistic: string;
@@ -86,6 +207,7 @@ const ProgramCard = ({
   services: string[];
   icon: React.ReactNode;
   imageUrl: string;
+  onLearnMore: () => void;
 }) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
@@ -122,7 +244,10 @@ const ProgramCard = ({
           </ul>
         </div>
 
-        <button className="w-full bg-[#18181B] text-white py-2.5 px-4 rounded-md text-sm font-medium font-Niramit hover:bg-gray-800 transition-colors">
+        <button 
+          onClick={onLearnMore}
+          className="w-full bg-[#18181B] text-white py-2.5 px-4 rounded-md text-sm font-medium font-Niramit hover:bg-gray-800 transition-colors"
+        >
           Learn More
         </button>
       </div>
@@ -131,6 +256,9 @@ const ProgramCard = ({
 };
 
 const ProgramsGrid = () => {
+  const [selectedProgram, setSelectedProgram] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const programs = [
     {
       title: "Healthcare Services",
@@ -182,16 +310,38 @@ const ProgramsGrid = () => {
     }
   ];
 
+  const handleLearnMore = (program: any) => {
+    setSelectedProgram(program);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProgram(null);
+  };
+
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {programs.map((program, index) => (
-            <ProgramCard key={index} {...program} />
-          ))}
+    <>
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {programs.map((program, index) => (
+              <ProgramCard 
+                key={index} 
+                {...program} 
+                onLearnMore={() => handleLearnMore(program)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <ProgramModal 
+        program={selectedProgram}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
+    </>
   );
 };
 
