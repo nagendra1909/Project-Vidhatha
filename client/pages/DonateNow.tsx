@@ -91,6 +91,7 @@ const HeroSection = () => {
 // Multi-step donation form
 const DonationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     donationType: 'one-time',
     amount: '',
@@ -115,10 +116,89 @@ const DonationForm = () => {
 
   const updateFormData = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  // Validation functions
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^[6-9]\d{9}$/;
+    return phoneRegex.test(phone.replace(/\s+/g, ''));
+  };
+
+  const validatePinCode = (pinCode: string) => {
+    const pinRegex = /^\d{6}$/;
+    return pinRegex.test(pinCode);
+  };
+
+  const validateStep = (step: number) => {
+    const newErrors: Record<string, string> = {};
+
+    switch (step) {
+      case 1:
+        // Validate donation amount
+        if (!formData.amount && !formData.customAmount) {
+          newErrors.amount = 'Please select or enter a donation amount';
+        }
+        if (formData.customAmount && (isNaN(Number(formData.customAmount)) || Number(formData.customAmount) <= 0)) {
+          newErrors.customAmount = 'Please enter a valid amount greater than 0';
+        }
+        if (formData.customAmount && Number(formData.customAmount) > 500000) {
+          newErrors.customAmount = 'Maximum donation amount is ₹5,00,000';
+        }
+        break;
+
+      case 2:
+        // Validate payment method
+        if (!formData.paymentMethod) {
+          newErrors.paymentMethod = 'Please select a payment method';
+        }
+        break;
+
+      case 3:
+        // Validate personal information
+        if (!formData.firstName.trim()) {
+          newErrors.firstName = 'First name is required';
+        }
+        if (!formData.lastName.trim()) {
+          newErrors.lastName = 'Last name is required';
+        }
+        if (!formData.email.trim()) {
+          newErrors.email = 'Email address is required';
+        } else if (!validateEmail(formData.email)) {
+          newErrors.email = 'Please enter a valid email address';
+        }
+        if (formData.phone && !validatePhone(formData.phone)) {
+          newErrors.phone = 'Please enter a valid 10-digit mobile number';
+        }
+        if (formData.pinCode && !validatePinCode(formData.pinCode)) {
+          newErrors.pinCode = 'Please enter a valid 6-digit PIN code';
+        }
+        break;
+
+      case 4:
+        // Validate terms and conditions
+        if (!formData.terms) {
+          newErrors.terms = 'Please accept the terms and conditions to proceed';
+        }
+        break;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const nextStep = () => {
-    if (currentStep < 4) setCurrentStep(currentStep + 1);
+    if (validateStep(currentStep) && currentStep < 4) {
+      setCurrentStep(currentStep + 1);
+    }
   };
 
   const prevStep = () => {
@@ -159,7 +239,10 @@ const DonationForm = () => {
           {['25', '50', '100', '250', '500', '1000'].map((amount) => (
             <button
               key={amount}
-              onClick={() => updateFormData('amount', amount)}
+              onClick={() => {
+                updateFormData('amount', amount);
+                updateFormData('customAmount', '');
+              }}
               className={`py-3 px-4 border rounded-md font-niramit text-sm font-medium ${
                 formData.amount === amount
                   ? 'border-red-500 bg-red-50 text-red-600'
@@ -176,9 +259,19 @@ const DonationForm = () => {
             type="number"
             placeholder="Enter custom amount"
             value={formData.customAmount}
-            onChange={(e) => updateFormData('customAmount', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md font-niramit text-sm"
+            onChange={(e) => {
+              updateFormData('customAmount', e.target.value);
+              updateFormData('amount', '');
+            }}
+            className={`w-full px-3 py-2 border rounded-md font-niramit text-sm ${
+              errors.customAmount || errors.amount 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-gray-300 focus:ring-red-500'
+            }`}
           />
+          {(errors.customAmount || errors.amount) && (
+            <p className="text-red-500 text-xs mt-1">{errors.customAmount || errors.amount}</p>
+          )}
         </div>
       </div>
 
@@ -226,7 +319,9 @@ const DonationForm = () => {
           { value: 'upi', label: 'UPI Payment', icon: '📱' },
           { value: 'netbanking', label: 'Net Banking', icon: '🏦' }
         ].map((method) => (
-          <label key={method.value} className="flex items-center gap-3 p-4 border border-gray-300 rounded-md cursor-pointer hover:border-red-300">
+          <label key={method.value} className={`flex items-center gap-3 p-4 border rounded-md cursor-pointer hover:border-red-300 ${
+            errors.paymentMethod ? 'border-red-500' : 'border-gray-300'
+          }`}>
             <input
               type="radio"
               name="paymentMethod"
@@ -240,6 +335,9 @@ const DonationForm = () => {
           </label>
         ))}
       </div>
+      {errors.paymentMethod && (
+        <p className="text-red-500 text-xs mt-1">{errors.paymentMethod}</p>
+      )}
 
       <div className="space-y-4">
         <label className="flex items-center gap-3">
@@ -284,9 +382,12 @@ const DonationForm = () => {
             type="text"
             value={formData.firstName}
             onChange={(e) => updateFormData('firstName', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md font-niramit text-sm"
+            className={`w-full px-3 py-2 border rounded-md font-niramit text-sm ${
+              errors.firstName ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-red-500'
+            }`}
             required
           />
+          {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
         </div>
         <div>
           <label className="block text-gray-700 font-niramit text-sm mb-2">Last Name *</label>
@@ -294,9 +395,12 @@ const DonationForm = () => {
             type="text"
             value={formData.lastName}
             onChange={(e) => updateFormData('lastName', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md font-niramit text-sm"
+            className={`w-full px-3 py-2 border rounded-md font-niramit text-sm ${
+              errors.lastName ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-red-500'
+            }`}
             required
           />
+          {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
         </div>
       </div>
 
@@ -307,9 +411,12 @@ const DonationForm = () => {
             type="email"
             value={formData.email}
             onChange={(e) => updateFormData('email', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md font-niramit text-sm"
+            className={`w-full px-3 py-2 border rounded-md font-niramit text-sm ${
+              errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-red-500'
+            }`}
             required
           />
+          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
         </div>
         <div>
           <label className="block text-gray-700 font-niramit text-sm mb-2">Phone Number</label>
@@ -317,8 +424,12 @@ const DonationForm = () => {
             type="tel"
             value={formData.phone}
             onChange={(e) => updateFormData('phone', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md font-niramit text-sm"
+            className={`w-full px-3 py-2 border rounded-md font-niramit text-sm ${
+              errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-red-500'
+            }`}
+            placeholder="10-digit mobile number"
           />
+          {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
         </div>
       </div>
 
@@ -356,8 +467,12 @@ const DonationForm = () => {
             type="text"
             value={formData.pinCode}
             onChange={(e) => updateFormData('pinCode', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md font-niramit text-sm"
+            className={`w-full px-3 py-2 border rounded-md font-niramit text-sm ${
+              errors.pinCode ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-red-500'
+            }`}
+            placeholder="6-digit PIN code"
           />
+          {errors.pinCode && <p className="text-red-500 text-xs mt-1">{errors.pinCode}</p>}
         </div>
       </div>
 
@@ -438,12 +553,13 @@ const DonationForm = () => {
             type="checkbox"
             checked={formData.terms}
             onChange={(e) => updateFormData('terms', e.target.checked)}
-            className="w-5 h-5 mt-1"
+            className={`w-5 h-5 mt-1 ${errors.terms ? 'border-red-500' : ''}`}
           />
           <p className="text-black font-niramit text-base">
             I agree to the <a href="#" className="text-blue-600 underline">Terms and conditions</a> and <a href="#" className="text-blue-600 underline">Privacy Policy</a>
           </p>
         </label>
+        {errors.terms && <p className="text-red-500 text-xs mt-1 ml-8">{errors.terms}</p>}
       </div>
     );
   };
@@ -485,6 +601,30 @@ const DonationForm = () => {
 
       {/* Form Content */}
       <div className="mb-8">
+        {Object.keys(errors).length > 0 && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">
+                  Please fix the following errors:
+                </h3>
+                <div className="mt-2 text-sm text-red-700">
+                  <ul className="list-disc list-inside space-y-1">
+                    {Object.values(errors).map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
         {renderStepContent()}
       </div>
 
@@ -511,7 +651,11 @@ const DonationForm = () => {
           </button>
         ) : (
           <button
-            onClick={() => alert('Donation completed! Thank you for your contribution.')}
+            onClick={() => {
+              if (validateStep(currentStep)) {
+                alert('Donation completed! Thank you for your contribution.');
+              }
+            }}
             disabled={!formData.terms}
             className={`px-6 py-2 rounded-md font-niramit text-sm font-medium ${
               formData.terms

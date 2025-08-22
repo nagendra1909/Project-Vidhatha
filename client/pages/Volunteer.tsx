@@ -140,6 +140,7 @@ const ProgressIndicator = ({ currentStep }: { currentStep: number }) => {
 // Multi-step volunteer form
 const VolunteerForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     // Personal Information
     firstName: '',
@@ -170,8 +171,138 @@ const VolunteerForm = () => {
     // Background - handled in success step
   });
 
+  // Validation functions
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^[6-9]\d{9}$/;
+    return phoneRegex.test(phone.replace(/\s+/g, ''));
+  };
+
+  const validateZipCode = (zipCode: string) => {
+    const zipRegex = /^\d{6}$/;
+    return zipRegex.test(zipCode);
+  };
+
+  const validateAge = (dateOfBirth: string) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      return age - 1;
+    }
+    return age;
+  };
+
+  const validateStep = (step: number) => {
+    const newErrors: Record<string, string> = {};
+
+    switch (step) {
+      case 1:
+        // Personal Information validation
+        if (!formData.firstName.trim()) {
+          newErrors.firstName = 'First name is required';
+        }
+        if (!formData.lastName.trim()) {
+          newErrors.lastName = 'Last name is required';
+        }
+        if (!formData.email.trim()) {
+          newErrors.email = 'Email address is required';
+        } else if (!validateEmail(formData.email)) {
+          newErrors.email = 'Please enter a valid email address';
+        }
+        if (!formData.phone.trim()) {
+          newErrors.phone = 'Phone number is required';
+        } else if (!validatePhone(formData.phone)) {
+          newErrors.phone = 'Please enter a valid 10-digit mobile number';
+        }
+        if (!formData.dateOfBirth) {
+          newErrors.dateOfBirth = 'Date of birth is required';
+        } else {
+          const age = validateAge(formData.dateOfBirth);
+          if (age < 16) {
+            newErrors.dateOfBirth = 'You must be at least 16 years old to volunteer';
+          }
+          if (age > 80) {
+            newErrors.dateOfBirth = 'Please verify your date of birth';
+          }
+        }
+        if (!formData.address.trim()) {
+          newErrors.address = 'Address is required';
+        }
+        if (!formData.city.trim()) {
+          newErrors.city = 'City is required';
+        }
+        if (!formData.state.trim()) {
+          newErrors.state = 'State is required';
+        }
+        if (!formData.zipCode.trim()) {
+          newErrors.zipCode = 'ZIP code is required';
+        } else if (!validateZipCode(formData.zipCode)) {
+          newErrors.zipCode = 'Please enter a valid 6-digit ZIP code';
+        }
+        if (!formData.emergencyContactName.trim()) {
+          newErrors.emergencyContactName = 'Emergency contact name is required';
+        }
+        if (!formData.emergencyContactPhone.trim()) {
+          newErrors.emergencyContactPhone = 'Emergency contact phone is required';
+        } else if (!validatePhone(formData.emergencyContactPhone)) {
+          newErrors.emergencyContactPhone = 'Please enter a valid 10-digit phone number';
+        }
+        break;
+
+      case 2:
+        // Availability validation
+        if (formData.preferredDays.length === 0) {
+          newErrors.preferredDays = 'Please select at least one preferred day';
+        }
+        if (!formData.preferredTime) {
+          newErrors.preferredTime = 'Please select your preferred time';
+        }
+        if (!formData.hoursPerWeek) {
+          newErrors.hoursPerWeek = 'Please select your available hours per week';
+        }
+        if (!formData.preferredStartDate) {
+          newErrors.preferredStartDate = 'Please select your preferred start date';
+        } else {
+          const startDate = new Date(formData.preferredStartDate);
+          const today = new Date();
+          if (startDate < today) {
+            newErrors.preferredStartDate = 'Start date cannot be in the past';
+          }
+        }
+        if (!formData.commitmentDuration) {
+          newErrors.commitmentDuration = 'Please select your commitment duration';
+        }
+        break;
+
+      case 3:
+        // Interests & Skills validation
+        if (formData.programAreas.length === 0) {
+          newErrors.programAreas = 'Please select at least one program area of interest';
+        }
+        if (!formData.motivation.trim()) {
+          newErrors.motivation = 'Please tell us why you want to volunteer';
+        }
+        if (formData.motivation.trim().length < 50) {
+          newErrors.motivation = 'Please provide a more detailed motivation (at least 50 characters)';
+        }
+        break;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const nextStep = () => {
-    if (currentStep < 5) setCurrentStep(currentStep + 1);
+    if (validateStep(currentStep) && currentStep < 5) {
+      setCurrentStep(currentStep + 1);
+    }
   };
 
   const prevStep = () => {
@@ -180,6 +311,10 @@ const VolunteerForm = () => {
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
   };
 
   const handleCheckboxChange = (field: string, value: string, checked: boolean) => {
@@ -189,6 +324,10 @@ const VolunteerForm = () => {
         ? [...(prev[field as keyof typeof prev] as string[]), value]
         : (prev[field as keyof typeof prev] as string[]).filter(item => item !== value)
     }));
+    // Clear error when user makes a selection
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
   };
 
   // Personal Information Step
@@ -210,8 +349,13 @@ const VolunteerForm = () => {
               type="text"
               value={formData.firstName}
               onChange={(e) => handleInputChange('firstName', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.firstName 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
             />
+            {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-900 mb-1">Last Name *</label>
@@ -219,8 +363,13 @@ const VolunteerForm = () => {
               type="text"
               value={formData.lastName}
               onChange={(e) => handleInputChange('lastName', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.lastName 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
             />
+            {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
           </div>
         </div>
 
@@ -231,8 +380,13 @@ const VolunteerForm = () => {
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.email 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
             />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-900 mb-1">Phone Number *</label>
@@ -240,8 +394,14 @@ const VolunteerForm = () => {
               type="tel"
               value={formData.phone}
               onChange={(e) => handleInputChange('phone', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.phone 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
+              placeholder="10-digit mobile number"
             />
+            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
           </div>
         </div>
 
@@ -251,8 +411,13 @@ const VolunteerForm = () => {
             type="date"
             value={formData.dateOfBirth}
             onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-            className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+              errors.dateOfBirth 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-gray-200 focus:ring-red-500'
+            }`}
           />
+          {errors.dateOfBirth && <p className="text-red-500 text-xs mt-1">{errors.dateOfBirth}</p>}
         </div>
 
         <div>
@@ -261,8 +426,13 @@ const VolunteerForm = () => {
             type="text"
             value={formData.address}
             onChange={(e) => handleInputChange('address', e.target.value)}
-            className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+              errors.address 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-gray-200 focus:ring-red-500'
+            }`}
           />
+          {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -272,8 +442,13 @@ const VolunteerForm = () => {
               type="text"
               value={formData.city}
               onChange={(e) => handleInputChange('city', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.city 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
             />
+            {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-900 mb-1">State *</label>
@@ -281,8 +456,13 @@ const VolunteerForm = () => {
               type="text"
               value={formData.state}
               onChange={(e) => handleInputChange('state', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.state 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
             />
+            {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-900 mb-1">ZIP Code *</label>
@@ -290,8 +470,14 @@ const VolunteerForm = () => {
               type="text"
               value={formData.zipCode}
               onChange={(e) => handleInputChange('zipCode', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.zipCode 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
+              placeholder="6-digit ZIP code"
             />
+            {errors.zipCode && <p className="text-red-500 text-xs mt-1">{errors.zipCode}</p>}
           </div>
         </div>
 
@@ -302,8 +488,13 @@ const VolunteerForm = () => {
               type="text"
               value={formData.emergencyContactName}
               onChange={(e) => handleInputChange('emergencyContactName', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.emergencyContactName 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
             />
+            {errors.emergencyContactName && <p className="text-red-500 text-xs mt-1">{errors.emergencyContactName}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-900 mb-1">Emergency Contact Phone *</label>
@@ -311,8 +502,14 @@ const VolunteerForm = () => {
               type="tel"
               value={formData.emergencyContactPhone}
               onChange={(e) => handleInputChange('emergencyContactPhone', e.target.value)}
-              className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.emergencyContactPhone 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-200 focus:ring-red-500'
+              }`}
+              placeholder="10-digit phone number"
             />
+            {errors.emergencyContactPhone && <p className="text-red-500 text-xs mt-1">{errors.emergencyContactPhone}</p>}
           </div>
         </div>
       </div>
@@ -335,7 +532,9 @@ const VolunteerForm = () => {
           <h4 className="font-niramit text-lg font-bold text-gray-900 mb-4">Preferred days (select all that apply)</h4>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
-              <label key={day} className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <label key={day} className={`flex items-center space-x-3 p-4 border rounded-lg hover:bg-gray-50 cursor-pointer ${
+                errors.preferredDays ? 'border-red-500' : 'border-gray-200'
+              }`}>
                 <input
                   type="checkbox"
                   checked={formData.preferredDays.includes(day)}
@@ -346,6 +545,7 @@ const VolunteerForm = () => {
               </label>
             ))}
           </div>
+          {errors.preferredDays && <p className="text-red-500 text-xs mt-1">{errors.preferredDays}</p>}
         </div>
 
         <div>
@@ -353,7 +553,11 @@ const VolunteerForm = () => {
           <select
             value={formData.preferredTime}
             onChange={(e) => handleInputChange('preferredTime', e.target.value)}
-            className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+              errors.preferredTime 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-gray-200 focus:ring-red-500'
+            }`}
           >
             <option value="">Select preferred time</option>
             <option value="morning">Morning (8 AM - 12 PM)</option>
@@ -361,6 +565,7 @@ const VolunteerForm = () => {
             <option value="evening">Evening (5 PM - 8 PM)</option>
             <option value="flexible">Flexible</option>
           </select>
+          {errors.preferredTime && <p className="text-red-500 text-xs mt-1">{errors.preferredTime}</p>}
         </div>
 
         <div>
@@ -368,7 +573,11 @@ const VolunteerForm = () => {
           <select
             value={formData.hoursPerWeek}
             onChange={(e) => handleInputChange('hoursPerWeek', e.target.value)}
-            className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+              errors.hoursPerWeek 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-gray-200 focus:ring-red-500'
+            }`}
           >
             <option value="">Select hours per week</option>
             <option value="1-4">1-4 hours</option>
@@ -376,6 +585,7 @@ const VolunteerForm = () => {
             <option value="10-15">10-15 hours</option>
             <option value="16+">16+ hours</option>
           </select>
+          {errors.hoursPerWeek && <p className="text-red-500 text-xs mt-1">{errors.hoursPerWeek}</p>}
         </div>
 
         <div>
@@ -384,8 +594,13 @@ const VolunteerForm = () => {
             type="date"
             value={formData.preferredStartDate}
             onChange={(e) => handleInputChange('preferredStartDate', e.target.value)}
-            className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+              errors.preferredStartDate 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-gray-200 focus:ring-red-500'
+            }`}
           />
+          {errors.preferredStartDate && <p className="text-red-500 text-xs mt-1">{errors.preferredStartDate}</p>}
         </div>
 
         <div>
@@ -393,7 +608,11 @@ const VolunteerForm = () => {
           <select
             value={formData.commitmentDuration}
             onChange={(e) => handleInputChange('commitmentDuration', e.target.value)}
-            className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+              errors.commitmentDuration 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-gray-200 focus:ring-red-500'
+            }`}
           >
             <option value="">Select commitment duration</option>
             <option value="1-3 months">1-3 months</option>
@@ -401,6 +620,7 @@ const VolunteerForm = () => {
             <option value="6-12 months">6-12 months</option>
             <option value="1+ years">1+ years</option>
           </select>
+          {errors.commitmentDuration && <p className="text-red-500 text-xs mt-1">{errors.commitmentDuration}</p>}
         </div>
       </div>
     </div>
@@ -431,7 +651,9 @@ const VolunteerForm = () => {
               { value: 'admin', label: 'Administrative Support', desc: 'Office work, data entry, coordination' },
               { value: 'events', label: 'Event Management', desc: 'Planning and organizing community events' }
             ].map((area) => (
-              <label key={area.value} className="flex items-start space-x-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <label key={area.value} className={`flex items-start space-x-3 p-4 border rounded-lg hover:bg-gray-50 cursor-pointer ${
+                errors.programAreas ? 'border-red-500' : 'border-gray-200'
+              }`}>
                 <input
                   type="checkbox"
                   checked={formData.programAreas.includes(area.value)}
@@ -445,6 +667,7 @@ const VolunteerForm = () => {
               </label>
             ))}
           </div>
+          {errors.programAreas && <p className="text-red-500 text-xs mt-1">{errors.programAreas}</p>}
         </div>
 
         <div>
@@ -476,8 +699,13 @@ const VolunteerForm = () => {
             onChange={(e) => handleInputChange('motivation', e.target.value)}
             placeholder="Tell us what motivates you to volunteer and what you hope to achieve"
             rows={4}
-            className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+              errors.motivation 
+                ? 'border-red-500 focus:ring-red-500' 
+                : 'border-gray-200 focus:ring-red-500'
+            }`}
           />
+          {errors.motivation && <p className="text-red-500 text-xs mt-1">{errors.motivation}</p>}
         </div>
       </div>
     </div>
@@ -600,6 +828,30 @@ const VolunteerForm = () => {
           <div className="py-12">
             <div className="max-w-4xl mx-auto px-6">
               <div className="space-y-8">
+                {Object.keys(errors).length > 0 && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div className="flex">
+                      <div className="flex-shrink-0">
+                        <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="ml-3">
+                        <h3 className="text-sm font-medium text-red-800">
+                          Please fix the following errors:
+                        </h3>
+                        <div className="mt-2 text-sm text-red-700">
+                          <ul className="list-disc list-inside space-y-1">
+                            {Object.values(errors).map((error, index) => (
+                              <li key={index}>{error}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
                 {renderCurrentStep()}
 
                 {/* Navigation Buttons */}
