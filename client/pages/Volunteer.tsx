@@ -672,26 +672,38 @@ const VolunteerForm = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Layout>
+        {/* Hero Section */}
+        <div className="bg-red-500 text-white py-16">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <h1 className="font-niramit text-4xl md:text-5xl font-bold mb-4">
+              Volunteer Application
+            </h1>
+            <p className="font-niramit text-lg md:text-xl text-red-100 max-w-2xl mx-auto">
+              Join our community of dedicated volunteers and make a lasting impact!
+            </p>
+          </div>
+        </div>
+
         <div className="max-w-4xl mx-auto px-6 py-12">
           {/* Progress Indicator */}
           <div className="mb-8">
-            <div className="flex items-center justify-between">
-              {[1, 2, 3].map((step) => (
-                <div key={step} className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+            <div className="flex items-center justify-center">
+              {[1, 2, 3].map((step, index) => (
+                <React.Fragment key={step}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
                     currentStep >= step ? 'bg-red-600 text-white' : 'bg-gray-200 text-gray-600'
                   }`}>
                     {step}
                   </div>
-                  {step < 3 && (
-                    <div className={`w-24 h-1 mx-2 ${
+                  {index < 2 && (
+                    <div className={`flex-1 h-1 mx-4 ${
                       currentStep > step ? 'bg-red-600' : 'bg-gray-200'
                     }`}></div>
                   )}
-                </div>
+                </React.Fragment>
               ))}
             </div>
-            <div className="flex justify-between mt-2">
+            <div className="flex justify-between mt-4">
               <span className="text-xs font-medium text-gray-600">Personal Info</span>
               <span className="text-xs font-medium text-gray-600">Availability</span>
               <span className="text-xs font-medium text-gray-600">Interests</span>
