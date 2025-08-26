@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import React, { useState } from "react";
+import { Gift } from 'lucide-react';
 
 // Icon components
 const HeartIcon = () => (
@@ -19,6 +20,11 @@ const HeroSection = () => {
   return (
     <section className="bg-gradient-to-br from-red-600 via-red-500 to-orange-500 py-16">
       <div className="max-w-7xl mx-auto px-6 text-center">
+        {/* Gift Icon */}
+        <div className="flex justify-center mb-6">
+          <Gift size={48} color="white" strokeWidth={2} />
+        </div>
+        
         <h1 className="text-white font-niramit text-4xl md:text-5xl font-bold mb-6">
           Make a Difference Today
         </h1>
@@ -130,20 +136,66 @@ const DonationDetailsStep = ({ formData, updateFormData, errors }: {
     </div>
 
     <div>
-      <h3 className="text-black font-niramit text-lg font-semibold mb-4">Choose program to Support</h3>
-      <select
-        value={formData.program}
-        onChange={(e) => updateFormData('program', e.target.value)}
-        className="w-full px-3 py-3 border border-gray-300 rounded-md font-niramit text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-      >
-        <option value="general-fund">General Fund</option>
-        <option value="healthcare">Healthcare Services</option>
-        <option value="education">Education & Skills</option>
-        <option value="community">Community Support</option>
-        <option value="arts">Arts & Culture</option>
-        <option value="environment">Environmental Protection</option>
-        <option value="emergency">Emergency Relief</option>
-      </select>
+      <h3 className="text-black font-niramit text-lg font-semibold mb-4">Choose Program to Support</h3>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          {
+            value: 'general-fund',
+            label: 'General Fund',
+            description: 'Support all our programs',
+            icon: '❤️'
+          },
+          {
+            value: 'healthcare',
+            label: 'Healthcare Services',
+            description: 'Free medical consultations and medicines',
+            icon: '🩺'
+          },
+          {
+            value: 'education',
+            label: 'Education & Skills',
+            description: 'Skill development and educational support',
+            icon: '📚'
+          },
+          {
+            value: 'community',
+            label: 'Community Support',
+            description: 'Food security and emergency relief',
+            icon: '🤝'
+          },
+          {
+            value: 'environment',
+            label: 'Environmental Protection',
+            description: 'Conservation and awareness',
+            icon: '🌱'
+          },
+          {
+            value: 'emergency',
+            label: 'Emergency Relief',
+            description: 'Disaster response and urgent needs',
+            icon: '🚨'
+          }
+        ].map((program) => (
+          <label key={program.value} className="flex items-start gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+            <input
+              type="radio"
+              name="program"
+              value={program.value}
+              checked={formData.program === program.value}
+              onChange={(e) => updateFormData('program', e.target.value)}
+              className="w-4 h-4 mt-1 text-red-500 border-gray-300 focus:ring-red-500"
+            />
+            <div className="flex items-center gap-3 flex-1">
+              <span className="text-xl">{program.icon}</span>
+              <div>
+                <div className="text-black font-niramit text-sm font-medium">{program.label}</div>
+                <div className="text-gray-600 font-niramit text-xs mt-1">{program.description}</div>
+              </div>
+            </div>
+          </label>
+        ))}
+      </div>
     </div>
   </div>
 );

@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import React, { useState } from "react";
+import { Clock, Heart, Users } from "lucide-react";
 
 // Icon components
 const UsersIcon = () => (
@@ -18,6 +19,24 @@ const CalendarIcon = () => (
     <path d="M6.66797 1.66602V4.99935" stroke="#09090B" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M2.4987 8.33398H17.4987" stroke="#09090B" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
+);
+
+const ClockIcon = () => (
+  <div className="w-12 h-12 flex items-center justify-center">
+    <Clock size={48} color="#EF4444" fill="none" strokeWidth={2} />
+  </div>
+);
+
+const HeartIcon = () => (
+  <div className="w-12 h-12 flex items-center justify-center">
+    <Heart size={48} color="#EF4444" fill="none" strokeWidth={2} />
+  </div>
+);
+
+const GroupIcon = () => (
+  <div className="w-12 h-12 flex items-center justify-center">
+    <Users size={48} color="#16a34a" fill="none" strokeWidth={2} />
+  </div>
 );
 
 const CheckIcon = () => (
@@ -359,24 +378,29 @@ const InterestsStep = ({ formData, handleInputChange, handleCheckboxChange, erro
     
     <div className="space-y-8">
       <div>
-        <label className="block text-sm font-medium text-gray-900 mb-3">Program Areas of Interest *</label>
+        <label className="block text-sm font-medium text-gray-900 mb-3">Program Areas of Interest (Select all that apply) *</label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[
-            { value: 'healthcare', label: 'Healthcare Services' },
-            { value: 'education', label: 'Education & Skills' },
-            { value: 'community', label: 'Community Support' },
-            { value: 'arts', label: 'Arts & Culture' },
-            { value: 'environment', label: 'Environmental Protection' },
-            { value: 'elderly', label: 'Elderly Care' }
+            { value: 'healthcare', label: 'Healthcare Services', desc: 'Support healthcare delivery and assistance' },
+            { value: 'education', label: 'Education & Skills', desc: 'Teaching and capacity building programs' },
+            { value: 'community', label: 'Community Support', desc: 'Community development and outreach' },
+            { value: 'arts', label: 'Arts & Culture', desc: 'Cultural programs and creative activities' },
+            { value: 'environment', label: 'Environmental Protection', desc: 'Environmental conservation efforts' },
+            { value: 'specialized', label: 'Specialized Care', desc: 'Specialized support and care services' },
+            { value: 'administrative', label: 'Administrative Support', desc: 'Office work and organizational tasks' },
+            { value: 'events', label: 'Event Management', desc: 'Planning and organizing community events' }
           ].map((area) => (
-            <label key={area.value} className="flex items-center gap-2">
+            <label key={area.value} className="flex items-start gap-3 p-3 border border-gray-200 rounded-md hover:bg-gray-50">
               <input
                 type="checkbox"
                 checked={formData.programAreas.includes(area.value)}
                 onChange={(e) => handleCheckboxChange('programAreas', area.value, e.target.checked)}
-                className="w-4 h-4"
+                className="w-4 h-4 mt-1"
               />
-              <span className="text-sm text-gray-700">{area.label}</span>
+              <div>
+                <span className="text-sm font-medium text-gray-900">{area.label}</span>
+                <p className="text-xs text-gray-600 mt-1">{area.desc}</p>
+              </div>
             </label>
           ))}
         </div>
@@ -384,31 +408,34 @@ const InterestsStep = ({ formData, handleInputChange, handleCheckboxChange, erro
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-900 mb-1">Skills & Expertise (Optional)</label>
+        <label className="block text-sm font-medium text-gray-900 mb-1">Skills & Expertise</label>
+        <p className="text-xs text-gray-600 mb-2">List your relevant skills, qualifications, or specialized experience (optional)</p>
         <textarea
           key="skills"
           value={formData.skills}
           onChange={(e) => handleInputChange('skills', e.target.value)}
           className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
           rows={3}
-          placeholder="List your relevant skills, experience, or expertise"
+          placeholder=""
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-900 mb-1">Previous Volunteer Experience (Optional)</label>
+        <label className="block text-sm font-medium text-gray-900 mb-1">Previous Experience</label>
+        <p className="text-xs text-gray-600 mb-2">Tell us about any previous volunteer or relevant experience</p>
         <textarea
           key="experience"
           value={formData.experience}
           onChange={(e) => handleInputChange('experience', e.target.value)}
           className="w-full px-3 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
           rows={3}
-          placeholder="Describe any previous volunteer experience"
+          placeholder=""
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-900 mb-1">Why do you want to volunteer with us? *</label>
+        <label className="block text-sm font-medium text-gray-900 mb-1">Why do you want to volunteer with us?</label>
+        <p className="text-xs text-gray-600 mb-2">Tell us about your motivations for volunteering (minimum 50 characters)</p>
         <textarea
           key="motivation"
           value={formData.motivation}
@@ -419,7 +446,7 @@ const InterestsStep = ({ formData, handleInputChange, handleCheckboxChange, erro
               : 'border-gray-200 focus:ring-red-500'
           }`}
           rows={4}
-          placeholder="Please share your motivation for volunteering (minimum 50 characters)"
+          placeholder=""
         />
         {errors.motivation && <p className="text-red-500 text-xs mt-1">{errors.motivation}</p>}
       </div>
@@ -468,16 +495,16 @@ const SuccessStep = () => (
       <div className="flex justify-center gap-4">
         <button
           onClick={() => window.location.href = '/'}
-          className="px-6 py-3 bg-gray-200 text-gray-800 rounded-md font-niramit text-sm font-medium hover:bg-gray-300"
+          className="px-6 py-3 bg-black text-white rounded-md font-niramit text-sm font-medium"
         >
           Return to Home
         </button>
-        <button
+        {/* <button
           onClick={() => window.location.href = '/programs'}
           className="px-6 py-3 bg-red-600 text-white rounded-md font-niramit text-sm font-medium hover:bg-red-700"
         >
           Learn About Our Programs
-        </button>
+        </button> */}
       </div>
     </div>
   </div>
@@ -659,16 +686,6 @@ const VolunteerForm = () => {
     }
   };
 
-  if (currentStep === 4) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Layout>
-          <SuccessStep />
-        </Layout>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Layout>
@@ -688,14 +705,14 @@ const VolunteerForm = () => {
           {/* Progress Indicator */}
           <div className="mb-8">
             <div className="flex items-center justify-center">
-              {[1, 2, 3].map((step, index) => (
+              {[1, 2, 3, 4].map((step, index) => (
                 <React.Fragment key={step}>
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
                     currentStep >= step ? 'bg-red-600 text-white' : 'bg-gray-200 text-gray-600'
                   }`}>
                     {step}
                   </div>
-                  {index < 2 && (
+                  {index < 3 && (
                     <div className={`flex-1 h-1 mx-4 ${
                       currentStep > step ? 'bg-red-600' : 'bg-gray-200'
                     }`}></div>
@@ -707,47 +724,102 @@ const VolunteerForm = () => {
               <span className="text-xs font-medium text-gray-600">Personal Info</span>
               <span className="text-xs font-medium text-gray-600">Availability</span>
               <span className="text-xs font-medium text-gray-600">Interests</span>
+              <span className="text-xs font-medium text-gray-600">Background</span>
             </div>
           </div>
 
           {/* Form Content */}
           {renderCurrentStep()}
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-between mt-8">
-            <button
-              onClick={prevStep}
-              disabled={currentStep === 1}
-              className={`px-6 py-3 border rounded-md font-niramit text-sm font-medium ${
-                currentStep === 1
-                  ? 'border-gray-300 text-gray-400 cursor-not-allowed opacity-50'
-                  : 'border-gray-300 text-gray-700 hover:border-gray-400'
-              }`}
-            >
-              Previous
-            </button>
-            
-            {currentStep < 3 ? (
+          {/* Navigation Buttons - Hide on step 4 (success step) */}
+          {currentStep < 4 && (
+            <div className="flex justify-between mt-8">
               <button
-                onClick={nextStep}
-                className="px-6 py-3 bg-red-600 text-white rounded-md font-niramit text-sm font-medium hover:bg-red-700"
+                onClick={prevStep}
+                disabled={currentStep === 1}
+                className={`px-6 py-3 border rounded-md font-niramit text-sm font-medium ${
+                  currentStep === 1
+                    ? 'border-gray-300 text-gray-400 cursor-not-allowed opacity-50'
+                    : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                }`}
               >
-                Next
+                Previous
               </button>
-            ) : (
-              <button
-                onClick={() => {
-                  if (validateStep(currentStep)) {
-                    setCurrentStep(4);
-                  }
-                }}
-                className="px-6 py-3 bg-green-600 text-white rounded-md font-niramit text-sm font-medium hover:bg-green-700"
-              >
-                Submit Application
-              </button>
-            )}
-          </div>
+              
+              {currentStep < 3 ? (
+                <button
+                  onClick={nextStep}
+                  className="px-6 py-3 bg-red-600 text-white rounded-md font-niramit text-sm font-medium hover:bg-red-700"
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    if (validateStep(currentStep)) {
+                      setCurrentStep(4);
+                    }
+                  }}
+                  className="px-6 py-3 bg-green-600 text-white rounded-md font-niramit text-sm font-medium hover:bg-green-700"
+                >
+                  Submit Application
+                </button>
+              )}
+            </div>
+          )}
         </div>
+
+        {/* What to Expect Section - Only show on steps 1, 2, 3 */}
+        {currentStep < 4 && (
+          <div className="max-w-6xl mx-auto px-6 py-16">
+            <div className="text-center mb-12">
+              <h2 className="font-niramit text-3xl font-bold text-gray-900 mb-4">
+                What to Expect
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Application Review */}
+              <div className="text-center bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <div className="flex justify-center mb-6">
+                  <ClockIcon />
+                </div>
+                <h3 className="font-niramit text-xl font-bold text-gray-900 mb-4">
+                  Application Review
+                </h3>
+                <p className="text-gray-600 font-niramit text-sm leading-relaxed">
+                  We'll review your application within 3-5 business days and match you with suitable opportunities.
+                </p>
+              </div>
+
+              {/* Orientation */}
+              <div className="text-center bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <div className="flex justify-center mb-6">
+                  <GroupIcon />
+                </div>
+                <h3 className="font-niramit text-xl font-bold text-gray-900 mb-4">
+                  Orientation
+                </h3>
+                <p className="text-gray-600 font-niramit text-sm leading-relaxed">
+                  Attend our volunteer session to learn about our organization and volunteer guidelines.
+                </p>
+              </div>
+
+              {/* Start Volunteering */}
+              <div className="text-center bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <div className="flex justify-center mb-6">
+                  <HeartIcon />
+                </div>
+                <h3 className="font-niramit text-xl font-bold text-gray-900 mb-4">
+                  Start Volunteering
+                </h3>
+                <p className="text-gray-600 font-niramit text-sm leading-relaxed">
+                  Begin your volunteer journey and start making a positive impact in our community.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </Layout>
     </div>
   );

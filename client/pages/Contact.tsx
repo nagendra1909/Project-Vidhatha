@@ -132,9 +132,9 @@ const LocationsSection = () => {
   const locations = [
     {
       title: "Main Office",
-      address: "123 Community Street, Hope City, HC 12345",
-      phone: "+1 (555) 123-4567",
-      email: "info@ngocare.org",
+      address: "3-15-9k/401, Sahara states, Mansoorabad L B Nagar, Hayathnagar, Rangareddy, Telangana",
+      phone: "+91 95423 66556",
+      email: "vidhathasociety@gmail.com",
       hours: "Mon-Fri: 9:00 AM - 6:00 PM"
     },
     {
@@ -187,6 +187,8 @@ const ContactForm = () => {
     message: ''
   });
 
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -194,10 +196,49 @@ const ContactForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
+    
+    // Show success toast
+    setShowSuccessToast(true);
+    
+    // Clear form fields
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: ''
+    });
+    
+    // Hide toast after 3 seconds
+    setTimeout(() => {
+      setShowSuccessToast(false);
+    }, 3000);
+  };
+
+  // Success Toast Component
+  const SuccessToast = () => {
+    if (!showSuccessToast) return null;
+
+    return (
+      <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center">
+        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span className="font-Niramit">Message sent successfully! We'll get back to you soon.</span>
+        <button 
+          onClick={() => setShowSuccessToast(false)}
+          className="ml-4 text-white hover:text-gray-200"
+        >
+          ×
+        </button>
+      </div>
+    );
   };
 
   return (
     <div className="bg-white rounded-lg border border-[#E4E4E7] shadow-sm p-6">
+      <SuccessToast />
       <div className="flex items-center mb-6">
         <MessageIcon />
         <h3 className="text-2xl font-bold font-Niramit text-[#09090B] ml-2">
@@ -261,7 +302,7 @@ const ContactForm = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="+1 (555) 123-4567"
+            placeholder="Enter the 10-digit number"
             className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#EB414B] focus:border-transparent"
           />
         </div>
@@ -416,7 +457,7 @@ const VolunteerForm = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="+1 (555) 123-4567"
+            placeholder="Enter the 10-digit number"
             className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#16A34A] focus:border-transparent"
             required
           />
@@ -475,7 +516,7 @@ const VolunteerForm = () => {
           to="/volunteer"
           className="w-full h-10 bg-[#145225] text-white text-sm font-medium font-Niramit rounded-md hover:bg-red-600 transition-colors inline-flex items-center justify-center"
         >
-          Complete Full Application
+          Submit Application
         </Link>
       </form>
     </div>
