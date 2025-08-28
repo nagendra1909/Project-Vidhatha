@@ -264,7 +264,7 @@ const ProgramsGrid = () => {
       title: "Healthcare Services",
       statistic: "25,000+ patients served annually",
       description: "Comprehensive medical care including free consultations, medicine distribution, and health awareness campaigns.",
-      services: ["General Medicine", "Gynecology", "Pediatrics", "Orthopedics"],
+      services: ["General Medicine", "Gynecology", "Pediatrics", "Orthopedics","Ophthalmology"],
       icon: <HealthcareIcon />,
       imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
     },
@@ -408,9 +408,9 @@ const GetInvolved = () => {
           <Link to="/volunteer" className="bg-[#EB414B] text-white px-8 py-3 rounded-md text-sm font-medium font-Niramit hover:bg-red-600 transition-colors inline-block">
             Volunteer Now
           </Link>
-          <button className="bg-white text-[#EB414B] border border-white px-8 py-3 rounded-md text-sm font-medium font-Niramit hover:bg-gray-50 transition-colors">
+            <Link to="/donate" className="bg-white text-[#EB414B] border border-white px-8 py-3 rounded-md text-sm font-medium font-Niramit hover:bg-gray-50 transition-colors inline-block">
             Support Our Programs
-          </button>
+            </Link>
         </div>
       </div>
     </section>

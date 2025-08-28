@@ -154,13 +154,6 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div className="space-y-6">
-            <Link to="/" className="inline-block">
-              <img
-                src="https://api.builder.io/api/v1/image/assets/TEMP/92332e7f2ac6463bb386ac57dc63f0b1cdde3eb0?width=176"
-                alt="Vidhatha Society Logo"
-                className="h-16 w-16 object-contain filter brightness-0 invert"
-              />
-            </Link>
             <p className="text-ngo-gray-300 font-niramit text-base leading-relaxed">
               Transforming lives through comprehensive healthcare, education,
               and community support services since 2010.

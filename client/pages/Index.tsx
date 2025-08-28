@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Stethoscope, Heart, Users } from "lucide-react";
+import { Stethoscope, Heart, Users, Globe } from "lucide-react";
 import Layout from "../components/Layout";
 
 // Animation styles
@@ -65,20 +65,30 @@ const HeartIcon = () => (
 
 const GroupIcon = () => (
   <div className="w-12 h-12 flex items-center justify-center">
-    <Users size={48} color="#3B82F6" fill="none" strokeWidth={2} />
+    <Users size={48} color="#ef4444" fill="none" strokeWidth={2} />
   </div>
 );
 
 const EarthIcon = () => (
-  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M23.8 3.99951C34.7355 3.99951 43.6 12.8657 43.6 23.8033C43.6 34.7409 34.7355 43.607 23.8 43.607C12.8645 43.607 4 34.7409 4 23.8033C4 12.8657 12.8645 3.99951 23.8 3.99951ZM27.1323 31.6258C24.9127 31.7548 22.6873 31.7548 20.4677 31.6258C20.7369 33.1823 21.0795 34.5844 21.4775 35.7806C21.9764 37.2778 22.5269 38.3472 23.0417 39.0007C23.2159 39.2185 23.4832 39.6463 23.804 39.6463C24.0911 39.6205 24.4019 39.1967 24.5564 39.0007C25.0712 38.3472 25.6236 37.2778 26.1206 35.7806C26.5606 34.4229 26.9002 33.034 27.1323 31.6258ZM38.6757 29.2592C38.1504 29.485 37.6006 29.6929 37.0264 29.883C35.3394 30.4455 33.3674 30.897 31.2052 31.2099C30.9363 33.1861 30.4924 35.1346 29.8786 37.0322C29.6885 37.6065 29.4806 38.1564 29.2549 38.6818C31.4139 37.8875 33.3745 36.6335 35.0011 35.0065C36.6277 33.3796 37.8815 31.4186 38.6757 29.2592ZM8.92426 29.2592C9.71846 31.4186 10.9723 33.3796 12.5989 35.0065C14.2255 36.6335 16.1861 37.8875 18.3451 38.6818C18.115 38.1406 17.907 37.5903 17.7214 37.0322C17.1076 35.1346 16.6637 33.1861 16.3948 31.2099C14.4189 30.9409 12.4709 30.4969 10.5736 29.883C9.9994 29.6929 9.44962 29.485 8.92426 29.2592Z" fill="#EB414B"/>
-  </svg>
+  <div className="w-12 h-12 flex items-center justify-center">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M23.8 3.99951C34.7355 3.99951 43.6 12.8657 43.6 23.8033C43.6 34.7409 34.7355 43.607 23.8 43.607C12.8645 43.607 4 34.7409 4 23.8033C4 12.8657 12.8645 3.99951 23.8 3.99951ZM27.1323 31.6258C24.9127 31.7548 22.6873 31.7548 20.4677 31.6258C20.7369 33.1823 21.0795 34.5844 21.4775 35.7806C21.9764 37.2778 22.5269 38.3472 23.0417 39.0007C23.2159 39.2185 23.4832 39.6463 23.804 39.6463C24.0911 39.6205 24.4019 39.1967 24.5564 39.0007C25.0712 38.3472 25.6236 37.2778 26.1206 35.7806C26.5606 34.4229 26.9002 33.034 27.1323 31.6258ZM38.6757 29.2592C38.1504 29.485 37.6006 29.6929 37.0264 29.883C35.3394 30.4455 33.3674 30.897 31.2052 31.2099C30.9363 33.1861 30.4924 35.1346 29.8786 37.0322C29.6885 37.6065 29.4806 38.1564 29.2549 38.6818C31.4139 37.8875 33.3745 36.6335 35.0011 35.0065C36.6277 33.3796 37.8815 31.4186 38.6757 29.2592ZM8.92426 29.2592C9.71846 31.4186 10.9723 33.3796 12.5989 35.0065C14.2255 36.6335 16.1861 37.8875 18.3451 38.6818C18.115 38.1406 17.907 37.5903 17.7214 37.0322C17.1076 35.1346 16.6637 33.1861 16.3948 31.2099C14.4189 30.9409 12.4709 30.4969 10.5736 29.883C9.9994 29.6929 9.44962 29.485 8.92426 29.2592Z" fill="#ef4444"/>
+    </svg>
+  </div>
+);
+
+const GlobeIcon = () => (
+  <div className="w-12 h-12 flex items-center justify-center">
+    <Globe size={48} color="#ef4444" fill="none" strokeWidth={2}/>
+  </div>
 );
 
 const FocusIcon = () => (
-  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M26 2V8.124C29.5248 8.56917 32.8013 10.1743 35.3135 12.6865C37.8257 15.1987 39.4308 18.4752 39.876 22H46V26H39.876C39.4308 29.5248 37.8257 32.8013 35.3135 35.3135C32.8013 37.8257 29.5248 39.4308 26 39.876V46H22V39.876C18.4752 39.4308 15.1987 37.8257 12.6865 35.3135C10.1743 32.8013 8.56917 29.5248 8.124 26H2V22H8.124C8.56917 18.4752 10.1743 15.1987 12.6865 12.6865C15.1987 10.1743 18.4752 8.56917 22 8.124V2H26ZM24 12C20.8174 12 17.7652 13.2643 15.5147 15.5147C13.2643 17.7652 12 20.8174 12 24C12 27.1826 13.2643 30.2348 15.5147 32.4853C17.7652 34.7357 20.8174 36 24 36C27.1826 36 30.2348 34.7357 32.4853 32.4853C34.7357 30.2348 36 27.1826 36 24C36 20.8174 34.7357 17.7652 32.4853 15.5147C30.2348 13.2643 27.1826 12 24 12ZM20 24C20 22.9391 20.4214 21.9217 21.1716 21.1716C21.9217 20.4214 22.9391 20 24 20C25.0609 20 26.0783 20.4214 26.8284 21.1716C27.5786 21.9217 28 22.9391 28 24C28 25.0609 27.5786 26.0783 26.8284 26.8284C26.0783 27.5786 25.0609 28 24 28C22.9391 28 21.9217 27.5786 21.1716 26.8284C20.4214 26.0783 20 25.0609 20 24Z" fill="#EB414B"/>
-  </svg>
+  <div className="w-12 h-12 flex items-center justify-center">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M26 2V8.124C29.5248 8.56917 32.8013 10.1743 35.3135 12.6865C37.8257 15.1987 39.4308 18.4752 39.876 22H46V26H39.876C39.4308 29.5248 37.8257 32.8013 35.3135 35.3135C32.8013 37.8257 29.5248 39.4308 26 39.876V46H22V39.876C18.4752 39.4308 15.1987 37.8257 12.6865 35.3135C10.1743 32.8013 8.56917 29.5248 8.124 26H2V22H8.124C8.56917 18.4752 10.1743 15.1987 12.6865 12.6865C15.1987 10.1743 18.4752 8.56917 22 8.124V2H26ZM24 12C20.8174 12 17.7652 13.2643 15.5147 15.5147C13.2643 17.7652 12 20.8174 12 24C12 27.1826 13.2643 30.2348 15.5147 32.4853C17.7652 34.7357 20.8174 36 24 36C27.1826 36 30.2348 34.7357 32.4853 32.4853C34.7357 30.2348 36 27.1826 36 24C36 20.8174 34.7357 17.7652 32.4853 15.5147C30.2348 13.2643 27.1826 12 24 12ZM20 24C20 22.9391 20.4214 21.9217 21.1716 21.1716C21.9217 20.4214 22.9391 20 24 20C25.0609 20 26.0783 20.4214 26.8284 21.1716C27.5786 21.9217 28 22.9391 28 24C28 25.0609 27.5786 26.0783 26.8284 26.8284C26.0783 27.5786 25.0609 28 24 28C22.9391 28 21.9217 27.5786 21.1716 26.8284C20.4214 26.0783 20 25.0609 20 24Z" fill="#ef4444"/>
+    </svg>
+  </div>
 );
 
 const ArrowRightIcon = () => (
@@ -413,7 +423,7 @@ const MissionValues = () => {
               description: "We focus on creating measurable, sustainable change that transforms lives for the better."
             },
             {
-              icon: <EarthIcon />,
+              icon: <GlobeIcon />,
               title: "Inclusivity",
               description: "We serve all members of our community regardless of background, beliefs, or circumstances."
             }
@@ -441,8 +451,9 @@ const MissionValues = () => {
         {/* Vision Banner */}
         <div
           ref={visionRef}
-          className="hero-gradient rounded-xl p-6 sm:p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-6 lg:gap-0 lg:justify-between"
+          className="rounded-xl p-6 sm:p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-6 lg:gap-0 lg:justify-between"
           style={{
+            background: 'linear-gradient(135deg, #EB414B 0%, #F97316 50%, #FCD34D 100%)',
             ...fadeInUp,
             ...(visionVisible ? visible : {}),
             transitionDelay: '0.4s'
@@ -455,8 +466,8 @@ const MissionValues = () => {
             </p>
           </div>
           <div className="text-center lg:text-right">
-            <div className="text-white font-niramit text-3xl sm:text-4xl font-bold">2030</div>
-            <div className="text-white font-niramit text-base sm:text-lg lg:text-xl">Our goal to reach 100,000 lives</div>
+            <div className="text-ngo-primary font-niramit text-4xl sm:text-5xl lg:text-6xl font-bold">2030</div>
+            <div className="text-white font-niramit text-base sm:text-lg lg:text-xl mt-2">Our goal to reach 100,000 lives</div>
           </div>
         </div>
       </div>
@@ -873,9 +884,9 @@ const ImpactNumbers = () => {
             These numbers continue to grow every day thanks to supporters like you. Together, we can reach even more people and create lasting change.
           </p>
           <div className="flex justify-center gap-4">
-            <button className="bg-ngo-primary text-white px-6 py-3 rounded font-niramit text-base font-bold hover:bg-red-600 transition-colors">
+            <Link to="/donate" className="bg-ngo-primary text-white px-6 py-3 rounded font-niramit text-base font-bold hover:bg-red-600 transition-colors">
               Donate Today
-            </button>
+            </Link>
             <Link to="/volunteer" className="border border-white text-white px-6 py-3 rounded font-niramit text-base font-bold hover:bg-white hover:text-black transition-colors inline-block">
               Volunteer Now
             </Link>
@@ -893,6 +904,7 @@ const Newsletter = () => {
     <section className="py-20 bg-ngo-gray-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
+          <img src="/stay-connected.png" alt="Stay Connected" className="mx-auto mb-6 w-16 h-16" />
           <h2 className="text-black font-niramit text-4xl font-bold mb-4">Stay Connected</h2>
           <p className="text-ngo-secondary font-niramit text-xl max-w-4xl mx-auto">
             Subscribe to our newsletter to receive updates about our programs, success stories, and ways you can make a difference in your community.
@@ -908,7 +920,33 @@ const Newsletter = () => {
               placeholder="Enter your email address"
               className="flex-1 bg-white px-4 py-3 rounded-md border border-gray-300 font-niramit text-base focus:outline-none focus:ring-2 focus:ring-ngo-primary"
             />
-            <button className="bg-ngo-primary text-white px-6 py-3 rounded-md font-niramit text-base font-bold hover:bg-red-600 transition-colors">
+            <button 
+              onClick={() => {
+              if (email) {
+                // Show success toast
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50 flex items-center gap-2';
+                toast.innerHTML = `
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                Successfully subscribed to our newsletter!
+                `;
+                document.body.appendChild(toast);
+                
+                // Remove toast after 3 seconds
+                setTimeout(() => {
+                if (document.body.contains(toast)) {
+                  document.body.removeChild(toast);
+                }
+                }, 3000);
+                
+                // Clear email input
+                setEmail("");
+              }
+              }}
+              className="bg-ngo-primary text-white px-6 py-3 rounded-md font-niramit text-base font-bold hover:bg-red-600 transition-colors"
+            >
               Subscribe
             </button>
           </div>
