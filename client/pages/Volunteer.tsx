@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import React, { useState } from "react";
 import { Clock, Heart, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Icon components
 const UsersIcon = () => (
@@ -493,18 +494,18 @@ const SuccessStep = () => (
       </div>
       
       <div className="flex justify-center gap-4">
-        <button
-          onClick={() => window.location.href = '/'}
-          className="px-6 py-3 bg-black text-white rounded-md font-niramit text-sm font-medium"
+        <Link
+          to="/"
+          className="px-6 py-3 bg-black text-white rounded-md font-niramit text-sm font-medium hover:bg-gray-800 transition-colors duration-300"
         >
           Return to Home
-        </button>
-        {/* <button
-          onClick={() => window.location.href = '/programs'}
-          className="px-6 py-3 bg-red-600 text-white rounded-md font-niramit text-sm font-medium hover:bg-red-700"
+        </Link>
+        <Link
+          to="/programs"
+          className="px-6 py-3 bg-red-600 text-white rounded-md font-niramit text-sm font-medium hover:bg-red-700 transition-colors duration-300"
         >
           Learn About Our Programs
-        </button> */}
+        </Link>
       </div>
     </div>
   </div>
@@ -558,6 +559,29 @@ const VolunteerForm = () => {
     return zipRegex.test(zipCode);
   };
 
+  const validateName = (name: string) => {
+    // Allow letters, spaces, hyphens, apostrophes, and dots (for names like O'Connor, Mary-Jane, Jr.)
+    const nameRegex = /^[a-zA-Z\s\-'.]+$/;
+    return nameRegex.test(name.trim()) && name.trim().length >= 2;
+  };
+
+  const validateCity = (city: string) => {
+    // Allow letters, spaces, hyphens, and apostrophes (for cities like New York, Saint-Denis)
+    const cityRegex = /^[a-zA-Z\s\-']+$/;
+    return cityRegex.test(city.trim()) && city.trim().length >= 2;
+  };
+
+  const validateState = (state: string) => {
+    // Allow letters, spaces, and hyphens (for states like Tamil Nadu, Himachal Pradesh)
+    const stateRegex = /^[a-zA-Z\s\-]+$/;
+    return stateRegex.test(state.trim()) && state.trim().length >= 2;
+  };
+
+  const validateEmergencyContactName = (name: string) => {
+    // Same validation as regular name
+    return validateName(name);
+  };
+
   const validateAge = (dateOfBirth: string) => {
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
@@ -576,37 +600,87 @@ const VolunteerForm = () => {
     switch (step) {
       case 1:
         // Personal Information validation
-        if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
-        if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+        if (!formData.firstName.trim()) {
+          newErrors.firstName = 'First name is required';
+        } else if (!validateName(formData.firstName)) {
+          newErrors.firstName = 'First name should contain only letters and be at least 2 characters long';
+        } else if (formData.firstName.trim().length > 50) {
+          newErrors.firstName = 'First name should not exceed 50 characters';
+        }
+
+        if (!formData.lastName.trim()) {
+          newErrors.lastName = 'Last name is required';
+        } else if (!validateName(formData.lastName)) {
+          newErrors.lastName = 'Last name should contain only letters and be at least 2 characters long';
+        } else if (formData.lastName.trim().length > 50) {
+          newErrors.lastName = 'Last name should not exceed 50 characters';
+        }
+
         if (!formData.email.trim()) {
           newErrors.email = 'Email is required';
         } else if (!validateEmail(formData.email)) {
           newErrors.email = 'Please enter a valid email address';
         }
+
         if (!formData.phone.trim()) {
           newErrors.phone = 'Phone number is required';
         } else if (!validatePhone(formData.phone)) {
-          newErrors.phone = 'Please enter a valid 10-digit mobile number';
+          newErrors.phone = 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9';
         }
+
         if (!formData.dateOfBirth) {
           newErrors.dateOfBirth = 'Date of birth is required';
         } else {
           const age = validateAge(formData.dateOfBirth);
-          if (age < 16) newErrors.dateOfBirth = 'You must be at least 16 years old to volunteer';
+          if (age < 16) {
+            newErrors.dateOfBirth = 'You must be at least 16 years old to volunteer';
+          } else if (age > 100) {
+            newErrors.dateOfBirth = 'Please enter a valid date of birth';
+          }
         }
-        if (!formData.address.trim()) newErrors.address = 'Address is required';
-        if (!formData.city.trim()) newErrors.city = 'City is required';
-        if (!formData.state.trim()) newErrors.state = 'State is required';
+
+        if (!formData.address.trim()) {
+          newErrors.address = 'Address is required';
+        } else if (formData.address.trim().length < 10) {
+          newErrors.address = 'Please provide a more detailed address (at least 10 characters)';
+        } else if (formData.address.trim().length > 200) {
+          newErrors.address = 'Address should not exceed 200 characters';
+        }
+
+        if (!formData.city.trim()) {
+          newErrors.city = 'City is required';
+        } else if (!validateCity(formData.city)) {
+          newErrors.city = 'City name should contain only letters and be at least 2 characters long';
+        } else if (formData.city.trim().length > 50) {
+          newErrors.city = 'City name should not exceed 50 characters';
+        }
+
+        if (!formData.state.trim()) {
+          newErrors.state = 'State is required';
+        } else if (!validateState(formData.state)) {
+          newErrors.state = 'State name should contain only letters and be at least 2 characters long';
+        } else if (formData.state.trim().length > 50) {
+          newErrors.state = 'State name should not exceed 50 characters';
+        }
+
         if (!formData.zipCode.trim()) {
           newErrors.zipCode = 'ZIP code is required';
         } else if (!validateZipCode(formData.zipCode)) {
           newErrors.zipCode = 'Please enter a valid 6-digit ZIP code';
         }
-        if (!formData.emergencyContactName.trim()) newErrors.emergencyContactName = 'Emergency contact name is required';
+
+        if (!formData.emergencyContactName.trim()) {
+          newErrors.emergencyContactName = 'Emergency contact name is required';
+        } else if (!validateEmergencyContactName(formData.emergencyContactName)) {
+          newErrors.emergencyContactName = 'Emergency contact name should contain only letters and be at least 2 characters long';
+        } else if (formData.emergencyContactName.trim().length > 50) {
+          newErrors.emergencyContactName = 'Emergency contact name should not exceed 50 characters';
+        }
+
         if (!formData.emergencyContactPhone.trim()) {
           newErrors.emergencyContactPhone = 'Emergency contact phone is required';
         } else if (!validatePhone(formData.emergencyContactPhone)) {
-          newErrors.emergencyContactPhone = 'Please enter a valid 10-digit mobile number';
+          newErrors.emergencyContactPhone = 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9';
         }
         break;
 
