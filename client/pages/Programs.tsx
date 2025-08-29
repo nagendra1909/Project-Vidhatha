@@ -266,7 +266,7 @@ const ProgramsGrid = () => {
       description: "Comprehensive medical care including free consultations, medicine distribution, and health awareness campaigns.",
       services: ["General Medicine", "Gynecology", "Pediatrics", "Orthopedics","Ophthalmology"],
       icon: <HealthcareIcon />,
-      imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      imageUrl: "/healthservices.png"
     },
     {
       title: "Education & Skills",
@@ -274,7 +274,7 @@ const ProgramsGrid = () => {
       description: "Empowering individuals through skill development, educational support, and literacy programs for all age groups.",
       services: ["Vocational Training", "Career Guidance", "Educational Support", "Literacy Programs"],
       icon: <EducationIcon />,
-      imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      imageUrl: "/skill.png"
     },
     {
       title: "Community Support",
@@ -282,7 +282,7 @@ const ProgramsGrid = () => {
       description: "Essential support services including food security, emergency relief, and funeral services for families in need.",
       services: ["Food Distribution", "Emergency Relief", "Funeral Services", "Family Counseling"],
       icon: <CommunityIcon />,
-      imageUrl: "https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      imageUrl: "/support.png"
     },
     {
       title: "Arts & Culture",
@@ -290,7 +290,7 @@ const ProgramsGrid = () => {
       description: "Preserving and promoting cultural heritage through classes, events, and community festivals.",
       services: ["Dance & Music", "Traditional Arts", "Cultural Events", "Competitions"],
       icon: <ArtsIcon />,
-      imageUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      imageUrl: "/art.png"
     },
     {
       title: "Environmental Protection",
@@ -298,7 +298,7 @@ const ProgramsGrid = () => {
       description: "Creating a sustainable future through green initiatives, tree plantation, and environmental education.",
       services: ["Tree Plantation", "Community Cleanups", "Environmental Education", "Green Initiatives"],
       icon: <EnvironmentIcon />,
-      imageUrl: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      imageUrl: "/protection.png"
     },
     {
       title: "Specialized Care",
@@ -306,7 +306,7 @@ const ProgramsGrid = () => {
       description: "Targeted support for vulnerable populations including seniors, differently-abled individuals, and women & children.",
       services: ["Disability Support", "Senior Care", "Women & Children Programs", "Counseling Services"],
       icon: <SpecializedIcon />,
-      imageUrl: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      imageUrl: "/specialcare.png"
     }
   ];
 
