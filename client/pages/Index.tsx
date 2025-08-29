@@ -249,7 +249,7 @@ const Hero = () => {
           >
             <div className="relative">
               <img
-                src="https://api.builder.io/api/v1/image/assets/TEMP/9df290f6a88aaee6370fa211720a0d55628fbadf?width=1000"
+                src="/Rectangle 68.png"
                 alt="Community"
                 className="w-full h-auto rounded-xl hover:scale-105 transition-transform duration-500"
               />
@@ -285,12 +285,12 @@ const ContentSections = () => {
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                 <img
-                  src="https://api.builder.io/api/v1/image/assets/TEMP/8f72c9802b018dd43ec81595d3f4e94527a0d63c?width=1004"
+                  src="/Rectangle 17.png"
                   alt="Women and Children"
                   className="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-[25px] sm:rounded-[35px] lg:rounded-[50px] hover:scale-105 transition-transform duration-500"
                 />
                 <img
-                  src="https://api.builder.io/api/v1/image/assets/TEMP/d2009583a5a8fb83858a033322a7897dc296916a?width=1004"
+                  src="/Rectangle 18.png"
                   alt="Community Support"
                   className="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-[25px] sm:rounded-[35px] lg:rounded-[50px] hover:scale-105 transition-transform duration-500"
                 />
@@ -362,12 +362,12 @@ const ContentSections = () => {
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                 <img
-                  src="https://api.builder.io/api/v1/image/assets/TEMP/bf73a5db1c602a2e3b8225dc6e36b841d4d47de1?width=1004"
+                  src="/Rectangle 16.png"
                   alt="Old Age Care"
                   className="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-[25px] sm:rounded-[35px] lg:rounded-[50px] hover:scale-105 transition-transform duration-500"
                 />
                 <img
-                  src="https://api.builder.io/api/v1/image/assets/TEMP/d04b54492381426b995dd53eea8a740031b226a0?width=1004"
+                  src="/Rectangle 15.png"
                   alt="Elder Support"
                   className="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-[25px] sm:rounded-[35px] lg:rounded-[50px] hover:scale-105 transition-transform duration-500"
                 />
@@ -484,25 +484,25 @@ const FeaturedPrograms = () => {
       title: "Healthcare Services",
       impact: "25,000+ patients served annually",
       description: "Free medical consultations, medicine distribution, and health awareness campaigns across multiple specialties.",
-      image: "https://api.builder.io/api/v1/image/assets/TEMP/b040d70a8d8141e1fc6c9ab83127f722f5cfbf25?width=636"
+      image:"/healthcare.png"
     },
     {
       title: "Education & Skills",
       impact: "5,000+ students supported",
       description: "Comprehensive skill development, educational support, and literacy programs for all age groups.",
-      image: "https://api.builder.io/api/v1/image/assets/TEMP/b32a199a43f7b608d9ae3370bf3de4bb6dd624be?width=636"
+      image:"/education.png"
     },
     {
       title: "Community Support",
       impact: "15,000+ families assisted",
       description: "Food security, emergency relief, and funeral services to support families in times of need for the people.",
-      image: "https://api.builder.io/api/v1/image/assets/TEMP/e10513ca55d162a46bbf26759417ec65676f9282?width=636"
+      image:"/community.png"
     },
     {
       title: "Environmental Protection",
       impact: "50,000+ trees planted",
       description: "Green initiatives, tree plantation drives, and environmental education for a sustainable future.",
-      image: "https://api.builder.io/api/v1/image/assets/TEMP/b53f1fdd96de81f81d91af5c14974c666443f43b?width=636"
+      image:"/environment.png"
     }
   ];
 
@@ -961,7 +961,7 @@ const Newsletter = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/cace8c4771975f89ca95b4f3cbf11028f3c02079?width=80" alt="Monthly Updates" className="w-10 h-10" />
+              <img src="/calender.png" alt="Monthly Updates" className="w-10 h-10" />
             </div>
             <h3 className="text-ngo-secondary font-niramit text-2xl font-bold mb-4">Monthly Updates</h3>
             <p className="text-ngo-secondary font-niramit text-base">
@@ -971,7 +971,7 @@ const Newsletter = () => {
           
           <div className="text-center">
             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/1bc64747af890d00c614e0b61315ec680fb3a49b?width=80" alt="Volunteer Opportunities" className="w-10 h-10" />
+              <img src="/volunteer.png" alt="Volunteer Opportunities" className="w-10 h-10" />
             </div>
             <h3 className="text-ngo-secondary font-niramit text-2xl font-bold mb-4">Volunteer Opportunities</h3>
             <p className="text-ngo-secondary font-niramit text-base">
@@ -981,7 +981,7 @@ const Newsletter = () => {
           
           <div className="text-center">
             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-              <img src="https://api.builder.io/api/v1/image/assets/TEMP/de833d48a94e4e6e5c5b79c3862765c9715bf9f6?width=80" alt="Success Stories" className="w-10 h-10" />
+              <img src="/success.png" alt="Success Stories" className="w-10 h-10" />
             </div>
             <h3 className="text-ngo-secondary font-niramit text-2xl font-bold mb-4">Success Stories</h3>
             <p className="text-ngo-secondary font-niramit text-base">
