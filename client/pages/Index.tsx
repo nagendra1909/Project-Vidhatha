@@ -65,7 +65,7 @@ const HeartIcon = () => (
 
 const GroupIcon = () => (
   <div className="w-12 h-12 flex items-center justify-center">
-    <Users size={48} color="#ef4444" fill="none" strokeWidth={2} />
+    <Users size={48} color="#FBBF24" fill="none" strokeWidth={2} />
   </div>
 );
 
@@ -79,7 +79,7 @@ const EarthIcon = () => (
 
 const GlobeIcon = () => (
   <div className="w-12 h-12 flex items-center justify-center">
-    <Globe size={48} color="#ef4444" fill="none" strokeWidth={2}/>
+    <Globe size={48} color="#FBBF24" fill="none" strokeWidth={2}/>
   </div>
 );
 
@@ -197,7 +197,7 @@ const Hero = () => {
             {/* Stats */}
             <div
               ref={statsRef}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8 sm:gap-12 lg:gap-16"
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-12 sm:gap-16 lg:gap-20"
               style={{
                 ...fadeInUp,
                 ...(statsVisible ? visible : {}),
@@ -205,35 +205,27 @@ const Hero = () => {
               }}
             >
               <div className="text-center">
-                <div className="w-8 h-8 mx-auto mb-3 text-yellow-300">
-                  <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21.6628 28V25.3333C21.6628 23.9188 21.1009 22.5623 20.1007 21.5621C19.1005 20.5619 17.7439 20 16.3294 20H8.32943C6.91494 20 5.55839 20.5619 4.55819 21.5621C3.558 22.5623 2.99609 23.9188 2.99609 25.3333V28" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M12.3294 14.6667C15.2749 14.6667 17.6628 12.2789 17.6628 9.33333C17.6628 6.38781 15.2749 4 12.3294 4C9.38391 4 6.99609 6.38781 6.99609 9.33333C6.99609 12.2789 9.38391 14.6667 12.3294 14.6667Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                <div className="w-12 h-12 mx-auto mb-4 text-yellow-400">
+                  <GroupIcon />
                 </div>
-                <div className="text-white font-geist text-xl sm:text-2xl font-bold">50,000+</div>
-                <div className="text-blue-200 font-geist text-sm sm:text-base">Lives Impacted</div>
+                <div className="text-white font-geist text-2xl sm:text-3xl font-bold">50,000+</div>
+                <div className="text-blue-200 font-geist text-base sm:text-lg">Lives Impacted</div>
               </div>
 
               <div className="text-center">
-                <div className="w-8 h-8 mx-auto mb-3 text-ngo-primary">
-                  <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M25.653 18.6667C27.6397 16.72 29.653 14.3867 29.653 11.3333C29.653 9.38841 28.8804 7.52315 27.5051 6.14788C26.1298 4.77262 24.2646 4 22.3197 4C19.973 4 18.3197 4.66667 16.3197 6.66667C14.3197 4.66667 12.6663 4 10.3197 4C8.37474 4 6.50948 4.77262 5.13421 6.14788C3.75895 7.52315 2.98633 9.38841 2.98633 11.3333C2.98633 14.4 4.98633 16.7333 6.98633 18.6667L16.3197 28L25.653 18.6667Z" stroke="#EB414B" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                <div className="w-12 h-12 mx-auto mb-4 text-red-500">
+                  <HeartIcon />
                 </div>
-                <div className="text-white font-geist text-xl sm:text-2xl font-bold">15+</div>
-                <div className="text-blue-200 font-geist text-sm sm:text-base">Programs</div>
+                <div className="text-white font-geist text-2xl sm:text-3xl font-bold">15+</div>
+                <div className="text-blue-200 font-geist text-base sm:text-lg">Programs</div>
               </div>
 
               <div className="text-center">
-                <div className="w-8 h-8 mx-auto mb-3 text-yellow-300">
-                  <svg width="32" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.3294 29.3333C23.6932 29.3333 29.6628 23.3638 29.6628 16C29.6628 8.63616 23.6932 2.66663 16.3294 2.66663C8.96563 2.66663 2.99609 8.63616 2.99609 16C2.99609 23.3638 8.96563 29.3333 16.3294 29.3333Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16.3294 2.66663C12.9057 6.2615 10.9961 11.0356 10.9961 16C10.9961 20.9643 12.9057 25.7384 16.3294 29.3333C19.7531 25.7384 21.6628 20.9643 21.6628 16C21.6628 11.0356 19.7531 6.2615 16.3294 2.66663Z" stroke="#FDE047" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                <div className="w-12 h-12 mx-auto mb-4 text-yellow-400">
+                  <GlobeIcon />
                 </div>
-                <div className="text-white font-geist text-xl sm:text-2xl font-bold">25+</div>
-                <div className="text-blue-200 font-geist text-sm sm:text-base">Communities</div>
+                <div className="text-white font-geist text-2xl sm:text-3xl font-bold">25+</div>
+                <div className="text-blue-200 font-geist text-base sm:text-lg">Communities</div>
               </div>
             </div>
           </div>
