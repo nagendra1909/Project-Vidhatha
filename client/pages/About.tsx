@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Layout from "../components/Layout";
 
 // Icon components
@@ -155,53 +156,187 @@ const HeroSection = () => {
 };
 
 const OurStorySection = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-4xl font-bold font-niramit text-ngo-gray-800 mb-8">
-              Our Story
-            </h2>
+    <>
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl font-bold font-niramit text-ngo-gray-800 mb-8">
+                Our Story
+              </h2>
 
-            <div className="space-y-6">
-              <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
-                Vidhatha Society was born from a simple yet powerful belief:
-                every person deserves access to quality healthcare, education,
-                and opportunities to thrive, regardless of their circumstances.
-              </p>
+              <div className="space-y-6">
+                <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                  Vidhatha Society was born from a simple yet powerful belief:
+                  every person deserves access to quality healthcare, education,
+                  and opportunities to thrive, regardless of their circumstances.
+                </p>
 
-              <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
-                Founded in 2010 by a group of passionate community leaders, we
-                started with a small clinic serving just a few dozen families.
-                Today, we operate comprehensive programs across 25+ communities,
-                having impacted over 50,000 lives.
-              </p>
+                <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                  Founded in 2010 by a group of passionate community leaders, we
+                  started with a small clinic serving just a few dozen families.
+                  Today, we operate comprehensive programs across 25+ communities,
+                  having impacted over 50,000 lives.
+                </p>
 
-              <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
-                Our journey has been marked by countless stories of
-                transformation - from patients who received life-saving
-                treatment to students who discovered new career paths, from
-                families who found support in their darkest hours to communities
-                that came together for positive change.
-              </p>
+                <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                  Our journey has been marked by countless stories of
+                  transformation - from patients who received life-saving
+                  treatment to students who discovered new career paths, from
+                  families who found support in their darkest hours to communities
+                  that came together for positive change.
+                </p>
+              </div>
+
+              <button 
+                onClick={openModal}
+                className="mt-8 bg-ngo-primary text-white px-6 py-3 rounded-md text-base font-medium font-niramit hover:bg-red-600 transition-all duration-300 hover:scale-105"
+              >
+                Read Our Full History
+              </button>
             </div>
 
-            <button className="mt-8 bg-ngo-primary text-white px-6 py-3 rounded-md text-base font-medium font-niramit hover:bg-red-600 transition-all duration-300 hover:scale-105">
-              Read Our Full History
-            </button>
-          </div>
-
-          <div className="relative">
-            <img
-              src="/About.png"
-              alt="Vidhatha Society team with community members"
-              className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105"
-            />
+            <div className="relative">
+              <img
+                src="/About.png"
+                alt="Vidhatha Society team with community members"
+                className="w-full h-auto rounded-lg shadow-xl transition-transform duration-300 hover:scale-105"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Modal Overlay */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-6 border-b border-gray-200">
+              <h3 className="text-2xl font-bold font-niramit text-ngo-gray-800">
+                Our Full History
+              </h3>
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-700 text-2xl font-bold transition-colors duration-200"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div className="space-y-6">
+                  <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                    Vidhatha Society was born from a simple yet powerful belief:
+                    every person deserves access to quality healthcare, education,
+                    and opportunities to thrive, regardless of their circumstances.
+                  </p>
+
+                  <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                    Founded in 2010 by a group of passionate community leaders, we
+                    started with a small clinic serving just a few dozen families.
+                    Today, we operate comprehensive programs across 25+ communities,
+                    having impacted over 50,000 lives.
+                  </p>
+
+                  <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                    Our journey has been marked by countless stories of
+                    transformation - from patients who received life-saving
+                    treatment to students who discovered new career paths, from
+                    families who found support in their darkest hours to communities
+                    that came together for positive change.
+                  </p>
+
+                  <h4 className="text-xl font-bold font-niramit text-ngo-gray-800 mt-8">
+                    Our Founding Vision
+                  </h4>
+                  <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                    The founders of Vidhatha Society recognized a critical gap in essential services 
+                    within underserved communities. They envisioned an organization that would not 
+                    just provide temporary relief, but create sustainable, long-term solutions that 
+                    would empower individuals and strengthen entire communities.
+                  </p>
+
+                  <h4 className="text-xl font-bold font-niramit text-ngo-gray-800 mt-6">
+                    Growing Impact
+                  </h4>
+                  <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                    What began as a small healthcare initiative has evolved into a comprehensive 
+                    organization addressing multiple facets of community development. Through 
+                    partnerships with local leaders, government agencies, and international 
+                    organizations, we've been able to expand our reach and deepen our impact.
+                  </p>
+                </div>
+
+                <div className="lg:pl-6">
+                  <img
+                    src="/About.png"
+                    alt="Vidhatha Society team with community members"
+                    className="w-full h-auto rounded-lg shadow-lg mb-6"
+                  />
+                  
+                  <h4 className="text-xl font-bold font-niramit text-ngo-gray-800 mb-4">
+                    Key Achievements
+                  </h4>
+                  <ul className="space-y-3 text-base font-niramit text-ngo-gray-600">
+                    <li className="flex items-start">
+                      <span className="text-ngo-primary mr-2">•</span>
+                      Established 15+ sustainable community programs
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-ngo-primary mr-2">•</span>
+                      Trained over 200 local healthcare workers
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-ngo-primary mr-2">•</span>
+                      Provided education scholarships to 1,000+ students
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-ngo-primary mr-2">•</span>
+                      Supported 500+ families during crisis situations
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-ngo-primary mr-2">•</span>
+                      Created 300+ sustainable livelihoods
+                    </li>
+                  </ul>
+
+                  <h4 className="text-xl font-bold font-niramit text-ngo-gray-800 mt-6 mb-4">
+                    Looking Forward
+                  </h4>
+                  <p className="text-base font-niramit text-ngo-gray-600 leading-relaxed">
+                    As we continue to grow, our commitment remains unwavering: to create 
+                    lasting positive change in the communities we serve, ensuring that 
+                    every individual has the opportunity to thrive and contribute to 
+                    society's betterment.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 border-t border-gray-200 bg-gray-50">
+              <div className="flex justify-end">
+                <button
+                  onClick={closeModal}
+                  className="bg-ngo-primary text-white px-6 py-2 rounded-md text-base font-medium font-niramit hover:bg-red-600 transition-all duration-300"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
