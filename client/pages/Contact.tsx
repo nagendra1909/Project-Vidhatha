@@ -187,33 +187,210 @@ const ContactForm = () => {
     message: ''
   });
 
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [touched, setTouched] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    phone: false,
+    subject: false,
+    message: false
+  });
+
+  // Validation functions
+  const validateName = (name: string, field: string) => {
+    if (!name.trim()) {
+      return `${field} is required`;
+    }
+    if (name.trim().length < 2) {
+      return `${field} must be at least 2 characters long`;
+    }
+    if (!/^[a-zA-Z\s'-]+$/.test(name.trim())) {
+      return `${field} can only contain letters, spaces, hyphens, and apostrophes`;
+    }
+    if (name.trim().length > 50) {
+      return `${field} must be less than 50 characters`;
+    }
+    return '';
+  };
+
+  const validateEmail = (email: string) => {
+    if (!email.trim()) {
+      return 'Email is required';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return 'Please enter a valid email address';
+    }
+    if (email.length > 100) {
+      return 'Email must be less than 100 characters';
+    }
+    return '';
+  };
+
+  const validatePhone = (phone: string) => {
+    if (phone.trim() && phone.trim().length > 0) {
+      const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+      const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+      if (!phoneRegex.test(cleanPhone)) {
+        return 'Please enter a valid phone number';
+      }
+      if (cleanPhone.length < 10) {
+        return 'Phone number must be at least 10 digits';
+      }
+      if (cleanPhone.length > 15) {
+        return 'Phone number must be less than 15 digits';
+      }
+    }
+    return '';
+  };
+
+  const validateSubject = (subject: string) => {
+    if (!subject.trim()) {
+      return 'Subject is required';
+    }
+    if (subject.trim().length < 3) {
+      return 'Subject must be at least 3 characters long';
+    }
+    if (subject.length > 100) {
+      return 'Subject must be less than 100 characters';
+    }
+    return '';
+  };
+
+  const validateMessage = (message: string) => {
+    if (!message.trim()) {
+      return 'Message is required';
+    }
+    if (message.trim().length < 10) {
+      return 'Message must be at least 10 characters long';
+    }
+    if (message.length > 1000) {
+      return 'Message must be less than 1000 characters';
+    }
+    return '';
+  };
+
+  const validateField = (name: string, value: string) => {
+    let error = '';
+    
+    switch (name) {
+      case 'firstName':
+        error = validateName(value, 'First name');
+        break;
+      case 'lastName':
+        error = validateName(value, 'Last name');
+        break;
+      case 'email':
+        error = validateEmail(value);
+        break;
+      case 'phone':
+        error = validatePhone(value);
+        break;
+      case 'subject':
+        error = validateSubject(value);
+        break;
+      case 'message':
+        error = validateMessage(value);
+        break;
+    }
+    
+    return error;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    
+    // Real-time validation
+    const error = validateField(name, value);
+    setErrors({ ...errors, [name]: error });
+  };
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setTouched({ ...touched, [name]: true });
+    
+    // Validate on blur
+    const error = validateField(name, value);
+    setErrors({ ...errors, [name]: error });
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      firstName: validateField('firstName', formData.firstName),
+      lastName: validateField('lastName', formData.lastName),
+      email: validateField('email', formData.email),
+      phone: validateField('phone', formData.phone),
+      subject: validateField('subject', formData.subject),
+      message: validateField('message', formData.message)
+    };
+    
+    setErrors(newErrors);
+    setTouched({
+      firstName: true,
+      lastName: true,
+      email: true,
+      phone: true,
+      subject: true,
+      message: true
+    });
+    
+    return Object.values(newErrors).every(error => error === '');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
     
-    // Show success toast
-    setShowSuccessToast(true);
-    
-    // Clear form fields
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
-    
-    // Hide toast after 3 seconds
-    setTimeout(() => {
-      setShowSuccessToast(false);
-    }, 3000);
+    if (validateForm()) {
+      console.log('Form submitted:', formData);
+      
+      // Show success toast
+      setShowSuccessToast(true);
+      
+      // Clear form fields
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+      
+      // Reset errors and touched state
+      setErrors({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+      
+      setTouched({
+        firstName: false,
+        lastName: false,
+        email: false,
+        phone: false,
+        subject: false,
+        message: false
+      });
+      
+      // Hide toast after 3 seconds
+      setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 3000);
+    }
   };
 
   // Success Toast Component
@@ -257,10 +434,20 @@ const ContactForm = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Your first name"
-              className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#EB414B] focus:border-transparent"
+              className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+                errors.firstName && touched.firstName
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-[#E4E4E7] focus:ring-[#EB414B]'
+              }`}
               required
             />
+            {errors.firstName && touched.firstName && (
+              <p className="mt-1 text-sm text-red-600 font-Niramit">
+                {errors.firstName}
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium font-Niramit text-[#374151] mb-2">
@@ -271,10 +458,20 @@ const ContactForm = () => {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Your last name"
-              className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#EB414B] focus:border-transparent"
+              className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+                errors.lastName && touched.lastName
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-[#E4E4E7] focus:ring-[#EB414B]'
+              }`}
               required
             />
+            {errors.lastName && touched.lastName && (
+              <p className="mt-1 text-sm text-red-600 font-Niramit">
+                {errors.lastName}
+              </p>
+            )}
           </div>
         </div>
 
@@ -287,59 +484,120 @@ const ContactForm = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="your.email@example.com"
-            className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#EB414B] focus:border-transparent"
+            className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+              errors.email && touched.email
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-[#E4E4E7] focus:ring-[#EB414B]'
+            }`}
             required
           />
+          {errors.email && touched.email && (
+            <p className="mt-1 text-sm text-red-600 font-Niramit">
+              {errors.email}
+            </p>
+          )}
         </div>
 
         <div>
           <label className="block text-sm font-medium font-Niramit text-[#374151] mb-2">
             Phone Number
+            <span className="text-xs text-[#71717A] ml-1">(Optional)</span>
           </label>
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="Enter the 10-digit number"
-            className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#EB414B] focus:border-transparent"
+            onBlur={handleBlur}
+            placeholder="Enter your phone number"
+            className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+              errors.phone && touched.phone
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-[#E4E4E7] focus:ring-[#EB414B]'
+            }`}
           />
+          {errors.phone && touched.phone && (
+            <p className="mt-1 text-sm text-red-600 font-Niramit">
+              {errors.phone}
+            </p>
+          )}
         </div>
 
         <div>
           <label className="block text-sm font-medium font-Niramit text-[#374151] mb-2">
             Subject *
+            <span className="text-xs text-[#71717A] ml-1">(Max 100 characters)</span>
           </label>
           <input
             type="text"
             name="subject"
             value={formData.subject}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="What is this regarding?"
-            className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#EB414B] focus:border-transparent"
+            maxLength={100}
+            className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+              errors.subject && touched.subject
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-[#E4E4E7] focus:ring-[#EB414B]'
+            }`}
             required
           />
+          <div className="flex justify-between items-center mt-1">
+            <div>
+              {errors.subject && touched.subject && (
+                <p className="text-sm text-red-600 font-Niramit">
+                  {errors.subject}
+                </p>
+              )}
+            </div>
+            <p className="text-xs text-[#71717A] font-Niramit">
+              {formData.subject.length}/100
+            </p>
+          </div>
         </div>
 
         <div>
           <label className="block text-sm font-medium font-Niramit text-[#374151] mb-2">
             Message *
+            <span className="text-xs text-[#71717A] ml-1">(Max 1000 characters)</span>
           </label>
           <textarea
             name="message"
             value={formData.message}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Tell us how we can help you..."
             rows={5}
-            className="w-full px-3 py-2 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#EB414B] focus:border-transparent resize-vertical"
+            maxLength={1000}
+            className={`w-full px-3 py-2 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent resize-vertical ${
+              errors.message && touched.message
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-[#E4E4E7] focus:ring-[#EB414B]'
+            }`}
             required
           />
+          <div className="flex justify-between items-center mt-1">
+            <div>
+              {errors.message && touched.message && (
+                <p className="text-sm text-red-600 font-Niramit">
+                  {errors.message}
+                </p>
+              )}
+            </div>
+            <p className="text-xs text-[#71717A] font-Niramit">
+              {formData.message.length}/1000
+            </p>
+          </div>
         </div>
 
         <button
           type="submit"
-          className="w-full h-10 bg-[#EB414B] text-white text-sm font-medium font-Niramit rounded-md hover:bg-red-600 transition-colors"
+          className="w-full h-10 bg-[#EB414B] text-white text-sm font-medium font-Niramit rounded-md hover:bg-red-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          disabled={Object.values(errors).some(error => error !== '') || 
+                   (!formData.firstName || !formData.lastName || !formData.email || !formData.subject || !formData.message)}
         >
           Send Message
         </button>
@@ -360,20 +618,220 @@ const VolunteerForm = () => {
     skills: ''
   });
 
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    interests: '',
+    availability: '',
+    skills: ''
+  });
+
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [touched, setTouched] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    phone: false,
+    interests: false,
+    availability: false,
+    skills: false
+  });
+
+  // Validation functions
+  const validateName = (name: string, field: string) => {
+    if (!name.trim()) {
+      return `${field} is required`;
+    }
+    if (name.trim().length < 2) {
+      return `${field} must be at least 2 characters long`;
+    }
+    if (!/^[a-zA-Z\s'-]+$/.test(name.trim())) {
+      return `${field} can only contain letters, spaces, hyphens, and apostrophes`;
+    }
+    if (name.trim().length > 50) {
+      return `${field} must be less than 50 characters`;
+    }
+    return '';
+  };
+
+  const validateEmail = (email: string) => {
+    if (!email.trim()) {
+      return 'Email is required';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return 'Please enter a valid email address';
+    }
+    if (email.length > 100) {
+      return 'Email must be less than 100 characters';
+    }
+    return '';
+  };
+
+  const validatePhone = (phone: string) => {
+    if (!phone.trim()) {
+      return 'Phone number is required';
+    }
+    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+    const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+    if (!phoneRegex.test(cleanPhone)) {
+      return 'Please enter a valid phone number';
+    }
+    if (cleanPhone.length < 10) {
+      return 'Phone number must be at least 10 digits';
+    }
+    if (cleanPhone.length > 15) {
+      return 'Phone number must be less than 15 digits';
+    }
+    return '';
+  };
+
+  const validateInterests = (interests: string[]) => {
+    if (interests.length === 0) {
+      return 'Please select at least one area of interest';
+    }
+    return '';
+  };
+
+  const validateField = (name: string, value: any) => {
+    let error = '';
+    
+    switch (name) {
+      case 'firstName':
+        error = validateName(value, 'First name');
+        break;
+      case 'lastName':
+        error = validateName(value, 'Last name');
+        break;
+      case 'email':
+        error = validateEmail(value);
+        break;
+      case 'phone':
+        error = validatePhone(value);
+        break;
+      case 'interests':
+        error = validateInterests(value);
+        break;
+      case 'availability':
+        if (value.length > 500) {
+          error = 'Availability description must be less than 500 characters';
+        }
+        break;
+      case 'skills':
+        if (value.length > 1000) {
+          error = 'Skills description must be less than 1000 characters';
+        }
+        break;
+    }
+    
+    return error;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    
+    // Real-time validation
+    const error = validateField(name, value);
+    setErrors({ ...errors, [name]: error });
+  };
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name } = e.target;
+    setTouched({ ...touched, [name]: true });
+    
+    // Validate on blur
+    const value = name === 'interests' ? formData.interests : e.target.value;
+    const error = validateField(name, value);
+    setErrors({ ...errors, [name]: error });
   };
 
   const handleInterestChange = (interest: string) => {
     const updatedInterests = formData.interests.includes(interest)
       ? formData.interests.filter(i => i !== interest)
       : [...formData.interests, interest];
+    
     setFormData({ ...formData, interests: updatedInterests });
+    setTouched({ ...touched, interests: true });
+    
+    // Validate interests
+    const error = validateInterests(updatedInterests);
+    setErrors({ ...errors, interests: error });
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      firstName: validateField('firstName', formData.firstName),
+      lastName: validateField('lastName', formData.lastName),
+      email: validateField('email', formData.email),
+      phone: validateField('phone', formData.phone),
+      interests: validateField('interests', formData.interests),
+      availability: validateField('availability', formData.availability),
+      skills: validateField('skills', formData.skills)
+    };
+    
+    setErrors(newErrors);
+    setTouched({
+      firstName: true,
+      lastName: true,
+      email: true,
+      phone: true,
+      interests: true,
+      availability: true,
+      skills: true
+    });
+    
+    return Object.values(newErrors).every(error => error === '');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Volunteer form submitted:', formData);
+    
+    if (validateForm()) {
+      console.log('Volunteer form submitted:', formData);
+      
+      // Show success toast
+      setShowSuccessToast(true);
+      
+      // Clear form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        interests: [],
+        availability: '',
+        skills: ''
+      });
+      
+      // Reset errors and touched state
+      setErrors({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        interests: '',
+        availability: '',
+        skills: ''
+      });
+      
+      setTouched({
+        firstName: false,
+        lastName: false,
+        email: false,
+        phone: false,
+        interests: false,
+        availability: false,
+        skills: false
+      });
+      
+      // Hide toast after 3 seconds
+      setTimeout(() => {
+        setShowSuccessToast(false);
+      }, 3000);
+    }
   };
 
   const interests = [
@@ -385,8 +843,29 @@ const VolunteerForm = () => {
     'Administrative'
   ];
 
+  // Success Toast Component
+  const SuccessToast = () => {
+    if (!showSuccessToast) return null;
+
+    return (
+      <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center">
+        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span className="font-Niramit">Interest submitted successfully! We'll contact you soon.</span>
+        <button 
+          onClick={() => setShowSuccessToast(false)}
+          className="ml-4 text-white hover:text-gray-200"
+        >
+          ×
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white rounded-lg border border-[#E4E4E7] shadow-sm p-6">
+      <SuccessToast />
       <div className="flex items-center mb-6">
         <UserIcon />
         <h3 className="text-2xl font-bold font-Niramit text-[#09090B] ml-2">
@@ -412,10 +891,20 @@ const VolunteerForm = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Your first name"
-              className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#16A34A] focus:border-transparent"
+              className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+                errors.firstName && touched.firstName
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-[#E4E4E7] focus:ring-[#16A34A]'
+              }`}
               required
             />
+            {errors.firstName && touched.firstName && (
+              <p className="mt-1 text-sm text-red-600 font-Niramit">
+                {errors.firstName}
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium font-Niramit text-[#374151] mb-2">
@@ -426,10 +915,20 @@ const VolunteerForm = () => {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Your last name"
-              className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#16A34A] focus:border-transparent"
+              className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+                errors.lastName && touched.lastName
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-[#E4E4E7] focus:ring-[#16A34A]'
+              }`}
               required
             />
+            {errors.lastName && touched.lastName && (
+              <p className="mt-1 text-sm text-red-600 font-Niramit">
+                {errors.lastName}
+              </p>
+            )}
           </div>
         </div>
 
@@ -442,10 +941,20 @@ const VolunteerForm = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="your.email@example.com"
-            className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#16A34A] focus:border-transparent"
+            className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+              errors.email && touched.email
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-[#E4E4E7] focus:ring-[#16A34A]'
+            }`}
             required
           />
+          {errors.email && touched.email && (
+            <p className="mt-1 text-sm text-red-600 font-Niramit">
+              {errors.email}
+            </p>
+          )}
         </div>
 
         <div>
@@ -457,10 +966,20 @@ const VolunteerForm = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="Enter the 10-digit number"
-            className="w-full h-10 px-3 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#16A34A] focus:border-transparent"
+            onBlur={handleBlur}
+            placeholder="Enter your phone number"
+            className={`w-full h-10 px-3 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent ${
+              errors.phone && touched.phone
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-[#E4E4E7] focus:ring-[#16A34A]'
+            }`}
             required
           />
+          {errors.phone && touched.phone && (
+            <p className="mt-1 text-sm text-red-600 font-Niramit">
+              {errors.phone}
+            </p>
+          )}
         </div>
 
         <div>
@@ -474,7 +993,7 @@ const VolunteerForm = () => {
                   type="checkbox"
                   checked={formData.interests.includes(interest)}
                   onChange={() => handleInterestChange(interest)}
-                  className="w-3 h-3 border border-[#71717A] rounded-sm mr-2 text-[#16A34A] focus:ring-[#16A34A]"
+                  className="w-4 h-4 border border-[#71717A] rounded mr-3 text-[#16A34A] focus:ring-[#16A34A]"
                 />
                 <span className="text-sm font-Niramit text-[#09090B]">
                   {interest}
@@ -482,42 +1001,87 @@ const VolunteerForm = () => {
               </label>
             ))}
           </div>
+          {errors.interests && touched.interests && (
+            <p className="mt-1 text-sm text-red-600 font-Niramit">
+              {errors.interests}
+            </p>
+          )}
         </div>
 
         <div>
           <label className="block text-sm font-medium font-Niramit text-[#374151] mb-2">
             Availability
+            <span className="text-xs text-[#71717A] ml-1">(Max 500 characters)</span>
           </label>
           <textarea
             name="availability"
             value={formData.availability}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Tell us about your availability (days, times, frequency)..."
             rows={3}
-            className="w-full px-3 py-2 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#16A34A] focus:border-transparent resize-vertical"
+            maxLength={500}
+            className={`w-full px-3 py-2 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent resize-vertical ${
+              errors.availability && touched.availability
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-[#E4E4E7] focus:ring-[#16A34A]'
+            }`}
           />
+          <div className="flex justify-between items-center mt-1">
+            <div>
+              {errors.availability && touched.availability && (
+                <p className="text-sm text-red-600 font-Niramit">
+                  {errors.availability}
+                </p>
+              )}
+            </div>
+            <p className="text-xs text-[#71717A] font-Niramit">
+              {formData.availability.length}/500
+            </p>
+          </div>
         </div>
 
         <div>
           <label className="block text-sm font-medium font-Niramit text-[#374151] mb-2">
             Skills & Experience
+            <span className="text-xs text-[#71717A] ml-1">(Max 1000 characters)</span>
           </label>
           <textarea
             name="skills"
             value={formData.skills}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Share any relevant skills or experience..."
             rows={3}
-            className="w-full px-3 py-2 border border-[#E4E4E7] rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:ring-[#16A34A] focus:border-transparent resize-vertical"
+            maxLength={1000}
+            className={`w-full px-3 py-2 border rounded-md text-sm font-Niramit placeholder-[#71717A] focus:outline-none focus:ring-2 focus:border-transparent resize-vertical ${
+              errors.skills && touched.skills
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-[#E4E4E7] focus:ring-[#16A34A]'
+            }`}
           />
+          <div className="flex justify-between items-center mt-1">
+            <div>
+              {errors.skills && touched.skills && (
+                <p className="text-sm text-red-600 font-Niramit">
+                  {errors.skills}
+                </p>
+              )}
+            </div>
+            <p className="text-xs text-[#71717A] font-Niramit">
+              {formData.skills.length}/1000
+            </p>
+          </div>
         </div>
 
-        <Link
-          to="/volunteer"
-          className="w-full h-10 bg-[#145225] text-white text-sm font-medium font-Niramit rounded-md hover:bg-red-600 transition-colors inline-flex items-center justify-center"
+        <button
+          type="submit"
+          className="w-full h-10 bg-[#16A34A] text-white text-sm font-medium font-Niramit rounded-md hover:bg-[#145225] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          disabled={Object.values(errors).some(error => error !== '') || 
+                   (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || formData.interests.length === 0)}
         >
-          Submit Application
-        </Link>
+          Submit Interest Form
+        </button>
       </form>
     </div>
   );

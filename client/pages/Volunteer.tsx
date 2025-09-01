@@ -148,18 +148,26 @@ const PersonalInfoStep = ({ formData, handleInputChange, errors }: {
 
       <div>
         <label className="block text-sm font-medium text-gray-900 mb-1">Address *</label>
-        <input
+        <textarea
           key="address"
-          type="text"
+          rows={3}
           value={formData.address}
           onChange={(e) => handleInputChange('address', e.target.value)}
-          className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 ${
+          placeholder="Enter your complete address (e.g., 123 Main Street, Apartment 4B, Neighborhood)"
+          className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 resize-none ${
             errors.address 
               ? 'border-red-500 focus:ring-red-500' 
               : 'border-gray-200 focus:ring-red-500'
           }`}
         />
-        {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
+        <div className="flex justify-between mt-1">
+          <div>
+            {errors.address && <p className="text-red-500 text-xs">{errors.address}</p>}
+          </div>
+          <p className="text-xs text-gray-500">
+            {formData.address.length}/200 characters
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -582,6 +590,51 @@ const VolunteerForm = () => {
     return validateName(name);
   };
 
+  const validateAddress = (address: string) => {
+    const trimmedAddress = address.trim();
+    
+    // Check if address is empty
+    if (!trimmedAddress) {
+      return false;
+    }
+    
+    // Check minimum length
+    if (trimmedAddress.length < 10) {
+      return false;
+    }
+    
+    // Check maximum length
+    if (trimmedAddress.length > 200) {
+      return false;
+    }
+    
+    // Check if address contains at least one letter and one number (typical address format)
+    const hasLetter = /[a-zA-Z]/.test(trimmedAddress);
+    const hasNumber = /\d/.test(trimmedAddress);
+    
+    if (!hasLetter) {
+      return false;
+    }
+    
+    // Allow letters, numbers, spaces, commas, periods, hyphens, apostrophes, forward slashes, and parentheses
+    const addressRegex = /^[a-zA-Z0-9\s,.\-'/()#]+$/;
+    if (!addressRegex.test(trimmedAddress)) {
+      return false;
+    }
+    
+    // Check for consecutive special characters (more than 2)
+    if (/[,.\-'/()#]{3,}/.test(trimmedAddress)) {
+      return false;
+    }
+    
+    // Check for too many consecutive spaces
+    if (/\s{4,}/.test(trimmedAddress)) {
+      return false;
+    }
+    
+    return true;
+  };
+
   const validateAge = (dateOfBirth: string) => {
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
@@ -645,6 +698,16 @@ const VolunteerForm = () => {
           newErrors.address = 'Please provide a more detailed address (at least 10 characters)';
         } else if (formData.address.trim().length > 200) {
           newErrors.address = 'Address should not exceed 200 characters';
+        } else if (!/[a-zA-Z]/.test(formData.address)) {
+          newErrors.address = 'Address must contain at least one letter';
+        } else if (!/^[a-zA-Z0-9\s,.\-'/()#]+$/.test(formData.address.trim())) {
+          newErrors.address = 'Address contains invalid characters. Only letters, numbers, spaces, and common punctuation are allowed';
+        } else if (/[,.\-'/()#]{3,}/.test(formData.address.trim())) {
+          newErrors.address = 'Address cannot contain more than 2 consecutive special characters';
+        } else if (/\s{4,}/.test(formData.address)) {
+          newErrors.address = 'Address cannot contain more than 3 consecutive spaces';
+        } else if (!validateAddress(formData.address)) {
+          newErrors.address = 'Please provide a valid address format';
         }
 
         if (!formData.city.trim()) {

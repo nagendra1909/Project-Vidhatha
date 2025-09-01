@@ -582,7 +582,7 @@ const SuccessStories = () => {
         "The vocational training program changed my life completely. I learned carpentry skills and now run my own small business. I can provide for my family and even employ two other people from my community.",
       impact: "Started successful carpentry business",
       image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+        "httpPhilip remembered. But. How much? They eat something. What did those things happen? It ain't been relaxed. What is it that the sounding of famous landing? He turned up the Sangamon for the same. But other material isn't one of them. There is no definitely the truth. Apps. Wake up again. I feel like he can't. Open but many other things in each of them. The potatoes of bloody into energy perimeter. The rich boy, the lake in the darkness. His name is. The. What challenges are probably about it, but she does not love. Marie again. I. Chandrakant by the station. The laptop, the Rahul Giran. OK OK. My mistakes. I. If they still buy while we get a CM on medicines. Tell me why he was behaving again and then he talks to him. Now I do know that employees by his adhesive this video. And he insists on the. Dress. There were no participation. Do you envy? And we had to go and again on the top. Represents a special. Student that. Inspired by that topic. Creativity. Success. Why did you want to? Yes. But he started this. $95 million. Is nothing, just. Damon said she couldn't. 300 years. 500 years. Ago. So this causes the tree to flood the damaged area of sticky message to stop the damage and within the next few years. I. Yes, shy and Italy approached. Dedicated. That I've been all willing to learn how Middle Eastern living dress. After putting on pick up and sunglasses, I instantly transformed into a Middle Eastern I got out of the car. The drug dealers were all surprised by me. I'm surprised that even if it works by a familiar Middle Eastern accident, first time I had no experience. I. When I can hold on socks the hip. I. I. Pl. Bye. I. I. I. I. Sorry, you guys to the place. Yeah, I'm gonna go, right. She was. I didn't know it. Text you doesn't mean you don't need. Thank you and everything to others except for her with the idea of this definition to speak about the way to cook. What is this? Is going to be lowly different than you know? He was never expected to take a security threat to the country. This is somebody. Then he was. He was listening to me. It would be a little bit. The. He was told me to explain the building that they have been converted to. Many of the development of the district is not. It was important for the wandering. 11.83 after the. That was one point, 500. Tax. Income tax. 9593. The eyes of peaceful little that explained him. It was 383-8383. We ain't even. 25 and 20 yesterday. The idea of esports are going to follow gallery on campus, recorded and fixed, you know. I. I. I. I don't know. Bread we went to the. Club located. At the company. No complaints. Uh. Hey, Cortana. Father, actually. Hey, Cortana. 1 1. I. I could go to. Registration number? Serial number. Serial number. No, baby, I'll not be there. If he ever know about. It like already contract he found a movie but say at all. Once I love me. The task was not wiped. But everything took. It. And even lumber campus, would you live the way? He stopped. And Billy. My ideal. Feeling willing to do? Pakistan. Actually. We lived in. Hey, Cortana. 13 13 14. I. Hey, Cortana, turn on. 35 acre beach near. The lake at which is a little bit. Hey, Cortana, progression. Howard and Clear Engineering. They'll have the idea of the original revolution. He wanted alone, but I don't believe he caitalized the other executive. Never know it. But. Hey, Cortana. I feel like. My day was always a bit tired of 19 year old fellows. His case for a Walkman? His case called Marrow. It slipped six and slippers. He was born for a fixedly referred to him. Although the donor while we're going to get a moment. And later I rang fun. The. I usually remember about the village comments. There's another thing that. The moon agreed. I. I. Ronaldo the Philip was a guy. Goodbye. I. I. I. Thank you. I. Begins at the time. s://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
     },
     {
       name: "Maria Santos",
@@ -899,6 +899,97 @@ const ImpactNumbers = () => {
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  // Email validation function
+  const validateEmail = (email: string) => {
+    if (!email.trim()) {
+      return 'Email address is required';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return 'Please enter a valid email address';
+    }
+    if (email.length > 100) {
+      return 'Email must be less than 100 characters';
+    }
+    return '';
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    
+    // Real-time validation
+    if (touched) {
+      setError(validateEmail(value));
+    }
+  };
+
+  const handleBlur = () => {
+    setTouched(true);
+    setError(validateEmail(email));
+  };
+
+  const handleSubscribe = async () => {
+    setTouched(true);
+    const validationError = validateEmail(email);
+    setError(validationError);
+    
+    if (!validationError) {
+      setIsSubscribing(true);
+      
+      try {
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Show success toast
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2';
+        toast.innerHTML = `
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span style="font-family: Niramit">Successfully subscribed to our newsletter!</span>
+        `;
+        document.body.appendChild(toast);
+        
+        // Remove toast after 3 seconds
+        setTimeout(() => {
+          if (document.body.contains(toast)) {
+            document.body.removeChild(toast);
+          }
+        }, 3000);
+        
+        // Clear form
+        setEmail("");
+        setError("");
+        setTouched(false);
+        
+      } catch (err) {
+        // Show error toast
+        const errorToast = document.createElement('div');
+        errorToast.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2';
+        errorToast.innerHTML = `
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span style="font-family: Niramit">Failed to subscribe. Please try again.</span>
+        `;
+        document.body.appendChild(errorToast);
+        
+        setTimeout(() => {
+          if (document.body.contains(errorToast)) {
+            document.body.removeChild(errorToast);
+          }
+        }, 3000);
+      } finally {
+        setIsSubscribing(false);
+      }
+    }
+  };
 
   return (
     <section className="py-20 bg-ngo-gray-50">
@@ -912,50 +1003,52 @@ const Newsletter = () => {
         </div>
         
         <div className="flex justify-center mb-16">
-          <div className="flex items-center gap-4 max-w-lg w-full">
-            <input 
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-              className="flex-1 bg-white px-4 py-3 rounded-md border border-gray-300 font-niramit text-base focus:outline-none focus:ring-2 focus:ring-ngo-primary"
-            />
-            <button 
-              onClick={() => {
-              if (email) {
-                // Show success toast
-                const toast = document.createElement('div');
-                toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50 flex items-center gap-2';
-                toast.innerHTML = `
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                </svg>
-                Successfully subscribed to our newsletter!
-                `;
-                document.body.appendChild(toast);
-                
-                // Remove toast after 3 seconds
-                setTimeout(() => {
-                if (document.body.contains(toast)) {
-                  document.body.removeChild(toast);
-                }
-                }, 3000);
-                
-                // Clear email input
-                setEmail("");
-              }
-              }}
-              className="bg-ngo-primary text-white px-6 py-3 rounded-md font-niramit text-base font-bold hover:bg-red-600 transition-colors"
-            >
-              Subscribe
-            </button>
+          <div className="max-w-lg w-full">
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <input 
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  onBlur={handleBlur}
+                  placeholder="Enter your email address"
+                  className={`w-full bg-white px-4 py-3 rounded-md border font-niramit text-base focus:outline-none focus:ring-2 transition-colors ${
+                    error && touched
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-ngo-primary'
+                  }`}
+                  disabled={isSubscribing}
+                />
+              </div>
+              <button 
+                onClick={handleSubscribe}
+                disabled={isSubscribing || (touched && !!error) || !email.trim()}
+                className="bg-ngo-primary text-white px-6 py-3 rounded-md font-niramit text-base font-bold hover:bg-red-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
+              >
+                {isSubscribing ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Subscribing...
+                  </>
+                ) : (
+                  'Subscribe'
+                )}
+              </button>
+            </div>
+            {error && touched && (
+              <p className="mt-2 text-sm text-red-600 font-niramit">
+                {error}
+              </p>
+            )}
+            <div className="text-center mt-4">
+              <p className="text-gray-500 font-niramit text-sm">
+                We respect your privacy. <span className="text-ngo-primary cursor-pointer hover:underline">Unsubscribe</span> at any time
+              </p>
+            </div>
           </div>
-        </div>
-        
-        <div className="text-center mb-16">
-          <p className="text-gray-500 font-niramit text-base">
-            We respect your privacy. <span className="text-ngo-primary">Unsubscribe</span> at any time
-          </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
