@@ -443,7 +443,7 @@ const InterestsStep = ({ formData, handleInputChange, handleCheckboxChange, erro
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-900 mb-1">Why do you want to volunteer with us?</label>
+        <label className="block text-sm font-medium text-gray-900 mb-1">Why do you want to volunteer with us? *</label>
         <p className="text-xs text-gray-600 mb-2">Tell us about your motivations for volunteering (minimum 50 characters)</p>
         <textarea
           key="motivation"
