@@ -266,7 +266,7 @@ const Footer = () => {
                 href="tel:+15559114357"
                 className="text-red-400 font-niramit text-lg font-bold hover:text-red-300 transition-colors duration-300"
               >
-                +1 (555) 911-HELP
+                +91 95423 66556
               </a>
             </div>
           </div>
