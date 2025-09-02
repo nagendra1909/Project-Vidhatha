@@ -574,17 +574,17 @@ const SuccessStories = () => {
         "The vocational training program changed my life completely. I learned carpentry skills and now run my own small business. I can provide for my family and even employ two other people from my community.",
       impact: "Started successful carpentry business",
       image:
-        "httpPhilip remembered. But. How much? They eat something. What did those things happen? It ain't been relaxed. What is it that the sounding of famous landing? He turned up the Sangamon for the same. But other material isn't one of them. There is no definitely the truth. Apps. Wake up again. I feel like he can't. Open but many other things in each of them. The potatoes of bloody into energy perimeter. The rich boy, the lake in the darkness. His name is. The. What challenges are probably about it, but she does not love. Marie again. I. Chandrakant by the station. The laptop, the Rahul Giran. OK OK. My mistakes. I. If they still buy while we get a CM on medicines. Tell me why he was behaving again and then he talks to him. Now I do know that employees by his adhesive this video. And he insists on the. Dress. There were no participation. Do you envy? And we had to go and again on the top. Represents a special. Student that. Inspired by that topic. Creativity. Success. Why did you want to? Yes. But he started this. $95 million. Is nothing, just. Damon said she couldn't. 300 years. 500 years. Ago. So this causes the tree to flood the damaged area of sticky message to stop the damage and within the next few years. I. Yes, shy and Italy approached. Dedicated. That I've been all willing to learn how Middle Eastern living dress. After putting on pick up and sunglasses, I instantly transformed into a Middle Eastern I got out of the car. The drug dealers were all surprised by me. I'm surprised that even if it works by a familiar Middle Eastern accident, first time I had no experience. I. When I can hold on socks the hip. I. I. Pl. Bye. I. I. I. I. Sorry, you guys to the place. Yeah, I'm gonna go, right. She was. I didn't know it. Text you doesn't mean you don't need. Thank you and everything to others except for her with the idea of this definition to speak about the way to cook. What is this? Is going to be lowly different than you know? He was never expected to take a security threat to the country. This is somebody. Then he was. He was listening to me. It would be a little bit. The. He was told me to explain the building that they have been converted to. Many of the development of the district is not. It was important for the wandering. 11.83 after the. That was one point, 500. Tax. Income tax. 9593. The eyes of peaceful little that explained him. It was 383-8383. We ain't even. 25 and 20 yesterday. The idea of esports are going to follow gallery on campus, recorded and fixed, you know. I. I. I. I don't know. Bread we went to the. Club located. At the company. No complaints. Uh. Hey, Cortana. Father, actually. Hey, Cortana. 1 1. I. I could go to. Registration number? Serial number. Serial number. No, baby, I'll not be there. If he ever know about. It like already contract he found a movie but say at all. Once I love me. The task was not wiped. But everything took. It. And even lumber campus, would you live the way? He stopped. And Billy. My ideal. Feeling willing to do? Pakistan. Actually. We lived in. Hey, Cortana. 13 13 14. I. Hey, Cortana, turn on. 35 acre beach near. The lake at which is a little bit. Hey, Cortana, progression. Howard and Clear Engineering. They'll have the idea of the original revolution. He wanted alone, but I don't believe he caitalized the other executive. Never know it. But. Hey, Cortana. I feel like. My day was always a bit tired of 19 year old fellows. His case for a Walkman? His case called Marrow. It slipped six and slippers. He was born for a fixedly referred to him. Although the donor while we're going to get a moment. And later I rang fun. The. I usually remember about the village comments. There's another thing that. The moon agreed. I. I. Ronaldo the Philip was a guy. Goodbye. I. I. I. Thank you. I. Begins at the time. s://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+        "/James Thompson.png"
     },
     {
-      name: "Maria Santos",
+      name: "Akash Khanna",
       age: 34,
       program: "Healthcare Services",
       quote:
         "Thanks to the free medical consultations, I was able to get treatment for my diabetes. The health awareness programs taught me how to manage my condition and live a healthier life.",
       impact: "Successfully managing diabetes with proper care",
       image:
-        "https://images.unsplash.com/photo-1534339480783-6816b68be29c?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "/Akash Khanna.png"
     },
     {
       name: "Rajesh Kumar",
@@ -594,7 +594,7 @@ const SuccessStories = () => {
         "When my family faced financial crisis, the emergency relief program helped us get back on our feet. Now I volunteer to help other families in similar situations.",
       impact: "Recovered from financial crisis, now helps others",
       image:
-        "https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?q=80&w=1206&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "/Rajesh Kumar.png"
     },
     {
       name: "Priya Sharma",
@@ -604,7 +604,7 @@ const SuccessStories = () => {
         "Participating in the tree plantation drive opened my eyes to environmental issues. I now lead a local green initiative in my neighborhood and we've planted over 500 trees.",
       impact: "Leading environmental initiatives in community",
       image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
+        "/Priya Sharma.png"
     },
   ];
 
