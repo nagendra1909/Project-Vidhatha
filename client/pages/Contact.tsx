@@ -139,16 +139,16 @@ const LocationsSection = () => {
     },
     {
       title: "Healthcare Center",
-      address: "456 Medical Avenue, Hope City, HC 12346",
-      phone: "+1 (555) 234-5678",
-      email: "health@ngocare.org",
+      address: "3-15-9k/401, Sahara states, Mansoorabad L B Nagar, Hayathnagar, Rangareddy, Telangana",
+      phone: "+91 95423 66556",
+      email: "vidhathasociety@gmail.com",
       hours: "Mon-Sat: 8:00 AM - 8:00 PM"
     },
     {
       title: "Education Hub",
-      address: "789 Learning Lane, Hope City, HC 12347",
-      phone: "+1 (555) 345-6789",
-      email: "education@ngocare.org",
+      address: "3-15-9k/401, Sahara states, Mansoorabad L B Nagar, Hayathnagar, Rangareddy, Telangana",
+      phone: "+91 95423 66556",
+      email: "vidhathasociety@gmail.com",
       hours: "Mon-Fri: 10:00 AM - 7:00 PM"
     }
   ];
@@ -1117,7 +1117,7 @@ const EmergencySection = () => {
         <div className="bg-[#DC2626] rounded-lg py-2 text-white">
           <div className="text-center">
             <h3 className="text-4xl font-bold font-Niramit mb-2">
-              +1 (555) 911-HELP
+              +91 95423 66556
             </h3>
             <p className="text-base font-Niramit text-[#FEE2E2]">
               Available 24 hours a day, 7 days a week
