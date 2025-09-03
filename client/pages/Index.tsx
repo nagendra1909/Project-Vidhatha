@@ -538,9 +538,9 @@ const FeaturedPrograms = () => {
                 <h3 className="text-ngo-secondary font-niramit text-lg sm:text-xl font-bold mb-2">{program.title}</h3>
                 <p className="text-ngo-primary font-niramit text-xs sm:text-sm font-bold mb-3 sm:mb-4">{program.impact}</p>
                 <p className="text-gray-600 font-niramit text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">{program.description}</p>
-                <button className="w-full border border-gray-300 text-ngo-secondary py-2 sm:py-3 rounded font-niramit text-sm sm:text-base hover:bg-gray-50 hover:scale-105 transition-all duration-300 min-h-[44px]">
+                {/* <button className="w-full border border-gray-300 text-ngo-secondary py-2 sm:py-3 rounded font-niramit text-sm sm:text-base hover:bg-gray-50 hover:scale-105 transition-all duration-300 min-h-[44px]">
                   Learn More
-                </button>
+                </button> */}
               </div>
             </div>
           ))}
